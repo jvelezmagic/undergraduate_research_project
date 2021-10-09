@@ -4,4 +4,5 @@ before_chapter_script: _common.R
 delete_merged_file: true
 language:
   ui:
+    edit: "Edit"
     chapter_name: "Chapter "

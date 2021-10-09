@@ -1,0 +1,16 @@
+## Acknowledgements {.unnumbered}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+tristique, sem egestas aliquam varius, arcu nisi ullamcorper lacus, quis
+convallis enim velit et arcu. Vestibulum lacus arcu, tempor non dapibus
+vitae, malesuada ut ipsum. Phasellus condimentum diam ex. Sed maximus a
+mauris vel aliquet.
+
+Integer neque sapien, cursus eu viverra consequat, cursus congue dui.
+Maecenas est dui, rutrum vitae enim vel, varius scelerisque tortor. In
+vel dignissim orci. Integer varius neque mauris, mollis commodo libero
+fringilla sed. Nunc accumsan, libero id interdum dignissim, nulla nibh
+consectetur lorem, vel dignissim erat magna vitae ante. Aliquam at est
+lectus. Suspendisse nec sem euismod, condimentum neque sit amet,
+malesuada nibh. Aenean condimentum pharetra quam, id venenatis mauris
+tempor a.

@@ -1,8 +1,11 @@
 # example R options set globally
-options(width = 60)
+options(width = 80)
 
 # example chunk options set globally
 knitr::opts_chunk$set(
   comment = "#>",
-  collapse = TRUE
-  )
+  collapse = TRUE,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
