@@ -7,5 +7,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   echo = FALSE,
   message = FALSE,
-  warning = FALSE
+  warning = FALSE,
+  out.width = "100%"
 )

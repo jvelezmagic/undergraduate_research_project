@@ -227,7 +227,7 @@ survived_p2 <- counts_survived_by_gfp %>%
 
 p_proportions_by_gfp_row <- (survived_p1 | survived_p2) +
   plot_layout(
-    widths = c(7, 1)
+    widths = c(8, 1)
   )
 
 p_proportions_by_gfp_row

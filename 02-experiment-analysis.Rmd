@@ -352,7 +352,7 @@ surviving filament cells from the dead ones.
 
 (ref:experiment-03-chromosome-pca-new-coordinates-scap) Principal Component Analysis of chromosomal strain.
 
-(ref:experiment-03-chromosome-pca-new-coordinates-cap) **Principal Component Analysis of chromosomal strain.** When integrating the information of different variables in a dimensionality reduction analysis, we observed a clear separation between the surviving cells and those that did not. The contributions that determined this phenomenon come mainly from the last amount of DS-red, GFP, and cell length (see Figure \@ref(fig:experiment-03-chromosome-pca-variable-contribution)). Although it seems obvious, it effectively confirms that the temporal classification that we carry out makes sense. Longer length represents a greater uptake of antibiotics but in a much larger volume, so the net effect is an internal reduction of antibiotics (see Figure \@ref(fig:cell-dimensions-relationship)).
+(ref:experiment-03-chromosome-pca-new-coordinates-cap) **Principal Component Analysis of chromosomal strain.** When integrating the information of different variables in a dimensionality reduction analysis, we observed a clear separation between the surviving cells and those that did not. The contributions that determined this phenomenon come mainly from the last amount of DS-red, GFP, and cell length (see Figure \@ref(fig:experiment-03-chromosome-pca-variable-contribution)). Although it seems obvious, it effectively confirms that the temporal classification that we carry out makes sense. Longer length represents a greater uptake of antibiotics but in a much larger volume, so the net effect is an internal reduction of antibiotics (see Figure \@ref(fig:model-01-cell-dimensions-relationship)).
 
 ```{r experiment-03-chromosome-pca-new-coordinates, fig.cap='(ref:experiment-03-chromosome-pca-new-coordinates-cap)', fig.scap='(ref:experiment-03-chromosome-pca-new-coordinates-scap)'}
 ```
@@ -530,7 +530,7 @@ maximum. This new plot allowed us to observe how the bimodal survival
 distribution occurs for cells that did not grow as filaments, whereas
 cells that filament increase their survival probability gradually as
 they have more initial GFP (see also Figure
-@ref(fig:experiment-03-gfp-temporal-distribution).
+\@ref(fig:experiment-03-gfp-temporal-distribution)).
 
 (ref:experiment-04-gfp-survival-probability-scap) Plasmid initial GFP survival probability.
 
