@@ -1,0 +1,156 @@
+```{r experiment-02-libraries}
+library(tidyverse)
+library(fs)
+library(here)
+```
+
+```{r experiment-02-load-data}
+lineages_raw_file <- here("data", "interim", "lineages.csv")
+lineages_raw_df <- read_csv(
+  file = lineages_raw_file,
+  show_col_types = FALSE
+)
+```
+
+```{r experiment-02-specify-output-directory}
+out_dir <- here("data", "processed")
+dir_create(out_dir)
+```
+
+```{r experiment-02-normalize-values}
+lineages_processed_1_df <- lineages_raw_df %>%
+  mutate(
+    filamented_at_time = length > filamentation_threshold,
+    over_ds_red_threshold_at_time = ds_red > ds_red_threshold,
+    gfp = gfp / gfp_mean,
+    ds_red = log(ds_red / ds_red_mean),
+  ) %>%
+  relocate(where(is.character), where(is.logical))
+```
+
+```{r experiment-02-point-measurements}
+lineages_id_processed_1_df <- lineages_processed_1_df %>%
+  select(-contains("mean")) %>%
+  group_by(experiment_id, id) %>%
+  mutate(
+    divided_once_experiment_finished = keep(division, time > antibiotic_start_time) %>%
+      any()
+  ) %>%
+  filter(
+    time <= antibiotic_end_time + 10,
+    first(time) < antibiotic_start_time,
+    last(time) > antibiotic_start_time
+  ) %>%
+  summarize(
+    ## Include metadata of experiment. ----
+    across(
+      .cols = c(
+        antibiotic_start_time,
+        antibiotic_end_time,
+        divided_once_experiment_finished,
+        filamentation_threshold,
+      ),
+      .fns = first
+    ),
+    ## Add essential status identifiers. ----
+    filamented_id = any(filamented_at_time),
+    over_ds_red_id = any(over_ds_red_threshold_at_time),
+    divided_id = any(division),
+    ## Include Initial, SOS and, End measurements. ----
+    across(
+      .cols = c(
+        time,
+        length,
+        gfp,
+        ds_red
+      ),
+      .fns = list(
+        first = first,
+        sos = ~ ifelse(
+          test = filamented_id,
+          yes = nth(
+            x = .x,
+            n = which.max(filamented_at_time)
+          ),
+          no = NA
+        ),
+        last = ~ ifelse(
+          test = over_ds_red_id & !divided_once_experiment_finished,
+          yes = nth(
+            x = .x,
+            n = which.max(over_ds_red_threshold_at_time)
+          ),
+          no = last(.x)
+        )
+      )
+    ), 
+    ## Division data ----
+    n_divisions = sum(division),
+    time_since_last_division_to_experiment_start = ifelse(
+      test = divided_id,
+      yes = keep(time, division) %>% 
+        keep(~.x <= antibiotic_start_time) %>% 
+        {
+          .data <- .
+          ifelse(
+            test = is_empty(.data),
+            yes = NA,
+            no = antibiotic_start_time -last(.data)
+          )
+        },
+      no = NA
+    ),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    lived_time = time_last - time_first,
+    dead_or_missing_at_time = ifelse(
+      test = time_last > antibiotic_end_time,
+      yes = NA,
+      no = time_last + 10
+    ),
+    survived = is.na(dead_or_missing_at_time)
+  ) %>%
+  relocate(where(is.character), where(is.logical), where(is.numeric))
+```
+
+```{r experiment-02-save-point-measurements}
+write_csv(
+  x = lineages_id_processed_1_df,
+  file = path(out_dir, "cells_summary.csv")
+)
+```
+
+```{r experiment-02-filter-target-points}
+lineages_processed_2_df <- lineages_processed_1_df %>%
+  inner_join(
+    y = lineages_id_processed_1_df %>%
+      select(
+        experiment_id,
+        id,
+        filamented_id,
+        survived,
+        time_first,
+        time_last,
+        gfp_first
+      ),
+    by = c("experiment_id", "id")
+  ) %>%
+  group_by(experiment_id, id) %>%
+  filter(
+    row_number() <= ifelse(
+      test = any(over_ds_red_threshold_at_time),
+      yes = which.max(over_ds_red_threshold_at_time), 
+      no = n()
+    )
+  ) %>%
+  ungroup() %>%
+  relocate(where(is.character), where(is.logical))
+```
+
+```{r experiment-02-save-filtered-lineages}
+write_csv(
+  x = lineages_processed_2_df,
+  file = path(out_dir, "lineages.csv")
+)
+```

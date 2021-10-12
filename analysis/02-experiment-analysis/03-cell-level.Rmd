@@ -1,0 +1,659 @@
+```{r experiment-03-libraries}
+library(tidyverse)
+library(tidymodels)
+library(tidytext)
+library(plotly)
+library(ggpubr)
+library(GGally)
+library(ggdist)
+library(embed)
+library(here)
+library(fs)
+```
+
+```{r experiment-03-read-data}
+cells_file <- here("data", "processed", "cells_summary.csv")
+cells_raw_df <- read_csv(
+  file = cells_file,
+  show_col_types = FALSE
+) %>% 
+  select(-over_ds_red_id) %>%
+  rename(divided = divided_id)
+```
+
+```{r experiment-03-create-factors}
+cells_df <- cells_raw_df %>% 
+  mutate(
+    filamented_id = factor(
+      x = filamented_id,
+      levels = c(FALSE, TRUE), 
+      labels = c("Not filamented", "Filamented")
+    ),
+    survived = factor(
+      x = survived,
+      levels = c(FALSE, TRUE),
+      labels = c("Not survived", "Survived")
+    ),
+    cell_status = interaction(
+      filamented_id,
+      survived,
+      sep = " - "
+    ),
+    cell_status = paste0(
+      filamented_id,
+      " - ",
+      survived
+    ),
+    cell_status = factor(cell_status)
+  ) %>% 
+  relocate(where(is.character), where(is.factor), where(is.logical))
+```
+
+```{r experiment-03-set-default-plot-style}
+theme_set(
+  theme_bw() +
+  theme(
+    legend.position = "top",
+    strip.background = element_blank()
+  )
+)
+```
+
+```{r experiment-03-utility-functions}
+parse_metrics_column <- function(.data, metric_column) {
+  .data %>% 
+    mutate(
+      {{ metric_column }} := str_remove(
+        string = {{ metric_column }},
+        pattern = "(.+)_"
+      ) %>% 
+        factor(
+          levels = c("first", "sos", "last"),
+          labels = c("Initial", "SOS", "End")
+        ) %>%
+        identity()
+    )
+}
+```
+
+
+```{r experiment-03-cell-distribution-across-experiments}
+p_cells_distribution <- cells_df %>% 
+  count(experiment_id, cell_status) %>%
+  group_by(experiment_id) %>% 
+  mutate(
+    percentage = n / sum(n) * 100,
+    ymax = cumsum(percentage),
+    ymin = c(0, head(ymax, -1)),
+    labels = paste0(format(percentage, digits = 2), "%"),
+    labels_position = (ymax + ymin) / 2,
+    total_label = paste0("Total:\n", format(sum(n), big.mark = ","), " cells")
+  ) %>% 
+  ungroup() %>% 
+  identity() %>% 
+    ggplot(
+    aes(
+      ymin = ymin,
+      ymax = ymax,
+      xmin = 3,
+      xmax = 4
+    )
+  ) +
+  geom_rect(
+    size = 1.5,
+    color = "white",
+    aes(fill = cell_status)
+  ) +
+  geom_label(
+    x = 2,
+    aes(
+      y = labels_position,
+      label = labels
+    ),
+    label.size = NA,
+    size = 3.5,
+  ) +
+  geom_text(
+    aes(x = -Inf, y = -Inf, label = total_label),
+    hjust = 0.5, 
+    vjust = 0.5
+  ) +
+  facet_grid(. ~ experiment_id) +
+  coord_polar(theta = "y") +
+  xlim(c(-1, 4)) +
+  guides(
+    fill = guide_legend(ncol = 2)
+  ) +
+  theme_void() +
+  theme(
+    legend.position = "bottom"
+  ) +
+  labs(
+    fill = "Cell status"
+  ) +
+  NULL
+
+p_cells_distribution
+```
+
+```{r experiment-03-gfp-temporal-distribution}
+p_temporal_gfp_distributution <- cells_df %>% 
+  pivot_longer(
+    cols = contains("gfp"),
+    names_to = "metric",
+    values_to = "value"
+  ) %>% 
+  parse_metrics_column(metric) %>% 
+  filter(!is.na(value)) %>% 
+  identity() %>% 
+  ggplot(aes(x = cell_status, y = value, fill = cell_status)) +
+  stat_eye() +
+  stat_summary(fun=median, geom="line", aes(group=1))  +
+  stat_compare_means(
+    method = "t.test",
+    comparisons = list(c("Not filamented - Survived", "Not filamented - Not survived")),
+    label = "p.signif",
+    label.y = c(2.0),
+    hide.ns = TRUE
+  ) +
+  stat_compare_means(
+    method = "anova",
+    label.y.npc = 0.93
+  ) + # Add global annova p-value
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    ref.group = "Filamented - Survived",
+    hide.ns = TRUE,
+    label.y.npc = 0.75
+    ) +
+  stat_gradientinterval(position = "dodge", fill_type = "segments") +
+  facet_grid(experiment_id ~ metric) +
+  guides(
+    color = guide_legend(ncol = 2),
+    fill = guide_legend(ncol = 2)
+  ) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  ) +
+  labs(
+    fill = "Cell status",
+    y = "GFP value"
+  ) +
+  NULL
+
+p_temporal_gfp_distributution
+```
+
+```{r experiment-03-length-temporal-distribution}
+p_temporal_length_distributution <- cells_df %>% 
+  pivot_longer(
+    cols = contains("length"),
+    names_to = "metric",
+    values_to = "value"
+  ) %>% 
+  parse_metrics_column(metric) %>% 
+  filter(!is.na(value)) %>% 
+  identity() %>% 
+  ggplot(aes(x = cell_status, y = value, fill = cell_status)) +
+  geom_hline(aes(yintercept = filamentation_threshold), linetype = "dashed", alpha = 1 / 2) +
+  stat_eye() +
+  stat_summary(fun=median, geom="line", aes(group=1))  +
+  stat_compare_means(
+    method = "t.test",
+    comparisons = list(
+      c("Not filamented - Survived", "Not filamented - Not survived")
+    ),
+    label = "p.signif",
+    label.y = c(60),
+    hide.ns = TRUE
+  ) +
+  stat_compare_means(
+    method = "anova",
+    label.y.npc = 0.43,
+    label.x.npc = 0.3
+  ) + # Add global annova p-value
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    ref.group = "Filamented - Survived",
+    hide.ns = TRUE,
+    label.y.npc = 0.3
+  ) +
+  #stat_gradientinterval(position = "dodge", fill_type = "segments") +
+  facet_grid(experiment_id ~ metric) +
+  coord_cartesian(ylim = c(0, 150)) +
+  guides(
+    color = guide_legend(ncol = 2),
+    fill = guide_legend(ncol = 2)
+  ) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  ) +
+  labs(
+    fill = "Cell status",
+    y = "Length value"
+  ) +
+  NULL
+
+p_temporal_length_distributution
+```
+
+```{r experiment-03-dsred-temporal-distribution}
+p_temporal_dsred_distributution <- cells_df %>% 
+  pivot_longer(
+    cols = contains("ds_red"),
+    names_to = "metric",
+    values_to = "value"
+  ) %>% 
+  parse_metrics_column(metric) %>% 
+  filter(!is.na(value)) %>% 
+  identity() %>% 
+  ggplot(aes(x = cell_status, y = value, fill = cell_status)) +
+  stat_eye() +
+  stat_summary(fun=median, geom="line", aes(group=1))  +
+  stat_compare_means(
+    method = "t.test",
+    comparisons = list(c("Not filamented - Survived", "Not filamented - Not survived")),
+    label = "p.signif",
+    label.y = c(0.4),
+    hide.ns = TRUE
+  ) +
+  # stat_compare_means(
+  #   method = "anova",
+  #   label.y.npc = 0.93
+  # ) + # Add global annova p-value
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    ref.group = "Filamented - Survived",
+    hide.ns = TRUE,
+    label.y.npc = 0.75
+    ) +
+  stat_gradientinterval(position = "dodge", fill_type = "segments") +
+  facet_grid(experiment_id ~ metric) +
+  guides(
+    color = guide_legend(ncol = 2),
+    fill = guide_legend(ncol = 2)
+  ) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  ) +
+  labs(
+    fill = "Cell status",
+    y = "Ds-Red value"
+  ) +
+  NULL
+
+p_temporal_dsred_distributution
+```
+
+```{r experiment-03-just-initial-values}
+p_initial_values <- cells_df %>% 
+  ggplot(aes(x = log(gfp_first), y = length_first, color = cell_status)) +
+  geom_point(alpha = 1/2, size = 0.5) +
+  facet_wrap(. ~ experiment_id, scales = "free") +
+  guides(
+    color = guide_legend(ncol = 2, override.aes = list(alpha = 1, size = 1)),
+    fill = guide_legend(ncol = 2)
+  ) +
+  labs(
+    x = "Initial normalized GFP (log10)",
+    y = "Initial length",
+    color = "Cell status"
+  ) +
+  NULL
+
+p_initial_values
+```
+
+```{r experiment-03-metric-differences}
+p_metric_differences <- cells_df %>% 
+  ggplot(aes(x = log(gfp_last) - log(gfp_first), y = length_last - length_first, color = cell_status)) +
+  geom_point(alpha = 1/20) +
+  facet_grid(~experiment_id) +
+  guides(
+    color = guide_legend(ncol = 2, override.aes = list(alpha = 1)),
+    fill = guide_legend(ncol = 2)
+  ) +
+  labs(
+    x = "End GFP - Initial GFP",
+    y = "End length - Initial length",
+    color = "Cell status"
+  ) +
+  NULL
+
+p_metric_differences
+```
+
+```{r experiment-03-time-to-filamentation-filtered}
+p_time_to_filamentation_filtered <- cells_df %>% 
+  filter(
+    filamented_id == "Filamented",
+    time_sos > antibiotic_start_time
+  ) %>% 
+  mutate(
+    time_to_sos = time_sos - antibiotic_start_time,
+  ) %>%
+  ggplot(aes( x = experiment_id, y = time_to_sos, fill = survived)) +
+  stat_eye(position = "dodge") +
+  stat_compare_means(
+    label = "p.signif"
+  ) +
+  labs(
+    x = "Experiment",
+    y = "Time to filamentation (minutes)",
+    fill = "Cell status"
+  )
+
+p_time_to_filamentation_filtered
+```
+
+```{r experiment-03-initial-values-with-time}
+p_initial_values_with_time <- cells_df %>% 
+  filter(
+    filamented_id == "Filamented",
+    time_sos > antibiotic_start_time
+  ) %>% 
+  mutate(time_to_sos = time_sos - antibiotic_start_time) %>%
+  ggplot(aes(x = length_first, y = log(gfp_first), z = time_to_sos)) +
+  stat_summary_2d() +
+  facet_grid(experiment_id ~ survived) +
+  scale_fill_viridis_c(option = "magma") +
+  labs(
+    x = "Initial length",
+    y = "Initial GFP",
+    fill = "Time to filamentation (minutes)"
+  ) +
+  NULL
+
+p_initial_values_with_time
+```
+
+```{r experiment-03-metric-difference-with-time}
+p_metric_differences_with_time <- cells_df %>% 
+  filter(
+    filamented_id == "Filamented",
+    time_sos > antibiotic_start_time
+  ) %>% 
+  mutate(
+    time_to_sos = time_sos - antibiotic_start_time,
+    diff_length = length_last - length_first,
+    diff_gfp = gfp_last - gfp_first
+  ) %>%
+  ggplot(aes(x = diff_gfp, y = diff_length, z = time_to_sos)) +
+  stat_summary_2d() +
+  facet_grid(experiment_id ~ survived) +
+  scale_fill_viridis_c(option = "magma") +
+  labs(
+    x = "End GFP - Initial GFP",
+    y = "End length - Initial length",
+    fill = "Time to filamentation (minutes)"
+  ) +
+  NULL
+
+p_metric_differences_with_time
+```
+
+```{r experiment-03-number-divisions}
+p_number_divisions <-cells_df %>% 
+  ggplot(aes(x = cell_status, y = n_divisions, fill = cell_status)) +
+  stat_eye(position = "dodge") +
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    ref.group = "Filamented - Survived",
+    label.y.npc = 0.75,
+    hide.ns = TRUE
+  ) +
+  stat_compare_means(
+    method = "t.test",
+    comparisons = list(c("Not filamented - Survived", "Not filamented - Not survived")),
+    label = "p.signif",
+    label.y = 7,
+    hide.ns = TRUE
+  ) +
+  facet_grid(. ~ experiment_id) +
+  coord_cartesian(ylim = c(0, 10)) +
+  guides(
+    fill = guide_legend(ncol = 2)
+  ) +
+  theme(
+    panel.grid.major = element_blank(),
+    axis.text.x = element_blank()
+  ) +
+  labs(
+    x = "Cell status",
+    y = "Number of divisions",
+    fill = "Cell status"
+  ) +
+  NULL
+
+p_number_divisions
+```
+
+```{r experiment-03-time-since-last-division}
+p_time_since_last_division <- cells_df %>% 
+  filter(!is.na(time_since_last_division_to_experiment_start)) %>% 
+  ggplot(
+    aes(
+      x = experiment_id,
+      y = time_since_last_division_to_experiment_start,
+      fill = cell_status
+    )
+  ) +
+  stat_eye(position = "dodge") +
+  labs(
+    x = "Experiment",
+    y = "Time since last division to experiment start",
+    fill = "Cell status"
+  ) +
+  guides(
+    color = guide_legend(ncol = 2),
+    fill = guide_legend(ncol = 2)
+  ) +
+  NULL
+
+p_time_since_last_division
+```
+
+```{r experiment-03-split-datasets}
+experiment_datasets <- cells_df %>% 
+  select(experiment_id, cell_status, divided, contains("first"), contains("last"), -contains("time")) %>% 
+  mutate(divided = as.numeric(divided)) %>% 
+  select(where(~!any(is.na(.)))) %>% 
+  glimpse() %>% 
+  
+  group_by(experiment_id) %>% 
+  {
+    grouped_data <- .
+    group_split(grouped_data) %>% 
+      set_names(nm = group_keys(grouped_data) %>% pull())
+  } %>% 
+  map(select, -experiment_id) %>% 
+  identity()
+
+chromosome_df <- experiment_datasets$Chromosome
+plasmid_df <- experiment_datasets$Plasmid
+```
+
+```{r experiment-03-chromosome-pca-prep}
+c_pca_rec <- recipe(cell_status ~ ., data = chromosome_df) %>% 
+  step_naomit(all_predictors()) %>% 
+  step_normalize(all_predictors()) %>%
+  step_pca(all_predictors())
+
+set.seed(42)
+c_pca_prep <- prep(c_pca_rec)
+c_pca_prep
+```
+
+```{r experiment-03-chromosome-pca-variable-contribution}
+c_tidied_pca <- tidy(c_pca_prep, 3)
+
+p_c_titied_pca <- c_tidied_pca %>%
+  filter(component %in% paste0("PC", 1:2)) %>%
+  mutate(
+    component = fct_inorder(component),
+    terms = reorder_within(terms, abs(value), component)
+  ) %>%
+  ggplot(
+    aes(
+      x = abs(value), 
+      y= terms,
+      fill = value > 0
+    )
+  ) +
+  geom_bar(stat = "identity") +
+  facet_grid(component ~ ., scales = "free_y") +
+  scale_y_reordered() +
+  labs(
+    x = "Absolute value of contribution",
+    y = "Metric",
+    fill = "Is positive?"
+  )
+
+p_c_titied_pca
+```
+
+```{r experiment-03-chromosome-pca-new-coordinates}
+p_c_pca <- c_pca_prep %>% 
+  juice() %>% 
+  ggplot(aes(x = PC1, y = PC2, color = cell_status)) +
+  geom_vline(xintercept = 0) +
+  geom_hline(yintercept = 0) +
+  geom_jitter(size = 0.7) +
+  guides(
+    color = guide_legend(ncol = 2, override.aes = list(alpha = 1, size = 1)),
+    fill = guide_legend(ncol = 2)
+  ) +
+  labs(
+    color = "Cell status"
+  ) +
+  NULL
+
+p_c_pca
+```
+
+```{r experiment-03-plasmid-pca-prep}
+p_pca_rec <- recipe(cell_status ~ ., data = plasmid_df) %>% 
+  step_naomit(all_predictors()) %>% 
+  step_normalize(all_predictors()) %>%
+  step_pca(all_predictors())
+
+set.seed(42)
+p_pca_prep <- prep(p_pca_rec)
+p_pca_prep
+```
+
+```{r experiment-03-plasmid-pca-variable-contribution}
+p_tidied_pca <- tidy(p_pca_prep, 3)
+
+p_p_titied_pca <- p_tidied_pca %>%
+  filter(component %in% paste0("PC", 1:2)) %>%
+  mutate(
+    component = fct_inorder(component),
+    terms = reorder_within(terms, abs(value), component)
+  ) %>%
+  ggplot(
+    aes(
+      x = abs(value), 
+      y= terms,
+      fill = value > 0
+    )
+  ) +
+  geom_bar(stat = "identity") +
+  facet_grid(component ~ ., scales = "free_y") +
+  scale_y_reordered() +
+  labs(
+    x = "Absolute value of contribution",
+    y = "Metric",
+    fill = "Is positive?"
+  )
+
+p_p_titied_pca
+```
+
+```{r experiment-03-plasmid-pca-new-coordinates}
+p_p_pca <- p_pca_prep %>% 
+  juice() %>% 
+  ggplot(aes(x = PC1, y = PC2, color = cell_status)) +
+  geom_vline(xintercept = 0) +
+  geom_hline(yintercept = 0) +
+  geom_jitter(size = 0.1, alpha = 1/3) +
+  scale_x_continuous(limits = c(NA,  5)) +
+  scale_y_continuous(limits = c(NA, 7)) +
+  guides(
+    color = guide_legend(ncol = 2, override.aes = list(alpha = 1, size = 1)),
+    fill = guide_legend(ncol = 2)
+  ) +
+  labs(
+    color = "Cell status"
+  ) +
+  NULL
+
+p_p_pca
+```
+
+```{r experiment-03-chromosome-prep}
+c_umap_rec <- recipe(cell_status ~ ., data = chromosome_df) %>% 
+  step_naomit(all_predictors()) %>% 
+  step_normalize(all_predictors()) %>%
+  step_umap(all_predictors())
+
+set.seed(42)
+c_umap_prep <- prep(c_umap_rec)
+c_umap_prep
+```
+
+```{r experiment-03-chromosome-umap-new-coordinates}
+p_c_umap <- juice(c_umap_prep) %>% 
+  ggplot(aes(umap_1, umap_2, labe )) +
+  geom_point(aes(color = cell_status), alpha = 0.7, size = 2) +
+  guides(
+    color = guide_legend(ncol = 2, override.aes = list(alpha = 1, size = 1)),
+    fill = guide_legend(ncol = 2)
+  ) +
+  labs(
+    x = "UMAP 1",
+    y = "UMAP 2",
+    color = "Cell status"
+  )
+
+p_c_umap
+```
+
+```{r experiment-03-plasmid-prep}
+p_umap_rec <- recipe(cell_status ~ ., data = plasmid_df) %>% 
+  step_naomit(all_predictors()) %>% 
+  step_normalize(all_predictors()) %>%
+  step_umap(all_predictors())
+
+set.seed(42)
+p_umap_prep <- prep(p_umap_rec)
+p_umap_prep
+```
+
+```{r experiment-03-plasmid-umap-new-coordinates}
+p_p_umap <- juice(p_umap_prep) %>%
+  ggplot(aes(umap_1, umap_2, label)) +
+  geom_point(aes(color = cell_status), alpha = 1/3, size = 1) +
+  labs(
+    x = "UMAP 1",
+    y = "UMAP 2",
+    color = "Cell status"
+  ) +
+  guides(
+    color = guide_legend(ncol = 2, override.aes = list(alpha = 1, size = 1)),
+    fill = guide_legend(ncol = 2)
+  ) +
+  NULL
+
+p_p_umap
+```

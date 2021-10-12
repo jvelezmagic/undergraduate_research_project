@@ -1,0 +1,324 @@
+```{r experiment-04-libraries}
+library(tidyverse)
+library(here)
+library(fs)
+library(patchwork)
+```
+
+```{r experiment-04-read-data}
+lineages_file <- here("data", "processed", "lineages.csv")
+lineages_raw_df <- read_csv(
+  file = lineages_file,
+  show_col_types = FALSE
+) %>%
+  glimpse()
+```
+
+```{r experiment-04-create-factors}
+lineages_processed_1_df <- lineages_raw_df %>%
+  mutate(
+    filamented_id = factor(
+      x = filamented_id,
+      levels = c(FALSE, TRUE),
+      labels = c("Not filamented", "Filamented")
+    ),
+    filamented_at_time = factor(
+      x = filamented_at_time,
+      levels = c(FALSE, TRUE),
+      labels = c("Not filamented", "Filamented")
+    ),
+    survived = factor(
+      x = survived,
+      levels = c(FALSE, TRUE),
+      labels = c("Not survived", "Survived")
+    ),
+    cell_status = interaction(
+      filamented_id,
+      survived,
+      sep = " - "
+    ) %>%
+      as.character() %>%
+      as.factor()
+  ) %>%
+  glimpse()
+```
+
+```{r experiment-04-set-plotting-style}
+theme_set(
+  theme_bw() +
+    theme(
+      legend.position = "top",
+      strip.background = element_blank()
+    )
+)
+```
+
+```{r experiment-04-create-status-over-time-dataset}
+status_time_df <- lineages_processed_1_df %>%
+  select(experiment_id, id, time) %>%
+  group_by(experiment_id) %>%
+  group_modify(~ complete(expand(.x, id, time))) %>%
+  ungroup() %>%
+  left_join(lineages_processed_1_df) %>%
+  rename(cell_status_at_time = filamented_at_time) %>%
+  fill(time_first, time_last, gfp_first, filamentation_threshold, ds_red_threshold, .direction = "up") %>%
+  fill(antibiotic_start_time, antibiotic_end_time, .direction = "down") %>%
+  filter(time >= time_first) %>%
+  mutate(
+    cell_status_at_time = as.character(cell_status_at_time),
+    cell_status_at_time = replace_na(cell_status_at_time, "Dead"),
+    cell_status_at_time = factor(
+      x = cell_status_at_time,
+      levels = c("Not filamented", "Filamented", "Dead")
+    ),
+    time = factor(time)
+  ) %>%
+  glimpse() %>%
+  identity()
+```
+
+```{r experiment-04-status-with-dead}
+p_status_with_dead <- status_time_df %>%
+  ggplot(aes(x = time, fill = cell_status_at_time)) +
+  geom_bar(position = "fill", stat = "count", width = 1) +
+  geom_vline(aes(xintercept = factor(antibiotic_start_time)), linetype = "dashed") +
+  geom_vline(aes(xintercept = factor(antibiotic_end_time)), linetype = "dashed") +
+  facet_grid(experiment_id ~ .) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0), labels = scales::percent) +
+  theme(
+    panel.spacing.y = unit(1, "lines")
+  ) +
+  geom_text(
+    data = data.frame(
+      x = c(7.5, 15.5),
+      y = c(0.75, 0.25),
+      label = c("Start", "End"),
+      experiment_id = "Plasmid"
+    ),
+    mapping = aes(x = x, y = y, label = label),
+    size = 6,
+    hjust = 0L,
+    vjust = 0L,
+    colour = "white",
+    inherit.aes = FALSE
+  ) +
+  labs(
+    x = "Time (minutes)",
+    y = "Percentage of cells",
+    fill = "Cell status"
+  ) +
+  scale_fill_hue(direction = -1, h.start = 90) +
+  NULL
+
+p_status_with_dead
+```
+
+```{r experiment-04-metrics-over-time}
+p_metrics_over_time <- lineages_processed_1_df %>%
+  select(experiment_id, cell_status, time, length, gfp, ds_red) %>%
+  pivot_longer(
+    cols = c(length, gfp, ds_red),
+    names_to = "metric"
+  ) %>%
+  mutate(
+    metric = case_when(
+      metric == "ds_red" ~ "DsRed",
+      metric == "gfp" ~ "GFP",
+      metric == "length" ~ "Length"
+    ),
+    filamentation_threshold = ifelse(metric == "length", filamentation_threshold, NA)
+  ) %>%
+  group_by(experiment_id, cell_status, time, metric) %>%
+  summarise(
+    ci = list(mean_cl_normal(value)),
+    .groups = "drop"
+  ) %>%
+  unnest(cols = c(ci)) %>%
+  left_join(
+    y = lineages_processed_1_df %>%
+      select(experiment_id, antibiotic_start_time, antibiotic_end_time, filamentation_threshold) %>%
+      distinct(),
+    by = c("experiment_id")
+  ) %>%
+  mutate(
+    filamentation_threshold = ifelse(metric == "Length", filamentation_threshold, NA)
+  ) %>%
+  ggplot(aes(x = time, y = y, ymin = ymin, ymax = ymax, color = cell_status)) +
+  geom_vline(aes(xintercept = antibiotic_start_time), linetype = "dashed") +
+  geom_vline(aes(xintercept = antibiotic_end_time), linetype = "dashed") +
+  geom_hline(aes(yintercept = as.numeric(filamentation_threshold)), linetype = "dashed") +
+  geom_smooth(method = "loess") +
+  facet_grid(metric ~ experiment_id, scales = "free_y") +
+  labs(
+    x = "Time (minutes)",
+    y = "Value",
+    color = "Cell status"
+  ) +
+  guides(
+    color = guide_legend(ncol = 2),
+    fill = guide_legend(ncol = 2)
+  ) +
+  NULL
+
+p_metrics_over_time
+```
+
+```{r experiment-04-proportion-living-cells-gfp-by-row}
+counts_survived_by_gfp <- status_time_df %>%
+  filter(experiment_id == "Plasmid") %>%
+  mutate(
+    gfp_first = gfp_first / max(gfp_first),
+    gfp_first = cut(gfp_first, breaks = seq(0, 1, 0.05))
+  ) %>%
+  with_groups(
+    gfp_first,
+    ~ mutate(.x, n_at_gfp = filter(cur_data(), time == antibiotic_start_time) %>% nrow())
+  ) %>%
+  group_by(time, gfp_first) %>%
+  summarise(
+    percentage_alive = sum(cell_status_at_time != "Dead") / first(n_at_gfp),
+    antibiotic_start_time = first(antibiotic_start_time),
+    antibiotic_end_time = first(antibiotic_end_time),
+    .groups = "drop"
+  ) %>%
+  identity()
+
+survived_p1 <- counts_survived_by_gfp %>%
+  ggplot(aes(x = time, y = gfp_first, fill = percentage_alive)) +
+  geom_tile() +
+  geom_vline(aes(xintercept = factor(antibiotic_start_time)), linetype = "dashed") +
+  geom_vline(aes(xintercept = factor(antibiotic_end_time)), linetype = "dashed") +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_discrete(expand = c(0, 0)) +
+  scale_fill_viridis_c(
+    option = "inferno",
+    labels = scales::label_percent(),
+  ) +
+  labs(
+    x = "Time (minutes)",
+    y = "Proportion of GFP",
+    fill = "Percentage of living cells"
+  ) +
+  theme(
+    legend.spacing.x = unit(1, "cm")
+  ) +
+  guides(
+    fill = guide_colorbar(
+      barwidth = 8
+    )
+  ) +
+  NULL
+
+survived_p2 <- counts_survived_by_gfp %>%
+  filter(time == antibiotic_end_time + 10) %>%
+  ggplot(aes(x = percentage_alive, y = gfp_first, fill = percentage_alive)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_c(
+    option = "inferno",
+    labels = scales::percent,
+    limits = c(min(counts_survived_by_gfp$percentage_alive), max(counts_survived_by_gfp$percentage_alive))
+  ) +
+  theme_void() +
+  theme(
+    legend.position = "none"
+  ) +
+  NULL
+
+p_proportions_by_gfp_row <- (survived_p1 | survived_p2) +
+  plot_layout(
+    widths = c(7, 1)
+  )
+
+p_proportions_by_gfp_row
+```
+
+```{r experiment-04-gfp-survival-probability}
+step <- 0.04
+breaks <- seq(min(lineages_processed_1_df$gfp) - step, max(lineages_processed_1_df$gfp) + step, step)
+hist_gfp_control_info <- hist(
+  lineages_processed_1_df$gfp,
+  breaks = breaks,
+  plot = FALSE
+)
+
+p_survival_probability_gfp <- lineages_processed_1_df %>%
+  filter(experiment_id == "Plasmid", survived == "Survived", time == time_first) %>%
+  group_by(filamented_id) %>%
+  summarize(
+    counts = list(hist(gfp, plot = FALSE, breaks = breaks)$counts)
+  ) %>%
+  unnest(counts) %>%
+  mutate(
+    mids = rep(hist_gfp_control_info$mids, 2),
+    control_counts = rep(hist_gfp_control_info$counts, times = 2),
+    survival_probability = counts / control_counts
+  ) %>%
+  identity() %>%
+  # filter(survival_probability != 0) %>%
+  ggplot(aes(x = mids, y = survival_probability, color = filamented_id)) +
+  geom_point() +
+  geom_smooth(
+    se = FALSE,
+    size = 0.5,
+    linetype = "dashed"
+  ) +
+  scale_x_continuous() +
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_color_hue(direction = -1, h.start = 90) +
+  labs(
+    x = "Initial GFP",
+    y = "Survival probability",
+    color = "Cell status"
+  )
+
+p_survival_probability_gfp
+```
+
+```{r experiment-04-length-survival-probability}
+step <- 1
+breaks <- seq(min(lineages_processed_1_df$length) - step, max(lineages_processed_1_df$length) + step, step)
+hist_length_control_info <- hist(
+  lineages_processed_1_df$length,
+  breaks = breaks,
+  plot = FALSE
+)
+
+survival_probability_length <- lineages_processed_1_df %>%
+  filter(experiment_id == "Plasmid", survived == "Survived", time == time_first) %>%
+  group_by(filamented_id) %>%
+  summarize(
+    counts = list(hist(length, plot = FALSE, breaks = breaks)$counts)
+  ) %>%
+  unnest(counts) %>%
+  mutate(
+    mids = rep(hist_length_control_info$mids, 2),
+    control_counts = rep(hist_length_control_info$counts, times = 2),
+    survival_probability = counts / control_counts
+  ) %>%
+  identity()
+
+p_survival_probability_length <- survival_probability_length %>%
+  filter(survival_probability != 1) %>%
+  ggplot(aes(x = mids, y = survival_probability, color = filamented_id)) +
+  geom_point() +
+  geom_smooth(
+    se = FALSE,
+    size = 0.5,
+    linetype = "dashed"
+  ) +
+  scale_x_continuous() +
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_color_hue(direction = -1, h.start = 90) +
+  labs(
+    x = "Initial length",
+    y = "Survival probability",
+    color = "Cell status"
+  ) +
+  coord_cartesian(
+    xlim = c(FALSE, 120),
+    ylim = c(0, 0.1)
+  )
+
+p_survival_probability_length
+```

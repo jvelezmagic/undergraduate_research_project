@@ -1,0 +1,154 @@
+```{r experiment-01-libraries}
+library(tidyverse)
+library(fs)
+library(janitor)
+library(here)
+```
+
+```{r experiment-01-read-data-not-evaluated, eval=FALSE}
+data_dir <- here("data", "uJ_data")
+
+lineages_raw_df <- data_dir %>%
+  dir_ls(
+    recurse = TRUE,
+    type = "file",
+    glob = "*/data/lineages/*_lineages_all.csv"
+  ) %>%
+  read_csv(id = "path", show_col_types = FALSE) %>%
+  mutate(
+    experimentID = str_extract(
+      string = path,
+      pattern = dir_ls(data_dir) %>%
+        path_file() %>%
+        paste(collapse = "|")
+    ),
+    trapID = str_extract(
+      string = path,
+      pattern = "(xy\\d+)"
+    )
+  ) %>% 
+  select(-path) %>% 
+  relocate(contains("id"))
+
+lineages_raw_df %>% 
+  write_csv(
+    file = here("data", "raw", "lineages.csv")
+  )
+```
+
+```{r experiment-01-read-data-locally}
+data_dir <- here("data", "raw")
+
+lineages_raw_df <- read_csv(
+  file = path(data_dir, "lineages.csv"),
+  show_col_types = FALSE
+)
+```
+
+```{r experiment-01-specify-output-directory}
+out_dir <- here("data", "interim")
+dir_create(out_dir)
+```
+
+```{r experiment-01-simplify}
+lineages_processed_1_df <- lineages_raw_df %>% 
+  clean_names() %>% 
+  mutate(
+    experiment_id = case_when(
+      experiment_id == "MGGT-AMP-Pulse" ~ "Chromosome",
+      TRUE ~ "Plasmid"
+    ),
+    id = paste0(trap_id, "_", lineage_id, "_", track_id),
+    across(contains("id"), as.character)
+  ) %>% 
+  select(
+    experiment_id,
+    id,
+    frame,
+    length,
+    division,
+    gfp,
+    ds_red
+  ) %>% 
+  relocate(where(is.character))
+```
+
+```{r experiment-01-metadata}
+EXPERIMENTS_INFO <- tribble(
+  ~experiment_id, ~time_unit, ~antibiotic_start_time, ~antibiotic_end_time,
+  "Chromosome", 10, 60, 100,
+  "Plasmid", 10, 60, 140
+)
+```
+
+```{r experiment-01-merge-metadata}
+lineages_processed_2_df <- lineages_processed_1_df %>%
+  group_by(experiment_id) %>%
+  mutate(
+    frame = frame - min(frame),
+  ) %>%
+  ungroup() %>%
+  left_join(EXPERIMENTS_INFO, by = "experiment_id") %>%
+  mutate(
+    time = frame * time_unit,
+    division = ifelse(division, TRUE, FALSE),
+  ) %>%
+  select(-frame, -time_unit) %>%
+  relocate(where(is.character), where(is.logical))
+```
+
+```{r experiment-01-create-control-stats-table}
+control_stats_df <- lineages_processed_2_df %>% 
+  filter(time < antibiotic_start_time) %>% 
+  group_by(experiment_id) %>% 
+  summarize(
+    across(
+      .cols = c(length, gfp, ds_red),
+      .fns = list(mean = mean)
+    ),
+    .groups = "drop"
+  )
+```
+
+```{r experiment-01-filamentation-threshold}
+filamentation_threshold <- lineages_processed_2_df %>%
+  filter(time <= antibiotic_start_time) %>%
+  group_by(experiment_id) %>%
+  summarize(
+    filamentation_threshold = quantile(length, 0.95),
+    .groups = "drop"
+  )
+```
+
+```{r experiment-01-dead-threshold}
+dead_threshold <- lineages_processed_2_df %>%
+  filter(time > antibiotic_start_time, time < antibiotic_end_time) %>%
+  group_by(experiment_id) %>%
+  summarize(
+    ds_red_threshold = quantile(ds_red, 0.75, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+```{r experiment-01-merge-stats-and-thresholds}
+lineages_processed_3_df <- lineages_processed_2_df %>%
+  inner_join(
+    y = control_stats_df,
+    by = "experiment_id"
+  ) %>% 
+  inner_join(
+    y = filamentation_threshold,
+    by = "experiment_id"
+  ) %>%
+  inner_join(
+    y = dead_threshold,
+    by = "experiment_id"
+  )
+```
+
+```{r experiment-01-save-data}
+write_csv(
+  x = lineages_processed_3_df,
+  file = path(out_dir, "lineages.csv"),
+)
+```
