@@ -1,34 +1,5 @@
 # Models to the rescue; filamentation abstraction {#model-analysis}
 
-```{r 02-setup, echo=FALSE, message=FALSE}
-library(here)
-
-include_image <- function(url_web, url_latex) {
-  
-  url_file <- ifelse(
-    test = knitr::is_latex_output(),
-    yes = url_latex,
-    no = url_web
-  )
-  
-  linguisticsdown::include_graphics2(path = url_file)
-}
-
-custom_include <- function(url_base, file_name, web_type = ".png", latex_type = ".pdf") {
-  include_image(
-    url_web = paste0(url_base, "figure-html/", file_name, web_type),
-    url_latex = paste0(url_base, "figure-latex/", file_name, latex_type)
-  )
-}
-
-main_url <- "https://raw.githubusercontent.com/jvelezmagic/CellFilamentationAnalysis/main/_bookdown_files/"
-
-include_book_model_image <- purrr::partial(
-  .f = custom_include,
-  url_base = paste0(main_url, "05-jvelezmagic-toy-model-plots_files/")
-)
-```
-
 ```{r model-analysis-files}
 experiment_analysis_files <- fs::dir_ls(
   path = here::here("analysis", "03-model-analysis"),
@@ -67,12 +38,7 @@ Therefore, we hypothesized that this geometric interpretation of filamentation r
 
 (ref:model-01-cell-dimensions-relationship-cap) **Cell dimensions relationship.** We evaluated the resulting geometric properties on a grid of side lengths and radii with a pill-shaped cell. We can see that by maintaining a constant radius (typical case in bacteria such as *E. coli*) and increasing the side length, the surface area / volume relationship ($SA/V$) tends to decline since the $V$ will grow at a higher rate than the $SA$.
 
-```{r model-01-cell-dimensions-relationship, fig.cap='(ref:model-01-cell-dimensions-relationship-cap)', fig.scap='(ref:model-01-cell-dimensions-relationship-scap)'}
-if(knitr::is_html_output()){
-  knitr::include_graphics("https://raw.githubusercontent.com/jvelezmagic/CellFilamentation/main/plots/cell_dimensions_relationship.png")
-} else {
- linguisticsdown::include_graphics2("https://raw.githubusercontent.com/jvelezmagic/CellFilamentation/main/plots/cell_dimensions_relationship.pdf") 
-}
+```{r, model-01-cell-dimensions-relationship, fig.cap='(ref:model-01-cell-dimensions-relationship-cap)', fig.scap='(ref:model-01-cell-dimensions-relationship-scap)'}
 ```
 
 ## Filamentation model
@@ -118,25 +84,20 @@ However, we considered filamentation an active process that produces the first l
 Therefore, a differential equation model was proposed that assesses the change in the amount of internal toxin as a function of cell length.
 At the core of this model, we include the intrinsic relationship between the surface area and the capsule volume since it is vital in determining cell size [@harrisRelativeRatesSurface2016].
 
-In figure \@ref(fig:filamentation-model-ramp-signal), cells grow in a ramp-shaped external toxin signal without considering a toxin-antitoxin system.
+In figure \@ref(fig:model-01-filamentation-model-ramp-signal), cells grow in a ramp-shaped external toxin signal without considering a toxin-antitoxin system.
 As time progresses, the toxin in the external environment increases, so the cell raises its internal toxin levels.
 At approximately time $22$, any cell reaches $T_{sos}$.
 The control cell (unable to filament) and the average cell (capable of filamenting) reach the death threshold, $T_{kill}$, at times $31$ and $93$ (hatched and solid black lines), respectively.
 Therefore, under this example, the cell has increased its life span three times more than in control by growing as a filament (green shaded area versus orange shaded area).
-In turn, figure \@ref(fig:filamentation-model-ramp-signal) also shows stochastic simulations of the system in the intake of internal toxins.
+In turn, figure \@ref(fig:model-01-filamentation-model-ramp-signal) also shows stochastic simulations of the system in the intake of internal toxins.
 Considering that cell growth and death processes are inherently stochastic, stochastic simulations would be a better approximation.
 However, from now on, we will continue with the study of the deterministic model.
 
-(ref:filamentation-model-ramp-signal-scap) Effect of filamentation on intracellular toxin concentration.
+(ref:model-01-filamentation-model-ramp-signal-scap) Effect of filamentation on intracellular toxin concentration.
 
-(ref:filamentation-model-ramp-signal-cap) **Effect of filamentation on intracellular toxin concentration.** In the presence of an extracellular toxic agent, the intracellular concentration of the toxin ($T_{int}$) increases until reaching a damage threshold that triggers filamentation ($T_{sos}$, blue point), increasing cell length ($L$). When filamentation is on, the cell decreases $T_{int}$ due to the intrinsic relationship between surface area and cell volume. When the cell reaches its maximum length, it eventually dies if the stressful stimulus is not removed ($T_{kill}$, red dot). The hatched line represents a cell that can not grow as filament. The orange shaded area is the time between stress and the non-filament cell's death, while the green shaded area represents the temporal gain for doing so. The blue background lines represent stochastic simulations of the same system.
+(ref:model-01-filamentation-model-ramp-signal-cap) **Effect of filamentation on intracellular toxin concentration.** In the presence of an extracellular toxic agent, the intracellular concentration of the toxin ($T_{int}$) increases until reaching a damage threshold that triggers filamentation ($T_{sos}$, blue point), increasing cell length ($L$). When filamentation is on, the cell decreases $T_{int}$ due to the intrinsic relationship between surface area and cell volume. When the cell reaches its maximum length, it eventually dies if the stressful stimulus is not removed ($T_{kill}$, red dot). The hatched line represents a cell that can not grow as filament. The orange shaded area is the time between stress and the non-filament cell's death, while the green shaded area represents the temporal gain for doing so. The blue background lines represent stochastic simulations of the same system.
 
-```{r filamentation-model-ramp-signal, fig.cap='(ref:filamentation-model-ramp-signal-cap)', fig.scap='(ref:filamentation-model-ramp-signal-scap)'}
-if(knitr::is_html_output()){
-  knitr::include_graphics("https://raw.githubusercontent.com/jvelezmagic/CellFilamentation/main/plots/filamentation_model_ramp_signal.png")
-} else {
-  linguisticsdown::include_graphics2("https://github.com/jvelezmagic/CellFilamentation/raw/main/plots/filamentation_model_ramp_signal.pdf") 
-}
+```{r, model-01-filamentation-model-ramp-signal, fig.cap='(ref:model-01-filamentation-model-ramp-signal-cap)', fig.scap='(ref:model-01-filamentation-model-ramp-signal-scap)'}
 ```
 
 ### Filamentation increases the minimum inhibitory concentration
