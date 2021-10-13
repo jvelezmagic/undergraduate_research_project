@@ -14,25 +14,48 @@ experiment_analysis_files <- fs::dir_ls(
 #| include: false
 ```
 
-Scientists have extensively studied the mechanisms that orchestrate the growth and division of bacterial cells.
-Cells adapt their shape and dimensions in response to variations in the intracellular and extracellular environments by integrating information about the presence of nutrients or harmful agents in the decision to grow or divide.
-Filamentation is a process that occurs when rod-shaped cells stop dividing but continue to grow, thus producing elongated cells.
-Some cells can naturally grow as filamentous, while others only do so under stressful conditions [x, x].
-Here we use mathematical modeling and computational simulations to evaluate a toxic agent's intracellular concentration as a function of cell length.
-We show that filamentation can act as a strategy that promotes the resilience of a bacterial population under stressful environmental conditions.
+Scientists have extensively studied the mechanisms that orchestrate
+the growth and division of bacterial cells. Cells adapt their shape and
+dimensions in response to variations in the intracellular and extracellular
+environments by integrating information about the presence of nutrients or
+harmful agents in the decision to grow or divide. Filamentation is a
+process that occurs when rod-shaped cells stop dividing but continue to grow,
+thus producing elongated cells. Some cells can naturally grow as filamentous,
+while others only do so under stressful conditions [x, x].
+Here we use mathematical modeling and computational simulations to evaluate a
+toxic agent's intracellular concentration as a function of cell length.
+We show that filamentation can act as a strategy that promotes the
+resilience of a bacterial population under stressful environmental conditions.
 
 ## Introduction
 
-By integrating information from the environment, cells can alter their cell cycle.
-For instance, some cells arrest the cell division in the presence of toxic agents but continue to grow.
-Previous studies have shown that this filamentation phenomenon provides a mechanism that enables cells to cope with stress, which leads to an increase in the probability of survival [@justiceMorphologicalPlasticityBacterial2008].
-For example, filamentation can be a process capable of subverting innate defenses during urinary tract infection, facilitating the transition of additional rounds of intracellular bacterial community formation [@justiceFilamentationEscherichiaColi2006].
+By integrating information from the environment, cells can alter their
+cell cycle. For instance, some cells arrest the cell division in the
+presence of toxic agents but continue to grow. Previous studies have shown that
+this filamentation phenomenon provides a mechanism that enables cells to cope
+with stress, which leads to an increase in the probability of survival
+[@justiceMorphologicalPlasticityBacterial2008]. For example,
+filamentation can be a process capable of subverting innate defenses during
+urinary tract infection, facilitating the transition of additional rounds of
+intracellular bacterial community formation
+[@justiceFilamentationEscherichiaColi2006].
 
-Although filament growth can help mitigate environmental stress (e.g., by activating the SOS response system [@justiceMorphologicalPlasticityBacterial2008]), the evolutionary benefits of producing elongated cells that do not divide are unclear.
-Here, we proposed a mathematical model based on ordinary differential equations that explicitly considers the concentration of intracellular toxin as a function of the cell's length (see Equation \@ref(eq:model-equation)).
-The model is built based on the growth ratio of measurements of the surface area ($SA$) and the cell volume ($V$), whereby the uptake rate of the toxin depends on the $SA$.
-However, $V's$ rate of change for $SA$ is higher than $SA$ for $V$, which results in a transient reduction in the intracellular toxin concentration (see Figure \@ref(fig:model-01-cell-dimensions-relationship)).
-Therefore, we hypothesized that this geometric interpretation of filamentation represents a biophysical defense line to increase the probability of a bacterial population's survival in response to stressful environments.
+Although filament growth can help mitigate environmental stress
+(e.g., by activating the SOS response system
+[@justiceMorphologicalPlasticityBacterial2008]), the evolutionary
+benefits of producing elongated cells that do not divide are unclear.
+Here, we proposed a mathematical model based on ordinary differential
+equations that explicitly considers the concentration of intracellular
+toxin as a function of the cell's length 
+(see Equation \@ref(eq:model-equation)). The model is built based on the
+growth ratio of measurements of the surface area ($SA$) and the cell volume
+($V$), whereby the uptake rate of the toxin depends on the $SA$.
+However, $V's$ rate of change for $SA$ is higher than $SA$ for $V$,
+which results in a transient reduction in the intracellular toxin
+concentration (see Figure \@ref(fig:model-01-cell-dimensions-relationship)).
+Therefore, we hypothesized that this geometric interpretation of filamentation
+represents a biophysical defense line to increase the probability
+of a bacterial population's survival in response to stressful environments.
 
 (ref:model-01-cell-dimensions-relationship-scap) Cell dimensions relationship.
 
@@ -44,7 +67,8 @@ Therefore, we hypothesized that this geometric interpretation of filamentation r
 ## Filamentation model
 
 Let us assume the shape of cells is a cylinder with hemispherical ends.
-Based on this geometric structure, a nonlinear system of differential equations governing filamentation can be written as follows:
+Based on this geometric structure, a nonlinear system of differential
+equations governing filamentation can be written as follows:
 
 ```{=tex}
 \begin{equation}
@@ -60,38 +84,57 @@ Based on this geometric structure, a nonlinear system of differential equations 
 \end{equation}
 ```
 
-It considers the internal toxin ($T_{int}$) and the cell length ($L$) as variables.
-$T_{sa}$ and $T_{vol}$ represent the surface area and volume of the toxin in the cell, respectively.
-$T_{ext}(t)$ is a function that returns the amount of toxin in the cell medium.
-$T_{anti}$ and $\alpha$ symbolize the amount of antitoxin and its efficiency rate, respectively.
-$\beta$ as the rate of filamentation.
-$L_{max}$ is the maximum size that the cell can reach when filamentation is on.
-$T_{sos}$ and $T_{kill}$ are thresholds for filamentation and death, respectively.
-Finally, $\tau_{delay}$ is the amount of time required to activate filamentation after reaching the $T_{sos}$ threshold.
+It considers the internal toxin ($T_{int}$) and the cell length ($L$) as
+variables. $T_{sa}$ and $T_{vol}$ represent the surface area and volume
+of the toxin in the cell, respectively. $T_{ext}(t)$ is a function that
+returns the amount of toxin in the cell medium. $T_{anti}$ and $\alpha$ 
+symbolize the amount of antitoxin and its efficiency rate, respectively.
+$\beta$ as the rate of filamentation. $L_{max}$ is the maximum size that
+the cell can reach when filamentation is on. $T_{sos}$ and $T_{kill}$ are
+thresholds for filamentation and death, respectively. Finally,
+$\tau_{delay}$ is the amount of time required to activate filamentation
+after reaching the $T_{sos}$ threshold.
 
 ## Numerical results
 
 ### Filamentation provides transient resistance to stressful conditions
 
-When growing rod-shaped bacterial cells under constant conditions, the distribution of lengths and radii is narrow [@schaechterGrowthCellNuclear1962].
-However, when growing under stress conditions, some cells produce filaments [@schaechterDependencyMediumTemperature1958].
-This phenomenon may depend on the SOS response system [@bosEmergenceAntibioticResistance2015], which can repair DNA damage, giving the cell greater chances of recovering and surviving under stress conditions.
-Besides, the SOS response has been reported to have precise temporal coordination in individual bacteria [@friedmanPreciseTemporalModulation2005].
-Among the stress conditions that can trigger the SOS response is exposure to beta-lactam antibiotics [@millerSOSResponseInduction2004].
+When growing rod-shaped bacterial cells under constant conditions, the
+distribution of lengths and radii is narrow [@schaechterGrowthCellNuclear1962].
+However, when growing under stress conditions, some cells produce filaments
+[@schaechterDependencyMediumTemperature1958]. This phenomenon may depend
+on the SOS response system [@bosEmergenceAntibioticResistance2015],
+which can repair DNA damage, giving the cell greater chances of recovering
+and surviving under stress conditions. Besides, the SOS response has been
+reported to have precise temporal coordination in individual bacteria
+[@friedmanPreciseTemporalModulation2005]. Among the stress conditions that
+can trigger the SOS response is exposure to beta-lactam antibiotics
+[@millerSOSResponseInduction2004].
 
-In general, filamentation has been studied as an unavoidable consequence of stress.
-However, we considered filamentation an active process that produces the first line of defense against toxic agents.
-Therefore, a differential equation model was proposed that assesses the change in the amount of internal toxin as a function of cell length.
-At the core of this model, we include the intrinsic relationship between the surface area and the capsule volume since it is vital in determining cell size [@harrisRelativeRatesSurface2016].
+In general, filamentation has been studied as an unavoidable consequence
+of stress. However, we considered filamentation an active process that
+produces the first line of defense against toxic agents. Therefore, a
+differential equation model was proposed that assesses the change in
+the amount of internal toxin as a function of cell length. At the core of
+this model, we include the intrinsic relationship between the surface area
+and the capsule volume since it is vital in determining cell size
+[@harrisRelativeRatesSurface2016].
 
-In figure \@ref(fig:model-01-filamentation-model-ramp-signal), cells grow in a ramp-shaped external toxin signal without considering a toxin-antitoxin system.
-As time progresses, the toxin in the external environment increases, so the cell raises its internal toxin levels.
-At approximately time $22$, any cell reaches $T_{sos}$.
-The control cell (unable to filament) and the average cell (capable of filamenting) reach the death threshold, $T_{kill}$, at times $31$ and $93$ (hatched and solid black lines), respectively.
-Therefore, under this example, the cell has increased its life span three times more than in control by growing as a filament (green shaded area versus orange shaded area).
-In turn, figure \@ref(fig:model-01-filamentation-model-ramp-signal) also shows stochastic simulations of the system in the intake of internal toxins.
-Considering that cell growth and death processes are inherently stochastic, stochastic simulations would be a better approximation.
-However, from now on, we will continue with the study of the deterministic model.
+In figure \@ref(fig:model-01-filamentation-model-ramp-signal), cells grow
+in a ramp-shaped external toxin signal without considering a toxin-antitoxin
+system.As time progresses, the toxin in the external environment increases,
+so the cell raises its internal toxin levels. At approximately time
+$22$, any cell reaches $T_{sos}$. The control cell (unable to filament)
+and the average cell (capable of filamenting) reach the death threshold,
+$T_{kill}$, at times $31$ and $93$ (hatched and solid black lines),
+respectively. Therefore, under this example, the cell has increased its
+life span three times more than in control by growing as a filament
+(green shaded area versus orange shaded area). In turn, figure
+\@ref(fig:model-01-filamentation-model-ramp-signal) also shows stochastic
+simulations of the system in the intake of internal toxins.
+Considering that cell growth and death processes are inherently stochastic,
+stochastic simulations would be a better approximation. However, from
+now on, we will continue with the study of the deterministic model.
 
 (ref:model-01-filamentation-model-ramp-signal-scap) Effect of filamentation on intracellular toxin concentration.
 
@@ -102,24 +145,38 @@ However, from now on, we will continue with the study of the deterministic model
 
 ### Filamentation increases the minimum inhibitory concentration
 
-Antimicrobial resistance (AMR) can be considered one of the most critical health problems of the century.
-That is, microorganisms' ability to grow despite exposure to substances designed to inhibit their growth or kill them.
-In April 2014, the World Health Organization (WHO) published its first global report on AMR surveillance [@EditorialBoard2014].
-Taking out of the darkness a common fear, a possible post-antibiotic future in which common infections or minor injuries can kill.
-Therefore, understanding the mechanisms of avoiding antibiotic action is essential for producing knowledge and developing strategies that reduce the generation of resistant bacteria.
+Antimicrobial resistance (AMR) can be considered one of the most
+critical health problems of the century. That is, microorganisms'
+ability to grow despite exposure to substances designed to inhibit 
+their growth or kill them. In April 2014, the World Health
+Organization (WHO) published its first global report on AMR surveillance
+[@EditorialBoard2014]. Taking out of the darkness a common fear, a possible
+post-antibiotic future in which common infections or minor injuries can kill.
+Therefore, understanding the mechanisms of avoiding antibiotic action is
+essential for producing knowledge and developing strategies that reduce the
+generation of resistant bacteria.
 
-In other to characterize the degree of resistance, dose-response experiments determine the Minimum Inhibitory Concentration (MIC) [@andrewsDeterminationMinimumInhibitory2002].
-Bacteria are capable of modifying their MIC through various mechanisms, for example, mutations [@lambertBacterialResistanceAntibiotics2005], impaired membrane permeability [@satoOuterMembranePermeability1991], flux pumps [@webberImportanceEffluxPumps2003], toxin-inactivating enzymes [@wrightBacterialResistanceAntibiotics2005], and plasticity phenotypic [@justiceMorphologicalPlasticityBacterial2008].
-The latter is our phenomenon of interest because it considers the change in shape and size, allowing us to study it as a strategy to promote bacterial survival.
+In other to characterize the degree of resistance, dose-response
+experiments determine the Minimum Inhibitory Concentration (MIC)
+[@andrewsDeterminationMinimumInhibitory2002]. Bacteria are capable of 
+modifying their MIC through various mechanisms, for example, mutations
+[@lambertBacterialResistanceAntibiotics2005], impaired membrane permeability
+[@satoOuterMembranePermeability1991], flux pumps
+[@webberImportanceEffluxPumps2003], toxin-inactivating enzymes
+[@wrightBacterialResistanceAntibiotics2005], and plasticity phenotypic
+[@justiceMorphologicalPlasticityBacterial2008].
+The latter is our phenomenon of interest because it considers the
+change in shape and size, allowing us to study it as a strategy to
+promote bacterial survival.
 
-We decided to analyze the MIC change caused by filamentation through stable exposure experiments of different toxin amounts at other exposure times.
-Computational simulations show that when comparing cells unable to filament with those that can, there is an increase in the capacity to tolerate more generous amounts of toxin, increasing their MIC (see Figure \@ref(fig:model-02-toxin-exposure-experiment)).
-Therefore, it confers a gradual increase in resistance beyond filamentation's role in improving the cell's life span as the exposure time is longer.
-
-```{r include=FALSE, echo=FALSE}
-increased_time_resistance_scap <- "Effect of filamentation on minimum inhibitory concentration (MIC)."
-increased_time_resistance_cap <- paste0("**", increased_time_resistance_scap, "**", " ", "By exposing a cell to different toxin concentrations with stable signals, the cell achieves a set MIC for conditions without or with filamentation (separation between stressed and dead state) for each exposure time, without representing a change for the normal state cells' points (blue zone). Thus, the green line represents a gradual MIC increase when comparing each MIC between conditions for each exposure time.")
-```
+We decided to analyze the MIC change caused by filamentation through
+stable exposure experiments of different toxin amounts at other
+exposure times. Computational simulations show that when comparing
+cells unable to filament with those that can, there is an increase in the
+capacity to tolerate more generous amounts of toxin, increasing their
+MIC (see Figure \@ref(fig:model-02-toxin-exposure-experiment)).
+Therefore, it confers a gradual increase in resistance beyond filamentation's
+role in improving the cell's life span as the exposure time is longer.
 
 (ref:model-02-toxin-exposure-experiment-scap) Effect of filamentation on minimum inhibitory concentration (MIC).
 
@@ -130,19 +187,34 @@ increased_time_resistance_cap <- paste0("**", increased_time_resistance_scap, "*
 
 ### Heterogeneity in the toxin-antitoxin system represents a double-edged sword in survival probability
 
-One of the SOS response system properties is that it presents synchronous activation times within homogeneous populations [@friedmanPreciseTemporalModulation2005].
-It has constant gene expression rates that help it cope with stress; however, it is possible to introduce variability by considering having multicopy resistance plasmids [@million-weaverMechanismsPlasmidSegregation2014].
-Therefore, the response times would have an asynchronous behavior at the global level but synchronous at the local level.
+One of the SOS response system properties is that it presents synchronous
+activation times within homogeneous populations
+[@friedmanPreciseTemporalModulation2005].
+It has constant gene expression rates that help it cope with stress;
+however, it is possible to introduce variability by considering having
+multicopy resistance plasmids
+[@million-weaverMechanismsPlasmidSegregation2014].
+Therefore, the response times would have an asynchronous
+behavior at the global level but synchronous at the local level.
 
-To include this observation into the model, we include a negative term to the internal toxin representing a toxin-antitoxin system.
-Therefore, the model now has an efficiency rate of the antitoxin and a stable amount per cell.
-We simulate the effect of the toxin-antitoxin system variation within a $1000$-cell population; we initialize each one with similar initial conditions, except for the amount of internal antitoxin, defined as $T_{anti} \sim N(\mu, \sigma)$.
+To include this observation into the model, we include a negative
+term to the internal toxin representing a toxin-antitoxin system.
+Therefore, the model now has an efficiency rate of the antitoxin 
+and a stable amount per cell. We simulate the effect of the
+toxin-antitoxin system variation within a $1000$-cell population;
+we initialize each one with similar initial conditions, except for
+the amount of internal antitoxin, defined as $T_{anti} \sim N(\mu, \sigma)$.
 Considering that $T_{anti}$ values $< 0$ are equal to $0$.
 For each experiment, $\mu = 25$, while it was evaluated in the range $[0-20]$.
-For the generation of pseudo-random numbers and to ensure the results' reproducibility, the number $42$ was considered seed.
+For the generation of pseudo-random numbers and to ensure the results'
+reproducibility, the number $42$ was considered seed.
 
-As shown in Figure \@ref(fig:model-02-antitoxin-experiment), when we compare heterogeneous populations in their toxin-antitoxin system, we can achieve different population dynamics, that is, changes in the final proportions of cell states; normal, stressed, and dead.
-This difference is because the cell sometimes has more or less antitoxin to handle the incoming stress situation.
+As shown in Figure \@ref(fig:model-02-antitoxin-experiment),
+when we compare heterogeneous populations in their toxin-antitoxin system,
+we can achieve different population dynamics, that is, changes in the final
+proportions of cell states; normal, stressed, and dead.
+This difference is because the cell sometimes has more or less antitoxin to
+handle the incoming stress situation.
 
 (ref:model-02-antitoxin-experiment-scap) Variability in the toxin-antitoxin system produces different proportions of cell states.
 
@@ -151,11 +223,19 @@ This difference is because the cell sometimes has more or less antitoxin to hand
 ```{r, model-02-antitoxin-experiment, fig.cap='(ref:model-02-antitoxin-experiment-cap)', fig.scap='(ref:model-02-antitoxin-experiment-scap)'}
 ```
 
-Considering that the toxin-antitoxin system's variability can modify the proportions of final cell states, a question arose about heterogeneity levels' global behavior.
-To answer this question, we evaluate the probability of survival for each population, defined by its distribution of antitoxin levels.
-In this way, we characterized the population survival probability function into three essential points according to its effect: negative, invariant, and positive (see Figure \@ref(fig:model-02-survival-probability)).
-Furthermore, these points are relative to the homogeneous population's death time in question ($\tau_{kill}$): when $t < \tau_{kill}$ will represent a detrimental effect on survival, $t = \tau_{kill}$ will be independent of variability, and $t > \tau_{kill}$ will be a beneficial point for survival.
-Therefore, we concluded that the effect of heterogeneity in a toxin-antitoxin system represents a double-edged sword.
+Considering that the toxin-antitoxin system's variability can modify the
+proportions of final cell states, a question arose about heterogeneity levels'
+global behavior. To answer this question, we evaluate the probability of
+survival for each population, defined by its distribution of antitoxin
+levels. In this way, we characterized the population survival probability
+function into three essential points according to its effect: negative,
+invariant, and positive (see Figure \@ref(fig:model-02-survival-probability)).
+Furthermore, these points are relative to the homogeneous population's 
+death time in question ($\tau_{kill}$): when $t < \tau_{kill}$ will represent
+a detrimental effect on survival, $t = \tau_{kill}$ will be independent of
+variability, and $t > \tau_{kill}$ will be a beneficial point for survival.
+Therefore, we concluded that the effect of heterogeneity in a toxin-antitoxin
+system represents a double-edged sword.
 
 (ref:model-02-survival-probability-scap) Effect of variability on the toxin-antitoxin system.
 
@@ -166,15 +246,36 @@ Therefore, we concluded that the effect of heterogeneity in a toxin-antitoxin sy
 
 ## Benefits and limitations of the model
 
-Today, there have been advancements in the number of techniques that have allowed it to extend quantitative analyses to individual cells' dynamic observations [@camposConstantSizeExtension2014; @meldrumFacultyOpinionsRecommendation2005; @sliusarenkoHighthroughputSubpixelPrecision2011; @taheri-araghiCellSizeControlHomeostasis2017; @ursellRapidPreciseQuantification2017].
-Therefore, studying their cellular behavior every day from medium to medium can be somewhat reproducible, facilitating the association of complex biological functions in simple mathematical equations [@neidhardtBacterialGrowthConstant1999].
+Today, there have been advancements in the number of techniques that have
+allowed it to extend quantitative analyses to individual cells' dynamic
+observations [@camposConstantSizeExtension2014;
+@meldrumFacultyOpinionsRecommendation2005;
+@sliusarenkoHighthroughputSubpixelPrecision2011;
+@taheri-araghiCellSizeControlHomeostasis2017;
+@ursellRapidPreciseQuantification2017].
+Therefore, studying their cellular behavior every day from medium to
+medium can be somewhat reproducible, facilitating the association of
+complex biological functions in simple mathematical equations
+[@neidhardtBacterialGrowthConstant1999].
 
-Here, we proposed a mathematical model showing that filamentation could serve as a population's resilience mechanism to stress conditions.
-Finding that filamentation's net effect generates an additional window of time for the cell to survive, decreasing the toxin's intracellular concentration.
-However, we also found that a side effect of filamentation is to increase the cell's minimum inhibitory concentration.
-On the other hand, when we introduce variability in the amount of antitoxin in a cell population, we found that heterogeneity can be a double-edged sword, sometimes detrimental and sometimes beneficial, depending on the time of exposure to the toxic agent.
+Here, we proposed a mathematical model showing that filamentation could
+serve as a population's resilience mechanism to stress conditions.
+Finding that filamentation's net effect generates an additional window
+of time for the cell to survive, decreasing the toxin's intracellular
+concentration. However, we also found that a side effect of filamentation
+is to increase the cell's minimum inhibitory concentration.
+On the other hand, when we introduce variability in the amount of
+antitoxin in a cell population, we found that heterogeneity can be a
+double-edged sword, sometimes detrimental and sometimes beneficial,
+depending on the time of exposure to the toxic agent.
 
-Due to the above, despite being simple, the model could have the ability to recapitulate the behavior seen in nature from variables that we can calculate easily with single-cell measurements.
-However, in other situations, it could be helpful to consider the addition of variables such as cell wall production and peptidoglycans' accumulation, among others.
-Notwithstanding the lack of parameters that are a little closer to reality, confirming that the model can work under experimental conditions would represent an achievement due to its explanatory simplicity, starting, in this way, the path of the study of filamentation oriented to the ecology of stress.
-
+Due to the above, despite being simple, the model could have the ability
+to recapitulate the behavior seen in nature from variables that we can
+calculate easily with single-cell measurements. However, in other 
+situations, it could be helpful to consider the addition of variables
+such as cell wall production and peptidoglycans' accumulation, among
+others. Notwithstanding the lack of parameters that are a little
+closer to reality, confirming that the model can work under experimental
+conditions would represent an achievement due to its explanatory simplicity,
+starting, in this way, the path of the study of filamentation oriented to the
+ecology of stress.
