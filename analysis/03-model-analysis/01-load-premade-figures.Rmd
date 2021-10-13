@@ -2,35 +2,9 @@
 library(here)
 ```
 
-```{r model-01-utility-functions}
-include_image <- function(url_web, url_latex) {
-  url_file <- ifelse(
-    test = knitr::is_latex_output(),
-    yes = url_latex,
-    no = url_web
-  )
-
-  linguisticsdown::include_graphics2(path = url_file)
-}
-
-custom_include <- function(url_base, file_name, web_type = ".png", latex_type = ".pdf") {
-  include_image(
-    url_web = paste0(url_base, "figure-html/", file_name, web_type),
-    url_latex = paste0(url_base, "figure-latex/", file_name, latex_type)
-  )
-}
-
-main_url <- "https://raw.githubusercontent.com/jvelezmagic/CellFilamentationAnalysis/main/_bookdown_files/"
-
-include_book_model_image <- purrr::partial(
-  .f = custom_include,
-  url_base = paste0(main_url, "05-jvelezmagic-toy-model-plots_files/")
-)
-```
-
 ```{r model-01-cell-dimensions-relationship}
 if (knitr::is_html_output()) {
-  knitr::include_graphics("https://raw.githubusercontent.com/jvelezmagic/CellFilamentation/main/plots/cell_dimensions_relationship.png")
+  knitr::include_graphics("https://raw.githubusercontent.com/jvelezmagic/CellFilamentation/main/plots/cell_dimensions_relationship.svg")
 } else {
   linguisticsdown::include_graphics2("https://raw.githubusercontent.com/jvelezmagic/CellFilamentation/main/plots/cell_dimensions_relationship.pdf")
 }
@@ -38,7 +12,7 @@ if (knitr::is_html_output()) {
 
 ```{r model-01-filamentation-model-ramp-signal}
 if(knitr::is_html_output()){
-  knitr::include_graphics("https://raw.githubusercontent.com/jvelezmagic/CellFilamentation/main/plots/filamentation_model_ramp_signal.png")
+  knitr::include_graphics("https://raw.githubusercontent.com/jvelezmagic/CellFilamentation/main/plots/filamentation_model_ramp_signal.svg")
 } else {
   linguisticsdown::include_graphics2("https://github.com/jvelezmagic/CellFilamentation/raw/main/plots/filamentation_model_ramp_signal.pdf") 
 }
