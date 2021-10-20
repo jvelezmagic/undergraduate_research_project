@@ -1524,7 +1524,7 @@
 \newcommand\contentsname{Contents}
 \newcommand\listfigurename{List of Figures}
 \newcommand\listtablename{List of Tables}
-\newcommand\bibname{Bibliography}
+\newcommand\bibname{References}
 \newcommand\figurename{Figure}
 \newcommand\tablename{Table}
 \newcommand\partname{Part}
