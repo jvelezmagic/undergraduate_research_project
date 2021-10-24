@@ -16,4 +16,5 @@ StripTrailingWhitespace: Yes
 
 BuildType: Website
 
-MarkdownWrap: None
+MarkdownWrap: Column
+MarkdownWrapAtColumn: 72

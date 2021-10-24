@@ -15,7 +15,7 @@ biblio-style: apalike
 csl: chicago-fullnote-bibliography.csl
 link-citations: true
 colorlinks: true
-lot: false
+lot: true
 lof: true
 fontsize: 12pt
 classoption: oneside
