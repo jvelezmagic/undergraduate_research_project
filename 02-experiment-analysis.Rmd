@@ -16,35 +16,38 @@ experiment_analysis_files <- fs::dir_ls(
 
 ## Introduction
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non
-condimentum leo, a consectetur eros. Integer porta dui iaculis,
-efficitur odio id, finibus tortor. Vivamus eu ipsum metus. Pellentesque
-tristique dapibus ipsum. Sed eu consequat ligula, ut porttitor felis.
-Phasellus luctus lacus faucibus condimentum porta. Suspendisse consequat
-fringilla sodales. Aliquam ornare non ligula quis mollis. Nunc sed
-interdum mi. Curabitur vel massa lorem.
+The previous chapter (see Chapter \@ref(image-processing)) detailed the
+steps necessary to extract data from a set of microfluidic images
+through image analysis techniques and fluorescence microscopy. Each step
+was instrumental in creating a dataset that was easy to explore and ask
+questions. With the help of computational biology, systems biology, and
+data analysis techniques, we could process these files to help us in the
+search to find the role of filamentation in cell survival.
 
-Integer id risus quis enim eleifend efficitur. Aliquam tincidunt
-tincidunt justo, sagittis viverra leo finibus sit amet. Suspendisse
-neque nisi, vestibulum sed tellus quis, aliquet sollicitudin nisi. Duis
-ultrices, magna ac fringilla ultrices, ex nisi rhoncus dui, sed
-facilisis leo augue in justo. Phasellus fringilla vitae enim nec
-pharetra. Aliquam nunc enim, aliquet et ullamcorper sit amet, hendrerit
-nec erat. Suspendisse quam leo, vulputate vitae leo nec, venenatis
-pretium lectus. Fusce ante nisi, laoreet nec gravida sed, tincidunt a
-massa. Proin viverra ultricies nibh, non ultrices nunc ultricies vitae.
-Pellentesque dui nisi, dapibus id enim vel, mattis hendrerit ligula. Sed
-eu augue augue. Donec est ligula, fringilla vel lacus nec, vulputate
-mollis nibh.
+Both the ideas and concepts of computational biology and systems biology
+contributed to the development of this analysis. In principle,
+computational biology originated after the origin of computer science
+with the British mathematician and logistician Alan Turing (regularly
+known as the father of computing) [@turing1950]. Over time, systems
+biology emerged as an area that synergistically combines models and
+experimental data to understand biological processes [@bruggeman]. Thus,
+giving a step towards creating models that, in general, are
+phenomenological but that sometimes serve to discover new ideas about
+the process under study. Ideas and aspects of the study of biological
+sciences that otherwise could be unthinkable without the computer's
+power.
 
-Aliquam erat volutpat. Nunc orci augue, porttitor eget viverra a,
-posuere eu massa. Curabitur turpis sem, molestie vitae maximus id,
-varius sed quam. Orci varius natoque penatibus et magnis dis parturient
-montes, nascetur ridiculus mus. In in dui felis. Aenean malesuada
-accumsan erat, vel pulvinar lorem lobortis et. Vivamus dictum enim
-neque, sit amet aliquet quam varius non. Curabitur in dui ligula. In et
-magna in magna vulputate facilisis. Vivamus imperdiet mattis enim
-vehicula tristique.
+Here, we divide the experimental analysis into two main parts: 1) at the
+cell level or measurements at specific points in time and 2) at the
+population level and time series. The first level allowed us to identify
+the individual contribution of each variable understudy to determine
+cell survival. The second level allowed us to understand how the
+population behaves according to the passage of time in the face of
+exposure to a harmful agent (in this case, beta-lactam antibiotics).
+Together, both visions of the same study phenomenon allowed us to
+extract the main ideas for postulating a mathematical model that seeks
+to show how filamentation is a factor for cell survival in stressful
+environments (see Chapter \@ref(model-analysis)).
 
 ## General preprocessing of data {#experiment-general-preprocessing}
 
@@ -79,18 +82,9 @@ observation. Therefore, a *surviving cell* is defined as a cell observed
 before and after exposure to the antibiotic and does not surpass the
 Ds-Red threshold.
 
-(ref:experiment-03-cell-distribution-across-experiments-scap) Cell
-classification and its distribution across experiments.
+(ref:experiment-03-cell-distribution-across-experiments-scap) Cell classification and its distribution across experiments.
 
-(ref:experiment-03-cell-distribution-across-experiments-cap) **Cell
-classification and its distribution across experiments.** We define a
-*filamented cell* as a cell whose length exceeded two standard
-deviations from the mean at any time during the experiment. A *surviving
-cell* is a cell that was observed before and after exposure to the
-antibiotic. Accordingly, we removed from the analysis those cells that
-died before or were born after the exposure of the experiment.
-Therefore, we delimited the effect caused by the exposure to the
-antibiotic.
+(ref:experiment-03-cell-distribution-across-experiments-cap) **Cell classification and its distribution across experiments.** We define a *filamented cell* as a cell whose length exceeded two standard deviations from the mean at any time during the experiment. A *surviving cell* is a cell that was observed before and after exposure to the antibiotic. Accordingly, we removed from the analysis those cells that died before or were born after the exposure of the experiment. Therefore, we delimited the effect caused by the exposure to the antibiotic.
 
 ```{r, experiment-03-cell-distribution-across-experiments, fig.cap='(ref:experiment-03-cell-distribution-across-experiments-cap)', fig.scap='(ref:experiment-03-cell-distribution-across-experiments-scap)'}
 ```
@@ -122,25 +116,9 @@ the antibiotic by the end time. In contrast, dead cells presented higher
 levels of antibiotics (measured by proxy through the mean Ds-Red
 intensity of the cell).
 
-(ref:experiment-03-dsred-temporal-distribution-scap) Ds-Red temporal
-distribution.
+(ref:experiment-03-dsred-temporal-distribution-scap) Ds-Red temporal distribution.
 
-(ref:experiment-03-dsred-temporal-distribution-cap) **Ds-Red temporal
-distribution.** To evaluate the incident effect of the antibiotic marked
-by Ds-Red on cells by class, we show its values at three key moments:
-start, filamentation (SOS), and end. The upper asterisks represent the
-significance value when comparing a group X to the filamented and
-surviving cell reference. Asterisks in a line indicate whether or not
-there is a significant difference in the survival of non-filamented
-cells. The black dots represent the mean of each group, and the lines
-that join them are a comparative guide. The extent of the black bars
-represents the distribution of the data. Although, at the initial time,
-we observe multiple significant differences, this is likely due to the
-intrinsic noise of the system since, as expected, the values are close
-to zero. We observed a difference between the surviving and
-non-filamented cells for the chromosomal strain for the SOS time, but
-the same did not occur for the plasmid strain. The final amount of
-Ds-Red makes a clear difference between survival and death.
+(ref:experiment-03-dsred-temporal-distribution-cap) **Ds-Red temporal distribution.** To evaluate the incident effect of the antibiotic marked by Ds-Red on cells by class, we show its values at three key moments: start, filamentation (SOS), and end. The upper asterisks represent the significance value when comparing a group X to the filamented and surviving cell reference. Asterisks in a line indicate whether or not there is a significant difference in the survival of non-filamented cells. The black dots represent the mean of each group, and the lines that join them are a comparative guide. The extent of the black bars represents the distribution of the data. Although, at the initial time, we observe multiple significant differences, this is likely due to the intrinsic noise of the system since, as expected, the values are close to zero. We observed a difference between the surviving and non-filamented cells for the chromosomal strain for the SOS time, but the same did not occur for the plasmid strain. The final amount of Ds-Red makes a clear difference between survival and death.
 
 ```{r experiment-03-dsred-temporal-distribution, fig.cap='(ref:experiment-03-dsred-temporal-distribution-cap)', fig.scap='(ref:experiment-03-dsred-temporal-distribution-scap)'}
 ```
@@ -158,20 +136,9 @@ filamented cells, whether surviving or dead, their GFP measurements
 indicated no difference at the beginning or the end of the experiment,
 suggesting the presence of other determinants of cell survival.
 
-(ref:experiment-03-gfp-temporal-distribution-scap) GFP temporal
-distribution.
+(ref:experiment-03-gfp-temporal-distribution-scap) GFP temporal distribution.
 
-(ref:experiment-03-gfp-temporal-distribution-cap) **GFP temporal
-distribution.** To evaluate the incident effect of the GFP on cells by
-class, we used the same notation as in Figure
-\@ref(fig:experiment-03-dsred-temporal-distribution). The chromosomal
-strain exhibits variability in GFP at different time points, mainly due
-to experimental noise resulting from low fluorescent intensity values.
-As expected, in the plasmid strain, filamented cells had a lower initial
-GFP. At the time of filamentation, there appear to be differences in
-fluorescence between surviving and dead cells. However, in the end time,
-we observed that the surviving non-filamented cells have lower GFP
-values than the non-filamented dead cells and alive filamented cells.
+(ref:experiment-03-gfp-temporal-distribution-cap) **GFP temporal distribution.** To evaluate the incident effect of the GFP on cells by class, we used the same notation as in Figure \@ref(fig:experiment-03-dsred-temporal-distribution). The chromosomal strain exhibits variability in GFP at different time points, mainly due to experimental noise resulting from low fluorescent intensity values. As expected, in the plasmid strain, filamented cells had a lower initial GFP. At the time of filamentation, there appear to be differences in fluorescence between surviving and dead cells. However, in the end time, we observed that the surviving non-filamented cells have lower GFP values than the non-filamented dead cells and alive filamented cells.
 
 ```{r experiment-03-gfp-temporal-distribution, fig.cap='(ref:experiment-03-gfp-temporal-distribution-cap)', fig.scap='(ref:experiment-03-gfp-temporal-distribution-scap)'}
 ```
@@ -194,24 +161,9 @@ counterpart. Which we could explain as a length limit to which cells can
 grow without dying. Nevertheless, we had no information to evaluate such
 a hypothesis.
 
-(ref:experiment-03-length-temporal-distribution-scap) Length temporal
-distribution.
+(ref:experiment-03-length-temporal-distribution-scap) Length temporal distribution.
 
-(ref:experiment-03-length-temporal-distribution-cap) **Length temporal
-distribution.** To evaluate the incident effect of length on cells by
-class, we use the same notation as in Figure
-\@ref(fig:experiment-03-dsred-temporal-distribution). The observations
-for both strains, chromosomal or plasmid, are the same. In the
-beginning, the surviving filamented cells already have a difference in
-length concerning the rest of the classes. At the time of filamentation,
-there is no difference to help determine whether the cell will survive
-or not. Finally, in the final time, it seems that the surviving
-filamented cells have a greater length than the rest of the groups.
-However, this length is moderate compared to the excess length shown by
-non-surviving filamented cells. On the other hand, we highlighted the
-growth of the surviving non-filamented cells. Therefore, although they
-did not reach a length for us to classify as filamented, the cells did
-resort to filamentation.
+(ref:experiment-03-length-temporal-distribution-cap) **Length temporal distribution.** To evaluate the incident effect of length on cells by class, we use the same notation as in Figure \@ref(fig:experiment-03-dsred-temporal-distribution). The observations for both strains, chromosomal or plasmid, are the same. In the beginning, the surviving filamented cells already have a difference in length concerning the rest of the classes. At the time of filamentation, there is no difference to help determine whether the cell will survive or not. Finally, in the final time, it seems that the surviving filamented cells have a greater length than the rest of the groups. However, this length is moderate compared to the excess length shown by non-surviving filamented cells. On the other hand, we highlighted the growth of the surviving non-filamented cells. Therefore, although they did not reach a length for us to classify as filamented, the cells did resort to filamentation.
 
 ```{r experiment-03-length-temporal-distribution, fig.cap='(ref:experiment-03-length-temporal-distribution-cap)', fig.scap='(ref:experiment-03-length-temporal-distribution-scap)'}
 ```
@@ -242,14 +194,7 @@ in cell survival.
 
 (ref:experiment-03-just-initial-values-scap) Experiment initial values.
 
-(ref:experiment-03-just-initial-values-cap) **Experiment initial
-values.** By positioning a cell in space based on its initial length and
-GFP values, we can see that class separation occurs, but not as a strong
-signal. Therefore, we concluded that although the initial state
-influences the result, this is not everything. For this, we have the
-example of the length changes throughout the experiment caused by
-filamentation. In this graph, the GFP scale is at log10 to help us
-observe those minor differences between the experiments.
+(ref:experiment-03-just-initial-values-cap) **Experiment initial values.** By positioning a cell in space based on its initial length and GFP values, we can see that class separation occurs, but not as a strong signal. Therefore, we concluded that although the initial state influences the result, this is not everything. For this, we have the example of the length changes throughout the experiment caused by filamentation. In this graph, the GFP scale is at log10 to help us observe those minor differences between the experiments.
 
 ```{r, experiment-03-just-initial-values, fig.cap='(ref:experiment-03-just-initial-values-cap)', fig.scap='(ref:experiment-03-just-initial-values-scap)'}
 ```
@@ -257,15 +202,7 @@ observe those minor differences between the experiments.
 (ref:experiment-03-metric-differences-scap) Experiment initial values
 differences.
 
-(ref:experiment-03-metric-differences-cap) **Experiment initial values
-differences.** By comparing the metric differences of the last
-observation and the first observation of a cell, we can separate mainly
-the surviving filamented cells from those that did not do it in both
-experiments (green dots). Meanwhile, cells with plasmids form a small
-accumulation of surviving cells that did not produce filament (purple
-dots). However, this has made a breakthrough in understanding what is
-affecting cell survival. There are still variables that we can include
-to understand this phenomenon better.
+(ref:experiment-03-metric-differences-cap) **Experiment initial values differences.** By comparing the metric differences of the last observation and the first observation of a cell, we can separate mainly the surviving filamented cells from those that did not do it in both experiments (green dots). Meanwhile, cells with plasmids form a small accumulation of surviving cells that did not produce filament (purple dots). However, this has made a breakthrough in understanding what is affecting cell survival. There are still variables that we can include to understand this phenomenon better.
 
 ```{r, experiment-03-metric-differences, fig.cap='(ref:experiment-03-metric-differences-cap)', fig.scap='(ref:experiment-03-metric-differences-scap)'}
 ```
@@ -300,27 +237,14 @@ contribution of division to cell survival (see Figure
 
 (ref:experiment-03-number-divisions-scap) Cell's number of divisions.
 
-(ref:experiment-03-number-divisions-cap) **Cell's number of divisions.**
-Chromosomal cells exhibited more divisions for surviving classes and
-non-surviving filamented cells (*i.e.*, purple, green, and red dots)
-relative to unchanged behavior in plasmid cells. Therefore, its
-contribution to filamentation remains uncertain.
+(ref:experiment-03-number-divisions-cap) **Cell's number of divisions.** Chromosomal cells exhibited more divisions for surviving classes and non-surviving filamented cells (*i.e.*, purple, green, and red dots) relative to unchanged behavior in plasmid cells. Therefore, its contribution to filamentation remains uncertain.
 
 ```{r experiment-03-number-divisions, fig.cap='(ref:experiment-03-number-divisions-cap)', fig.scap='(ref:experiment-03-number-divisions-scap)'}
 ```
 
-(ref:experiment-03-time-since-last-division-scap) Time elapsed since the
-last division at the beginning of the experiment.
+(ref:experiment-03-time-since-last-division-scap) Time elapsed since the last division at the beginning of the experiment.
 
-(ref:experiment-03-time-since-last-division-cap) **Time elapsed since
-the last division at the beginning of the experiment.** The mean time of
-the last division before starting the experiment indicates that it did
-not influence the final result for chromosomal cells. There is a slight
-difference between the filamented-not survived cells and the rest for
-cells with plasmids. However, the signal does not appear to be strong on
-the survival role. Therefore, we conclude that we have no evidence to
-support that the time of the last division at the beginning of the
-experiment influences the final classification results.
+(ref:experiment-03-time-since-last-division-cap) **Time elapsed since the last division at the beginning of the experiment.** The mean time of the last division before starting the experiment indicates that it did not influence the final result for chromosomal cells. There is a slight difference between the filamented-not survived cells and the rest for cells with plasmids. However, the signal does not appear to be strong on the survival role. Therefore, we conclude that we have no evidence to support that the time of the last division at the beginning of the experiment influences the final classification results.
 
 ```{r experiment-03-time-since-last-division, fig.cap='(ref:experiment-03-time-since-last-division-cap)', fig.scap='(ref:experiment-03-time-since-last-division-scap)'}
 ```
@@ -358,15 +282,9 @@ antibiotics constantly, and 2) if the cell grows too fast, it is likely
 that the cost of maintaining an ample length for prolonged periods of
 exposure will become counterproductive.
 
-(ref:experiment-03-time-to-filamentation-filtered-scap) Time to
-filamentation filtered.
+(ref:experiment-03-time-to-filamentation-filtered-scap) Time to filamentation filtered.
 
-(ref:experiment-03-time-to-filamentation-filtered-cap) **Time to
-filamentation filtered.** To quantify the effect of filamented to
-survive, we filtered those cells that filamented during the experiment.
-In this way, we normalize the start times for the calculation of the
-filamentation time. For both strains, the filamentation time had a more
-significant delay in the surviving cells.
+(ref:experiment-03-time-to-filamentation-filtered-cap) **Time to filamentation filtered.** To quantify the effect of filamented to survive, we filtered those cells that filamented during the experiment. In this way, we normalize the start times for the calculation of the filamentation time. For both strains, the filamentation time had a more significant delay in the surviving cells.
 
 ```{r experiment-03-time-to-filamentation-filtered, fig.cap='(ref:experiment-03-time-to-filamentation-filtered-cap)', fig.scap='(ref:experiment-03-time-to-filamentation-filtered-scap)'}
 ```
@@ -384,16 +302,9 @@ greater degree. However, it may still not be enough, and there are still
 many other variables that play a crucial role in understanding the
 ecology of stress and how some cells will be survivors or not.
 
-(ref:experiment-03-initial-values-with-time-scap) Experiment initial
-values with time to filamentation.
+(ref:experiment-03-initial-values-with-time-scap) Experiment initial values with time to filamentation.
 
-(ref:experiment-03-initial-values-with-time-cap) **Experiment initial
-values with time to filamentation.** As in Figure
-\@ref(fig:experiment-03-just-initial-values), including the time it will
-take for cells to filament allows us to understand the phenomenon of
-survival better. Cells that filamented and survived generally have a
-much higher delay than their non-filamented peers for both strains (see
-Figure \@ref(fig:experiment-03-time-to-filamentation-filtered)).
+(ref:experiment-03-initial-values-with-time-cap) **Experiment initial values with time to filamentation.** As in Figure \@ref(fig:experiment-03-just-initial-values), including the time it will take for cells to filament allows us to understand the phenomenon of survival better. Cells that filamented and survived generally have a much higher delay than their non-filamented peers for both strains (see Figure \@ref(fig:experiment-03-time-to-filamentation-filtered)).
 
 ```{r, experiment-03-initial-values-with-time, fig.cap='(ref:experiment-03-initial-values-with-time-cap)', fig.scap='(ref:experiment-03-initial-values-with-time-scap)'}
 ```
@@ -443,39 +354,16 @@ non-surviving cells. However, for Figure
 separation was a bit rougher but allowed us to separate the surviving
 filament cells from the dead ones.
 
-(ref:experiment-03-chromosome-pca-new-coordinates-scap) Principal
-Component Analysis of chromosomal strain.
+(ref:experiment-03-chromosome-pca-new-coordinates-scap) Principal Component Analysis of chromosomal strain.
 
-(ref:experiment-03-chromosome-pca-new-coordinates-cap) **Principal
-Component Analysis of chromosomal strain.** When integrating the
-information of different variables in a dimensionality reduction
-analysis, we observed a clear separation between the surviving cells and
-those that did not. The contributions that determined this phenomenon
-come mainly from the last amount of Ds-Red, GFP, and cell length (see
-Figure \@ref(fig:experiment-03-chromosome-pca-variable-contribution)).
-Although it seems obvious, it effectively confirms that the temporal
-classification that we carry out makes sense. Longer length represents a
-greater uptake of antibiotics but in a much larger volume, so the net
-effect is an internal reduction of antibiotics (see Figure
-\@ref(fig:model-01-cell-dimensions-relationship)).
+(ref:experiment-03-chromosome-pca-new-coordinates-cap) **Principal Component Analysis of chromosomal strain.** When integrating the information of different variables in a dimensionality reduction analysis, we observed a clear separation between the surviving cells and those that did not. The contributions that determined this phenomenon come mainly from the last amount of Ds-Red, GFP, and cell length (see Figure \@ref(fig:experiment-03-chromosome-pca-variable-contribution)). Although it seems obvious, it effectively confirms that the temporal classification that we carry out makes sense. Longer length represents a greater uptake of antibiotics but in a much larger volume, so the net effect is an internal reduction of antibiotics (see Figure \@ref(fig:model-01-cell-dimensions-relationship)).
 
 ```{r experiment-03-chromosome-pca-new-coordinates, fig.cap='(ref:experiment-03-chromosome-pca-new-coordinates-cap)', fig.scap='(ref:experiment-03-chromosome-pca-new-coordinates-scap)'}
 ```
 
-(ref:experiment-03-plasmid-pca-new-coordinates-scap) Principal Component
-Analysis of plasmid strain.
+(ref:experiment-03-plasmid-pca-new-coordinates-scap) Principal Component Analysis of plasmid strain.
 
-(ref:experiment-03-plasmid-pca-new-coordinates-cap) **Principal
-Component Analysis of plasmid strain.** By integrating the information
-from different variables in a dimensionality reduction analysis, we
-observed a clear separation between the filamented and non-filamented
-cells. Said class separation is given by component 2 (Y-axis), which is
-determined primarily by the initial and final lengths of the cells (see
-Figure \@ref(fig:experiment-03-plasmid-pca-variable-contribution)).
-Furthermore, the classification also allows us to separate those
-filamented cells that died from those that survived. Therefore, despite
-the increase in the system's complexity, length plays a role in
-determining survival.
+(ref:experiment-03-plasmid-pca-new-coordinates-cap) **Principal Component Analysis of plasmid strain.** By integrating the information from different variables in a dimensionality reduction analysis, we observed a clear separation between the filamented and non-filamented cells. Said class separation is given by component 2 (Y-axis), which is determined primarily by the initial and final lengths of the cells (see Figure \@ref(fig:experiment-03-plasmid-pca-variable-contribution)). Furthermore, the classification also allows us to separate those filamented cells that died from those that survived. Therefore, despite the increase in the system's complexity, length plays a role in determining survival.
 
 ```{r experiment-03-plasmid-pca-new-coordinates, fig.cap='(ref:experiment-03-plasmid-pca-new-coordinates-cap)', fig.scap='(ref:experiment-03-plasmid-pca-new-coordinates-scap)'}
 ```
@@ -491,47 +379,16 @@ positive side, while the variable end and start length directed the dots
 to the opposing side. Therefore, we can support that filamentation has a
 role in moving cells away from having higher amounts of Ds-Red.
 
-(ref:experiment-03-chromosome-pca-variable-contribution-scap) Variables
-contribution of Principal Component Analysis of chromosomal strain.
+(ref:experiment-03-chromosome-pca-variable-contribution-scap) Variables contribution of Principal Component Analysis of chromosomal strain.
 
-(ref:experiment-03-chromosome-pca-variable-contribution-cap) **Variables
-contribution of Principal Component Analysis of chromosomal strain.** In
-the figure \@ref(fig:experiment-03-chromosome-pca-new-coordinates), we
-see that the classes we created manually reflected what we observed when
-performing a reduction of dimensions analysis. Here we show the
-individual contribution of each variable for the first two components.
-The variables that most affected components 1 and 2 (X-axis and Y-axis,
-respectively) are the final measurements of Ds-Red, GFP, length, and the
-initial amount of GFP. Given that they are chromosomal strains, we
-should note that this variability could be produced by intrinsic
-experimental noise that we could not remove. With that in mind, having
-the Ds-Red and the final length highlights the inherent role of cells by
-having increased its size.
+(ref:experiment-03-chromosome-pca-variable-contribution-cap) **Variables contribution of Principal Component Analysis of chromosomal strain.** In the figure \@ref(fig:experiment-03-chromosome-pca-new-coordinates), we see that the classes we created manually reflected what we observed when performing a reduction of dimensions analysis. Here we show the individual contribution of each variable for the first two components. The variables that most affected components 1 and 2 (X-axis and Y-axis, respectively) are the final measurements of Ds-Red, GFP, length, and the initial amount of GFP. Given that they are chromosomal strains, we should note that this variability could be produced by intrinsic experimental noise that we could not remove. With that in mind, having the Ds-Red and the final length highlights the inherent role of cells by having increased its size.
 
 ```{r, experiment-03-chromosome-pca-variable-contribution, fig.cap='(ref:experiment-03-chromosome-pca-variable-contribution-cap)', fig.scap='(ref:experiment-03-chromosome-pca-variable-contribution-scap)'}
 ```
 
-(ref:experiment-03-plasmid-pca-variable-contribution-scap) Variables
-contribution of Principal Component Analysis of plasmid strain.
+(ref:experiment-03-plasmid-pca-variable-contribution-scap) Variables contribution of Principal Component Analysis of plasmid strain.
 
-(ref:experiment-03-plasmid-pca-variable-contribution-cap) **Variables
-contribution of Principal Component Analysis of plasmid strain.** In
-Figure \@ref(fig:experiment-03-plasmid-pca-new-coordinates), we saw that
-we could separate the filamented cells from the non-filamented ones. The
-reduction analysis also shows a slight difference between surviving and
-dead cells within the small group of filamented cells. Here we offer the
-individual contribution of each variable for the first two components.
-For the first component (x-axis in Figure
-\@ref(fig:experiment-03-chromosome-pca-new-coordinates)), the initial
-and final GFP measurements received mainly the variability. We expected
-this component's importance since, being a chromosomal strain, we hope
-that its inherent variation will be inherited into the system. On the
-other hand, the second component (Y-axis in Figure
-\@ref(fig:experiment-03-chromosome-pca-new-coordinates)) was determined
-by the length of the cell. Factors that, in the chromosomal strain (see
-Figure \@ref(fig:experiment-03-chromosome-pca-variable-contribution)),
-determined with the help of Ds-Red the separation between surviving and
-dead cells.
+(ref:experiment-03-plasmid-pca-variable-contribution-cap) **Variables contribution of Principal Component Analysis of plasmid strain.** In Figure \@ref(fig:experiment-03-plasmid-pca-new-coordinates), we saw that we could separate the filamented cells from the non-filamented ones. The reduction analysis also shows a slight difference between surviving and dead cells within the small group of filamented cells. Here we offer the individual contribution of each variable for the first two components. For the first component (x-axis in Figure \@ref(fig:experiment-03-chromosome-pca-new-coordinates)), the initial and final GFP measurements received mainly the variability. We expected this component's importance since, being a chromosomal strain, we hope that its inherent variation will be inherited into the system. On the other hand, the second component (Y-axis in Figure \@ref(fig:experiment-03-chromosome-pca-new-coordinates)) was determined by the length of the cell. Factors that, in the chromosomal strain (see Figure \@ref(fig:experiment-03-chromosome-pca-variable-contribution)), determined with the help of Ds-Red the separation between surviving and dead cells.
 
 ```{r experiment-03-plasmid-pca-variable-contribution, fig.cap='(ref:experiment-03-plasmid-pca-variable-contribution-cap)', fig.scap='(ref:experiment-03-plasmid-pca-variable-contribution-scap)'}
 ```
@@ -559,31 +416,16 @@ division variable. So, in a way, the division also has a role in
 determining survival, but it is not essential or at least not
 over-represented in our data.
 
-(ref:experiment-03-chromosome-umap-new-coordinates-scap) UMAP
-coordinates of chromosome strain.
+(ref:experiment-03-chromosome-umap-new-coordinates-scap) UMAP coordinates of chromosome strain.
 
-(ref:experiment-03-chromosome-umap-new-coordinates-cap) **UMAP
-coordinates of chromosome strain.** We represented the cells in a low
-dimensional space. This new projection made it possible to group the
-cells that survived and those that did not. Therefore, as in PCA Figure
-\@ref(fig:experiment-03-chromosome-pca-new-coordinates), this technique
-supports the manual classification that we carry out.
+(ref:experiment-03-chromosome-umap-new-coordinates-cap) **UMAP coordinates of chromosome strain.** We represented the cells in a low dimensional space. This new projection made it possible to group the cells that survived and those that did not. Therefore, as in PCA Figure \@ref(fig:experiment-03-chromosome-pca-new-coordinates), this technique supports the manual classification that we carry out.
 
 ```{r, experiment-03-chromosome-umap-new-coordinates, fig.cap='(ref:experiment-03-chromosome-umap-new-coordinates-cap)', fig.scap='(ref:experiment-03-chromosome-umap-new-coordinates-scap)'}
 ```
 
-(ref:experiment-03-plasmid-umap-new-coordinates-scap) UMAP coordinates
-of plasmid strain.
+(ref:experiment-03-plasmid-umap-new-coordinates-scap) UMAP coordinates of plasmid strain.
 
-(ref:experiment-03-plasmid-umap-new-coordinates-cap) **UMAP coordinates
-of plasmid strain.** As in its
-\@ref(fig:experiment-03-chromosome-umap-new-coordinates) pair, the
-representation in a low-dimensional space helped classify the cells,
-grouping mainly into four groups, two of survivors and two of
-non-survivors. The variable *division* marks the separation of classes.
-The *division* variable indicates whether a cell is divided during its
-lifetime or not. Together, the UMAP represents the manually assigned
-classes.
+(ref:experiment-03-plasmid-umap-new-coordinates-cap) **UMAP coordinates of plasmid strain.** As in its \@ref(fig:experiment-03-chromosome-umap-new-coordinates) pair, the representation in a low-dimensional space helped classify the cells, grouping mainly into four groups, two of survivors and two of non-survivors. The variable *division* marks the separation of classes. The *division* variable indicates whether a cell is divided during its lifetime or not. Together, the UMAP represents the manually assigned classes.
 
 ```{r, experiment-03-plasmid-umap-new-coordinates, fig.cap='(ref:experiment-03-plasmid-umap-new-coordinates-cap)', fig.scap='(ref:experiment-03-plasmid-umap-new-coordinates-scap)'}
 ```
@@ -616,20 +458,7 @@ number of filament cells expected was much lower.
 
 (ref:experiment-04-status-with-dead-scap) Population status over time.
 
-(ref:experiment-04-status-with-dead-cap) **Population status over
-time.** We calculate how many cells of each type existed for each time
-point: non-filamented and filamented living cells (blue and green areas,
-respectively) and dead cells (red area; we considered *dead* cells as
-those cells that existed at one time and then stopped tracking). The
-black vertical lines represent the start and end of antibiotic exposure
-for each experiment. The effect of filamentation and its spread after
-exposure to the antibiotic is evident for the chromosomal strain. The
-experiment was finalized with the resolution of the cells when they
-returned to their non-filamented state. For its part, for the plasmid
-strain, it is observed how the filamented cells begin to appear slowly.
-Their proportion is as expected, given that the population had a wide
-distribution of GFP that allowed them to combat exposure to the
-antibiotic.
+(ref:experiment-04-status-with-dead-cap) **Population status over time.** We calculate how many cells of each type existed for each time point: non-filamented and filamented living cells (blue and green areas, respectively) and dead cells (red area; we considered *dead* cells as those cells that existed at one time and then stopped tracking). The black vertical lines represent the start and end of antibiotic exposure for each experiment. The effect of filamentation and its spread after exposure to the antibiotic is evident for the chromosomal strain. The experiment was finalized with the resolution of the cells when they returned to their non-filamented state. For its part, for the plasmid strain, it is observed how the filamented cells begin to appear slowly. Their proportion is as expected, given that the population had a wide distribution of GFP that allowed them to combat exposure to the antibiotic.
 
 ```{r experiment-04-status-with-dead, fig.cap='(ref:experiment-04-status-with-dead-cap)', fig.scap='(ref:experiment-04-status-with-dead-scap)'}
 ```
@@ -651,24 +480,9 @@ much longer initial length than the surviving cells, so we also consider
 it as a necessary factor in understanding which variables affect cell
 survival.
 
-(ref:experiment-04-metrics-over-time-scap) Population measurements over
-time.
+(ref:experiment-04-metrics-over-time-scap) Population measurements over time.
 
-(ref:experiment-04-metrics-over-time-cap) **Population measurements over
-time.** The colored lines symbolize the average value of each metric at
-each instant of time, while its surrounded gray shaded area represents
-the 95% confidence interval. The vertical lines represent the start and
-end of antibiotic exposure. The horizontal line in the length metric
-symbolizes the threshold to consider a cell filament. We observed a
-faster increase of Ds-Red for the non-surviving populations in both
-experiments. Regarding the GFP metric, the behavior is relatively stable
-for the chromosomal strain. In contrast, for the plasmid strain, a
-decline in GFP is observed for the population that did not survive. For
-the length metric, it is interesting to note how the chromosome cells
-that did not filament continued to grow past the filamentation threshold
-once the exposure to the antibiotic in the chromosomal strain had ended.
-On the other hand, the filamented and dead cells seem to have a greater
-length from the beginning for the plasmid strain.
+(ref:experiment-04-metrics-over-time-cap) **Population measurements over time.** The colored lines symbolize the average value of each metric at each instant of time, while its surrounded gray shaded area represents the 95% confidence interval. The vertical lines represent the start and end of antibiotic exposure. The horizontal line in the length metric symbolizes the threshold to consider a cell filament. We observed a faster increase of Ds-Red for the non-surviving populations in both experiments. Regarding the GFP metric, the behavior is relatively stable for the chromosomal strain. In contrast, for the plasmid strain, a decline in GFP is observed for the population that did not survive. For the length metric, it is interesting to note how the chromosome cells that did not filament continued to grow past the filamentation threshold once the exposure to the antibiotic in the chromosomal strain had ended. On the other hand, the filamented and dead cells seem to have a greater length from the beginning for the plasmid strain.
 
 ```{r experiment-04-metrics-over-time, fig.cap='(ref:experiment-04-metrics-over-time-cap)', fig.scap='(ref:experiment-04-metrics-over-time-scap)'}
 ```
@@ -698,23 +512,9 @@ reduction of live cells. An average GFP point provided higher survival
 than a point below or above the average (except for cells very close to
 the population maximum).
 
-(ref:experiment-04-proportion-living-cells-gfp-by-row-scap) Population
-survivals binned by initial GFP over time.
+(ref:experiment-04-proportion-living-cells-gfp-by-row-scap) Population survivals binned by initial GFP over time.
 
-(ref:experiment-04-proportion-living-cells-gfp-by-row-cap) **Population
-survivals binned by initial GFP over time.** We categorized the cells'
-GFP into ranges of proportions 0.05 concerning the maximum amount of GFP
-in the population. 100% cells per bin of GFP was taken as the number of
-cells one frame before the start of exposure to the antibiotic (minute
-50). Therefore, dark to light colors represent a generation of new
-cells, and light to dark colors the death of cells. The black vertical
-bars represent the start and end of the antibiotic exposure. Bars size
-and color on the right represent the percentage of the living cells 10
-minutes after the end of the experiment. As shown in Figure
-\@ref(fig:experiment-04-gfp-survival-probability), we showed that the
-surviving cells appear to follow something similar to a bimodal
-distribution. More cells survive with a moderate amount of GFP or with
-an amount close to the maximum of the population.
+(ref:experiment-04-proportion-living-cells-gfp-by-row-cap) **Population survivals binned by initial GFP over time.** We categorized the cells' GFP into ranges of proportions 0.05 concerning the maximum amount of GFP in the population. 100% cells per bin of GFP was taken as the number of cells one frame before the start of exposure to the antibiotic (minute 50). Therefore, dark to light colors represent a generation of new cells, and light to dark colors the death of cells. The black vertical bars represent the start and end of the antibiotic exposure. Bars size and color on the right represent the percentage of the living cells 10 minutes after the end of the experiment. As shown in Figure \@ref(fig:experiment-04-gfp-survival-probability), we showed that the surviving cells appear to follow something similar to a bimodal distribution. More cells survive with a moderate amount of GFP or with an amount close to the maximum of the population.
 
 ```{r experiment-04-proportion-living-cells-gfp-by-row, fig.cap='(ref:experiment-04-proportion-living-cells-gfp-by-row-cap)', fig.scap='(ref:experiment-04-proportion-living-cells-gfp-by-row-scap)'}
 ```
@@ -729,19 +529,9 @@ whereas cells that filament increase their survival probability
 gradually as they have more initial GFP (see also Figure
 \@ref(fig:experiment-03-gfp-temporal-distribution)).
 
-(ref:experiment-04-gfp-survival-probability-scap) Plasmid initial GFP
-survival probability.
+(ref:experiment-04-gfp-survival-probability-scap) Plasmid initial GFP survival probability.
 
-(ref:experiment-04-gfp-survival-probability-cap) **Plasmid initial GFP
-survival probability.** We calculated the survival probability after
-comparing the population distributions of GFP with those of the cells
-that managed to survive. To assess survival by GFP, we only used plasmid
-cells. For non-filamented cells (blue dots), a bell forms with an
-upturned tail. On the other hand, for the filamented cells (red dots), a
-continuous increase in survival is shown just when it seems that the
-probability of the non-filamented cells has decreased. In global, much
-GFP has higher resistance, but an average GFP value without
-filamentation also increases the probability of survival.
+(ref:experiment-04-gfp-survival-probability-cap) **Plasmid initial GFP survival probability.** We calculated the survival probability after comparing the population distributions of GFP with those of the cells that managed to survive. To assess survival by GFP, we only used plasmid cells. For non-filamented cells (blue dots), a bell forms with an upturned tail. On the other hand, for the filamented cells (red dots), a continuous increase in survival is shown just when it seems that the probability of the non-filamented cells has decreased. In global, much GFP has higher resistance, but an average GFP value without filamentation also increases the probability of survival.
 
 ```{r experiment-04-gfp-survival-probability, fig.cap='(ref:experiment-04-gfp-survival-probability-cap)', fig.scap='(ref:experiment-04-gfp-survival-probability-scap)'}
 ```
@@ -759,20 +549,9 @@ higher initial length meant a lower probability of survival (see red
 dotted lines in Figure
 \@ref(fig:experiment-04-length-survival-probability)).
 
-(ref:experiment-04-length-survival-probability-scap) Plasmid initial
-length survival probability.
+(ref:experiment-04-length-survival-probability-scap) Plasmid initial length survival probability.
 
-(ref:experiment-04-length-survival-probability-cap) **Plasmid initial
-length survival probability.** We calculated the survival probability
-after comparing the population distributions of length with those of the
-cells that managed to survive. For non-filamented cells (blue dots), the
-survival probability is higher for those cells with initial lengths and
-small. It seems to decrease with a more extensive initial size. For
-their part, for filamented cells (red dots), the probability of survival
-increases according to their length but then declines when the cells are
-too long at first (see red dotted line). Therefore, in general, a small
-and moderate length or an initial length already filamented from the
-beginning increases the chances of survival.
+(ref:experiment-04-length-survival-probability-cap) **Plasmid initial length survival probability.** We calculated the survival probability after comparing the population distributions of length with those of the cells that managed to survive. For non-filamented cells (blue dots), the survival probability is higher for those cells with initial lengths and small. It seems to decrease with a more extensive initial size. For their part, for filamented cells (red dots), the probability of survival increases according to their length but then declines when the cells are too long at first (see red dotted line). Therefore, in general, a small and moderate length or an initial length already filamented from the beginning increases the chances of survival.
 
 ```{r experiment-04-length-survival-probability, fig.cap='(ref:experiment-04-length-survival-probability-cap)', fig.scap='(ref:experiment-04-length-survival-probability-scap)'}
 ```
