@@ -4,7 +4,7 @@ author: "Vélez Santiago Jesús"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: krantz
-bibliography: [undergraduate-research-project.bib]
+bibliography: [undergraduate-research-project.bib, undergraduate-research-project-packages.bib]
 url: https://jvelezmagic.github.io/undergraduate_research_project/index.html
 # cover-image: path to the social sharing image like images/cover.jpg
 description: |
