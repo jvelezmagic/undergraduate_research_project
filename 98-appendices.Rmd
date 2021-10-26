@@ -47,9 +47,9 @@ Below is the main list of packages used for Chapter
 
 -   pickle [@van1995python].
 
--   scikit-image [@vanderwalt2014]
+-   scikit-image [@vanderwalt2014].
 
--   shapely [@shapely2007]
+-   shapely [@shapely2007].
 
 ## R
 
@@ -57,9 +57,66 @@ Below is the main list of packages used for Chapter
 \@ref(experiment-analysis) as well for the reproducibility of this
 undergraduate research project.
 
--   go
+```{r used-packages}
+pkgs <- c(
+  "bookdown",
+  "rmarkdown",
+  "knitr",
+  "GGally",
+  "embed",
+  "fs",
+  "ggdist",
+  "ggpubr",
+  "here",
+  "janitor",
+  "patchwork",
+  "plotly",
+  "tidymodels",
+  "tidytext",
+  "tidyverse",
+  "stringr",
+  "sessioninfo"
+)
+```
 
--   
+```{r write-packages-citations}
+knitr::write_bib(
+  c(
+    .packages(),
+    pkgs
+  ),
+  file = here::here("undergraduate-research-project-R-packages.bib")
+)
+```
+
+```{r save-citations-vector,  results='hide'}
+pkgs_citations <- knitr::write_bib(
+  c(.packages(), pkgs)
+)
+```
+
+```{r create-r-citations-table, results='asis'}
+r_citations <- tibble::tibble(
+  package = names(pkgs_citations),
+  citation = pkgs_citations
+) |>
+  dplyr::mutate(
+    citation = purrr::map(citation, as.character),
+    citation = purrr::map_chr(citation, dplyr::first),
+    citation = stringr::str_extract(citation, "\\{(.+)"),
+    citation = stringr::str_remove_all(citation, "\\{|,"),
+    citation = stringr::str_c("@", citation)
+  ) |>
+  dplyr::filter(stringr::str_detect(citation, "@R-")) |>
+  identity()
+
+r_citations |>
+  dplyr::mutate(
+    output_citation = stringr::str_c("- ", package, " [", citation, "].\n")
+  ) |>
+  dplyr::pull(output_citation) |>
+  cat()
+```
 
 ## Julia
 
@@ -121,25 +178,30 @@ Pkg.instantiate()
 
 5.  Play with the model.
 
-# Document reproducibility
+# Colophon
 
-All the dependencies used to generate this document are listed below.
+This undergraduate research project was written in
+[RStudio](https://www.rstudio.com/products/rstudio/)
+using [**bookdown**](https://bookdown.org).
+The [website](https://jvelezmagic.github.io/undergraduate_research_project/) is
+hosted via Github Pages, and the complete source is
+available via Github.
 
-```{r collected-packges, echo=FALSE, message=FALSE, warning=FALSE}
-library(GGally)
-library(embed)
-library(fs)
-library(ggdist)
-library(ggpubr)
-library(here)
-library(janitor)
-library(patchwork)
-library(plotly)
-library(tidymodels)
-library(tidytext)
-library(tidyverse)
-```
+This version of the project was built with `r R.version.string` and the
+following packages:
 
-```{r session-info, echo=FALSE}
-sessioninfo::session_info()
+```{r colophon, results='asis'}
+pkgs |>
+  sessioninfo::package_info(dependencies = FALSE) |>
+  tibble::as_tibble() |>
+  dplyr::transmute(
+    Package = package,
+    Version = ondiskversion,
+    Source = stringr::str_replace(source, "@", "\\\\@"),
+    Source = stringr::str_remove(Source, "\\\\@[a-f0-9]*")
+  ) |>
+  knitr::kable(
+    format = "pipe",
+    caption = "Packages used to built the project documents."
+  )
 ```
