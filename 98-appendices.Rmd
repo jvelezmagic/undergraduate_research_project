@@ -75,7 +75,8 @@ pkgs <- c(
   "tidytext",
   "tidyverse",
   "stringr",
-  "sessioninfo"
+  "sessioninfo",
+  "renv"
 )
 ```
 
