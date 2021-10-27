@@ -1,9 +1,18 @@
 ## Abstract {.unnumbered}
 
-Etiam venenatis purus eu felis viverra sodales. Sed et varius ex. Nullam
-sit amet aliquet purus. Fusce elementum vitae est eget vulputate.
-Aliquam erat volutpat. Donec ac suscipit leo, sed euismod nisi. Duis
-malesuada elementum pulvinar. Ut et vulputate augue. In dignissim ligula
-at nulla feugiat cursus. Suspendisse sed diam ut ligula sollicitudin
-pellentesque. Etiam ut gravida velit, vitae lobortis mi. Nam congue
-laoreet mauris sit amet iaculis.
+Scientists have extensively studied the mechanisms that orchestrate the
+growth and division of bacterial cells. Cells adapt their shape and
+dimensions in response to variations in the intracellular and
+extracellular environments by integrating information about the presence
+of nutrients or harmful agents in the decision to grow or divide.
+Filamentation is a process that occurs when rod-shaped cells stop
+dividing but continue to grow, thus producing elongated cells
+[@Wang2014; @Wang2014a; @jaimes-lizcano2014;
+@justiceMorphologicalPlasticityBacterial2008]. Some cells can naturally
+grow as filamentous, while others only do so under stressful conditions
+[@cayron2020; @justiceFilamentationEscherichiaColi2006]. Here, we use
+mathematical modeling and computational simulations to evaluate a toxic
+agent's intracellular concentration as a function of cell length. We
+show that filamentation can act as a strategy that promotes the
+resilience of a bacterial population under stressful environmental
+conditions.
