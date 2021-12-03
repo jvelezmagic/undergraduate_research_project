@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 ```{r experiment-04-libraries}
 library(tidyverse)
 library(here)
@@ -321,4 +326,219 @@ p_survival_probability_length <- survival_probability_length %>%
   )
 
 p_survival_probability_length
+```
+
+```{r}
+p_n_divisions <- lineages_processed_1_df |>
+  filter(time <= antibiotic_start_time, survived == "Survived") |>
+  group_by(experiment_id, id) |>
+  summarize(
+    n_divisions = sum(division),
+    .groups = "drop"
+  ) |>
+  ggplot(
+    aes(
+      x = experiment_id,
+      y = n_divisions
+    )
+  ) +
+  ggdist::stat_halfeye(
+    adjust = 0.5,
+    width = 0.6,
+    .width = 0,
+    justification = -0.3,
+    point_colour = NA
+  ) +
+  geom_boxplot(
+    width = 0.15,
+    outlier.shape = NA
+  ) +
+  gghalves::geom_half_point(
+    side = "l",
+    range_scale = 0.2,
+    alpha = 1 / 30
+  ) +
+  ggpubr::stat_compare_means(
+    method = "t.test",
+    comparisons = list(c("Plasmid", "Chromosome"))
+  ) +
+  scale_y_continuous(
+    breaks = 0:6
+  ) +
+  coord_flip() +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    legend.position = "none",
+    plot.title.position = "plot",
+    plot.title = element_text(
+      face = "bold",
+      size = 14,
+      hjust = 0
+    )
+  ) +
+  labs(
+    x = "",
+    y = "Number of divisions before exposure to antibiotics",
+    title = "Survival cells"
+  ) +
+  NULL
+
+p_n_divisions
+```
+
+```{r experiment-04-dt-length-survival-probability}
+complete_time_dt_stats <- lineages_processed_1_df |>
+  arrange(experiment_id, id, filamented_id, time) |>
+  add_count(experiment_id, id, filamented_id, wt = division) |>
+  filter(n != 0) |>
+  group_by(experiment_id, id, filamented_id) |>
+  summarize(
+    mean_dt_length = mean(lag(length), na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  identity()
+
+
+survival_time_dt_stats <- lineages_processed_1_df %>%
+  add_count(experiment_id, id, filamented_id, wt = division) |>
+  filter(
+    n != 0,
+    survived == "Survived",
+    time <= antibiotic_start_time
+  ) %>%
+  arrange(experiment_id, id, filamented_id, time) |>
+  group_by(experiment_id, id, filamented_id) |>
+  summarize(
+    mean_dt_length = mean(lag(length), na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  identity()
+```
+
+```{r do-it-for-chromosome}
+chromosome_complete_dt_length <- complete_time_dt_stats |>
+  filter(experiment_id == "Chromosome")
+
+chromosome_survived_dt_length <- survival_time_dt_stats |>
+  filter(experiment_id == "Chromosome")
+
+step <- 5
+breaks <- seq(
+  min(chromosome_complete_dt_length$mean_dt_length) - step,
+  max(chromosome_complete_dt_length$mean_dt_length) + step,
+  step
+)
+
+chromosome_hist_dt_length_control_info <- hist(
+  chromosome_complete_dt_length$mean_dt_length,
+  breaks = breaks,
+  plot = FALSE
+)
+
+chromosome_survival_probability_dt <- chromosome_survived_dt_length |>
+  group_by(experiment_id) |>
+  summarize(
+    counts = hist(mean_dt_length, plot = FALSE, breaks = breaks) |>
+      pluck("counts") |>
+      list()
+  ) |>
+  unnest(counts) |>
+  mutate(
+    mids = chromosome_hist_dt_length_control_info$mids,
+    control_counts = chromosome_hist_dt_length_control_info$counts,
+    survival_probability = counts / control_counts
+  ) %>%
+  glimpse()
+
+
+
+p_survival_probability_chromosome_dt_length <- chromosome_survival_probability_dt %>%
+  filter(survival_probability != 1) %>%
+  ggplot(aes(x = mids, y = survival_probability)) +
+  geom_point() +
+  geom_smooth(
+    se = FALSE,
+    size = 0.5,
+    linetype = "dashed"
+  ) +
+  scale_x_continuous() +
+  scale_y_continuous(labels = scales::label_percent()) +
+  labs(
+    x = "Mean length lag difference",
+    y = "Survival probability"
+  )
+
+p_survival_probability_chromosome_dt_length
+```
+
+```{r do-it-for-plasmid}
+plasmid_complete_dt_length <- complete_time_dt_stats |>
+  filter(experiment_id == "Plasmid")
+
+plasmid_survived_dt_length <- survival_time_dt_stats |>
+  filter(experiment_id == "Plasmid")
+
+step <- 5
+breaks <- seq(
+  min(plasmid_complete_dt_length$mean_dt_length) - step,
+  max(plasmid_complete_dt_length$mean_dt_length) + step,
+  step
+)
+
+plasmid_hist_dt_length_control_info <- hist(
+  plasmid_complete_dt_length$mean_dt_length,
+  breaks = breaks,
+  plot = FALSE
+)
+
+plasmid_survival_probability_dt <- plasmid_survived_dt_length |>
+  group_by(experiment_id) |>
+  summarize(
+    counts = hist(mean_dt_length, plot = FALSE, breaks = breaks) |>
+      pluck("counts") |>
+      list()
+  ) |>
+  unnest(counts) |>
+  mutate(
+    mids = plasmid_hist_dt_length_control_info$mids,
+    control_counts = plasmid_hist_dt_length_control_info$counts,
+    survival_probability = counts / control_counts
+  ) %>%
+  glimpse()
+
+p_survival_probability_plasmid_dt_length <- plasmid_survival_probability_dt %>%
+  filter(survival_probability != 1) %>%
+  ggplot(aes(x = mids, y = survival_probability)) +
+  geom_point() +
+  geom_smooth(
+    se = FALSE,
+    size = 0.5,
+    linetype = "dashed"
+  ) +
+  scale_x_continuous() +
+  scale_y_continuous(labels = scales::label_percent()) +
+  labs(
+    x = "Mean length lag difference",
+    y = "Survival probability"
+  )
+
+p_survival_probability_plasmid_dt_length
+```
+
+```{r other-option}
+lineages_processed_1_df |>
+  group_by(experiment_id, id, cell_status, antibiotic_start_time) |>
+  summarize(
+    time = time,
+    dt_length = lag(length, n = 1),
+    .groups = "drop"
+  ) |>
+  drop_na() |>
+  filter(time <= antibiotic_start_time) |>
+  ggplot(aes(x = factor(time), y = dt_length, fill = cell_status)) +
+  geom_boxplot(outlier.shape = NA) +
+  facet_grid(~experiment_id)
 ```
