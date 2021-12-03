@@ -1,1 +1,2 @@
 library(downlit)
+library(svglite)
