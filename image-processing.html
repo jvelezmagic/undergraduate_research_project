@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 1 Image processing | Bacterial filamentation: a bet for survival in stressful environments</title>
+<meta name="author" content="Vélez Santiago Jesús">
+<meta name="description" content="1.1 Introduction With the progress of technology, optical and fluorescence microscopy has become a fundamental tool for the characterization and understanding of the bacterial world. Microscopy...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 1 Image processing | Bacterial filamentation: a bet for survival in stressful environments">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://jvelezmagic.github.io/undergraduate_research_project/index.html/image-processing.html">
+<meta property="og:description" content="1.1 Introduction With the progress of technology, optical and fluorescence microscopy has become a fundamental tool for the characterization and understanding of the bacterial world. Microscopy...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 1 Image processing | Bacterial filamentation: a bet for survival in stressful environments">
+<meta name="twitter:description" content="1.1 Introduction With the progress of technology, optical and fluorescence microscopy has become a fundamental tool for the characterization and understanding of the bacterial world. Microscopy...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="css/style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Bacterial filamentation: a bet for survival in stressful environments</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="introduction.html">Introduction</a></li>
+<li><a class="active" href="image-processing.html"><span class="header-section-number">1</span> Image processing</a></li>
+<li><a class="" href="experiment-analysis.html"><span class="header-section-number">2</span> Experiment analysis</a></li>
+<li><a class="" href="model-analysis.html"><span class="header-section-number">3</span> Models to the rescue; filamentation abstraction</a></li>
+<li><a class="" href="general-discussion.html"><span class="header-section-number">4</span> Discussion</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="code-availability.html"><span class="header-section-number">A</span> Code availability</a></li>
+<li><a class="" href="software-tools.html"><span class="header-section-number">B</span> Software tools</a></li>
+<li><a class="" href="software-usage.html"><span class="header-section-number">C</span> Software usage</a></li>
+<li><a class="" href="colophon.html"><span class="header-section-number">D</span> Colophon</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/jvelezmagic/undergraduate_research_project">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="image-processing" class="section level1">
+<h1>
+<span class="header-section-number">1</span> Image processing<a class="anchor" aria-label="anchor" href="#image-processing"><i class="fas fa-link"></i></a>
+</h1>
+<div id="introduction-1" class="section level2">
+<h2>
+<span class="header-section-number">1.1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>With the progress of technology, optical and fluorescence microscopy has
+become a fundamental tool for the characterization and understanding of
+the bacterial world. Microscopy has allowed humanity to extend its
+senses to observe the unknown world with exciting new perspectives that
+they might never otherwise have envisioned. Furthermore, microscopy
+offers a clear advantage over other techniques used to characterize
+bacteria since it can acquire data from living cells in spatial
+resolution.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Lothar Schermelleh et al., “Super-Resolution Microscopy Demystified,” &lt;em&gt;Nature Cell Biology&lt;/em&gt; 21, no. 1 (January 2019): 72–84, &lt;a href="https://doi.org/10.1038/s41556-018-0251-8" role="doc-biblioref"&gt;https://doi.org/10.1038/s41556-018-0251-8&lt;/a&gt;.&lt;/p&gt;'><sup>4</sup></a></span></p>
+<p>Including the discovery of fluorescent proteins (<em>e.g.</em>, GFP and DsRed)
+and improvements in fluorescent reporters, it is possible to
+specifically label specific cellular components and track cellular
+functions.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Elizabeth A. Specht, Esther Braselmann, and Amy E. Palmer, “A Critical and Comparative Review of Fluorescent Tools for Live-Cell Imaging,” &lt;em&gt;Annual Review of Physiology&lt;/em&gt; 79, no. 1 (February 10, 2017): 93–117, &lt;a href="https://doi.org/10.1146/annurev-physiol-022516-034055" role="doc-biblioref"&gt;https://doi.org/10.1146/annurev-physiol-022516-034055&lt;/a&gt;.&lt;/p&gt;'><sup>5</sup></a></span> On the other hand, mechanical and intellectual
+development of microfluidic research techniques provides an excellent
+opportunity to overcome bio-medical and chemical techniques.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Neil Convery and Nikolaj Gadegaard, “30 Years of Microfluidics,” &lt;em&gt;Micro and Nano Engineering&lt;/em&gt; 2 (March 2019): 76–91, &lt;a href="https://doi.org/10.1016/j.mne.2019.01.003" role="doc-biblioref"&gt;https://doi.org/10.1016/j.mne.2019.01.003&lt;/a&gt;.&lt;/p&gt;'><sup>6</sup></a></span> Collectively, it is possible to study communities of
+bacteria at the level of individual cells.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Nathalie Q. Balaban et al., “Bacterial Persistence as a Phenotypic Switch,” &lt;em&gt;Science&lt;/em&gt; 305, no. 5690 (September 10, 2004): 1622–5, &lt;a href="https://doi.org/10.1126/science.1099390" role="doc-biblioref"&gt;https://doi.org/10.1126/science.1099390&lt;/a&gt;; Michael B. Elowitz et al., “Stochastic Gene Expression in a Single Cell,” &lt;em&gt;Science&lt;/em&gt; 297, no. 5584 (August 16, 2002): 1183–6, &lt;a href="https://doi.org/10.1126/science.1070919" role="doc-biblioref"&gt;https://doi.org/10.1126/science.1070919&lt;/a&gt;.&lt;/p&gt;'><sup>7</sup></a></span></p>
+<p>Although all this technological development has provided a significant
+advance for the scientific community, after acquiring fluorescence
+images, the extraction of quantitative properties from these images is
+crucial, but unfortunately, a difficult step for analyzing experiments.
+Not so long ago, image analysis in biology relied on manual
+quantification. However, manual analysis suffers from two main problems:
+1) accuracy and 2) scalability (that is, analyzing miles or more
+images). Fortunately, improvements in image accuracy and computational
+image analysis capabilities are revolutionizing the quantification of
+biological processes through.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Juan C Caicedo et al., “Data-Analysis Strategies for Image-Based Cell Profiling,” &lt;em&gt;Nature Methods&lt;/em&gt; 14, no. 9 (September 2017): 849–63, &lt;a href="https://doi.org/10.1038/nmeth.4397" role="doc-biblioref"&gt;https://doi.org/10.1038/nmeth.4397&lt;/a&gt;; Kevin Smith et al., “Phenotypic Image Analysis Software Tools for Exploring and Understanding Big Image Data from Cell-Based Assays,” &lt;em&gt;Cell Systems&lt;/em&gt; 6, no. 6 (June 2018): 636–53, &lt;a href="https://doi.org/10.1016/j.cels.2018.06.001" role="doc-biblioref"&gt;https://doi.org/10.1016/j.cels.2018.06.001&lt;/a&gt;.&lt;/p&gt;'><sup>8</sup></a></span> Therefore, the
+manual correction required to analyze the experiments is minimal.</p>
+<p>Here, we used a series of programs in <span class="math inline">\(\mu \mathrm{J}\)</span>
+(<a href="https://github.com/ccg-esb-lab/uJ" class="uri">https://github.com/ccg-esb-lab/uJ</a>), which consists of an
+<span class="math inline">\(\mathrm{ImageJ}\)</span> macro library (mainly) for quantifying unicellular
+bacterial dynamics in microfluidic devices.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Caroline A Schneider, Wayne S Rasband, and Kevin W Eliceiri, “NIH Image to Imagej: 25 Years of Image Analysis,” &lt;em&gt;Nature Methods&lt;/em&gt; 9, no. 7 (June 28, 2012): 671–75, &lt;a href="https://doi.org/10.1038/nmeth.2089" role="doc-biblioref"&gt;https://doi.org/10.1038/nmeth.2089&lt;/a&gt;.&lt;/p&gt;'><sup>9</sup></a></span> The
+specific steps used are described below and are summarized in Figure<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span class="citeproc-not-found" data-reference-id="ref"&gt;&lt;strong&gt;???&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;'><sup>10</sup></a></span>(fig:).</p>
+</div>
+<div id="preprocessing" class="section level2">
+<h2>
+<span class="header-section-number">1.2</span> Preprocessing<a class="anchor" aria-label="anchor" href="#preprocessing"><i class="fas fa-link"></i></a>
+</h2>
+<p>We exported the figures obtained by the NIS-Elements software
+(RRID:SCR_014329) from the microfluidics experiments in TIFF (Tagged
+Image File Format) format. Each figure was named as follows:
+<em>experimentxyc1t001</em> where <em>experiment</em> indicates the name assigned to
+the experiment, <em>xy</em> the trap number, <em>c</em> the fluorescence channel, and
+<em>t</em> the passage of time.</p>
+<p>Subsequently, we compile the images, rename them and save them as images
+in different folders. We maintained the classification by fluorescence
+channels and phase contrast, and within the channel folder, it is the
+sub-classification by trap number.</p>
+</div>
+<div id="segmentation" class="section level2">
+<h2>
+<span class="header-section-number">1.3</span> Segmentation<a class="anchor" aria-label="anchor" href="#segmentation"><i class="fas fa-link"></i></a>
+</h2>
+<p>To determine which parts of the photographs correspond to cells, we
+carry out an image segmentation analysis. Segmentation consists of
+classification at the pixel level, which allows us to define the pixels
+that give identity to the limit of a cell, its interior, and the image’s
+background (everything that is not a cell). A new image is generated
+from the above, known as the segmentation mask, containing only the
+pixels that identify cells.</p>
+<p>To build the segmentation mask, we used <em>Deepcell</em>.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;David A. Van Valen et al., “Deep Learning Automates the Quantitative Analysis of Individual Cells in Live-Cell Imaging Experiments,” ed. Martin Meier-Schellersheim, &lt;em&gt;PLOS Computational Biology&lt;/em&gt; 12, no. 11 (November 4, 2016): e1005177, &lt;a href="https://doi.org/10.1371/journal.pcbi.1005177" role="doc-biblioref"&gt;https://doi.org/10.1371/journal.pcbi.1005177&lt;/a&gt;.&lt;/p&gt;'><sup>11</sup></a></span>
+<em>Deepcell</em> is a network trained with a robust set of images that people
+previously classified as cells. However, the generation of the
+segmentation masks is not absolved of errors (see also Section
+<a href="image-processing.html#manual-corrections">1.5</a>). Sometimes we must correct them manually due
+to 1) mistakenly identifying two or more cells as one, 2) identifying
+two or more cells when it is only one cell, and 3) failing to identify a
+cell.</p>
+</div>
+<div id="tracking" class="section level2">
+<h2>
+<span class="header-section-number">1.4</span> Tracking<a class="anchor" aria-label="anchor" href="#tracking"><i class="fas fa-link"></i></a>
+</h2>
+<p>From the image segmentation, we obtain ROI files (region of interest),
+which contain coordinates of the position of individual cells in each
+photograph.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Ron Brinkmann, &lt;em&gt;The Art and Science of Digital Compositing, Second Edition: Techniques for Visual Effects, Animation and Motion Graphics (the Morgan Kaufmann Series in ... Morgan Kaufmann Series in Computer Graphics)&lt;/em&gt;, 2nd ed. (San Francisco, CA, USA: Morgan Kaufmann Publishers Inc., 2008).&lt;/p&gt;"><sup>12</sup></a></span> Tracking is the tracking of a region of
+interest in a consecutive series of images. In this case, the tracking
+generates the identification of the lineages, that is, the ancestry of
+each cell.</p>
+<p>We read the ROI files in Python through the <em>shapely</em> package, which
+efficiently reconstructs polygons, thus calculating the length of the
+cells.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Guido Van Rossum and Fred L. Drake, &lt;em&gt;Python 3 Reference Manual&lt;/em&gt; (Scotts Valley, CA: CreateSpace, 2009); Sean Gillies and others, “Shapely: Manipulation and Analysis of Geometric Objects” (toblerity.org, n.d.), &lt;a href="https://github.com/Toblerity/Shapely" role="doc-biblioref"&gt;https://github.com/Toblerity/Shapely&lt;/a&gt;.&lt;/p&gt;'><sup>13</sup></a></span> Also, in Python using ROI files,
+we track cells with the k-nearest neighbors algorithm that uses various
+properties such as fluorescence intensity, length, and shape of each
+cell, to identify cell lineages.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;N. S. Altman, “An Introduction to Kernel and Nearest-Neighbor Nonparametric Regression,” &lt;em&gt;The American Statistician&lt;/em&gt; 46, no. 3 (August 1992): 175–85, &lt;a href="https://doi.org/10.1080/00031305.1992.10475879" role="doc-biblioref"&gt;https://doi.org/10.1080/00031305.1992.10475879&lt;/a&gt;.&lt;/p&gt;'><sup>14</sup></a></span></p>
+</div>
+<div id="manual-corrections" class="section level2">
+<h2>
+<span class="header-section-number">1.5</span> Manual corrections<a class="anchor" aria-label="anchor" href="#manual-corrections"><i class="fas fa-link"></i></a>
+</h2>
+<p>For cell-tracking manual correction, we used <em>Napari,</em> an open-source
+python-based tool designed to explore, annotate, and analyze large
+multidimensional images.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Nicholas Sofroniew et al., &lt;em&gt;Napari/Napari: 0.4.12rc2&lt;/em&gt; (Zenodo, 2021), &lt;a href="https://doi.org/10.5281/ZENODO.3555620" role="doc-biblioref"&gt;https://doi.org/10.5281/ZENODO.3555620&lt;/a&gt;.&lt;/p&gt;'><sup>15</sup></a></span> Our custom cell-viewer allows
+us to easy lineage data visualization, custom-plotting, and
+lineage-correction. Code for our cell-viewer is available on
+<a href="https://github.com/ccg-esb-lab/uJ/tree/master/single-channel" class="uri">https://github.com/ccg-esb-lab/uJ/tree/master/single-channel</a>.</p>
+<p>We produced high-throughput data of thousands of cells with a
+single-cell resolution to the end of the lineages manual reconstruction.
+We obtained data about time-series of fluorescent intensity,
+morphological properties of individual cells (<em>e.g.</em>, elongation,
+duplication rate), and time-resolved population-level statistics
+(<em>e.g.</em>, probability of survival to the antibiotic shock).</p>
+</div>
+<div id="data-extraction" class="section level2">
+<h2>
+<span class="header-section-number">1.6</span> Data extraction<a class="anchor" aria-label="anchor" href="#data-extraction"><i class="fas fa-link"></i></a>
+</h2>
+<p>We construct a file in columnar format through image processing that
+contains the information necessary to analyze each experiment (<em>i.e.</em>,
+chromosomal and plasmids) in its different traps (<em>i.e.</em>, XY
+identifier). See Table <a href="image-processing.html#tab:data-columns-specifications">1.1</a> for a full
+description of the output data. Subsequently, the table was analyzed in
+R for statistical computation and plotting (see Chapter
+<a href="experiment-analysis.html#experiment-analysis">2</a>).<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;R Core Team, &lt;em&gt;R: A Language and Environment for Statistical Computing&lt;/em&gt; (Vienna, Austria: R Foundation for Statistical Computing, 2021), &lt;a href="https://www.R-project.org/" role="doc-biblioref"&gt;https://www.R-project.org/&lt;/a&gt;.&lt;/p&gt;'><sup>16</sup></a></span></p>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:data-columns-specifications">Table 1.1: </span> Resulting table from image processing.</caption>
+<colgroup>
+<col width="35%">
+<col width="64%">
+</colgroup>
+<thead><tr class="header">
+<th>Column</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>experimentID</td>
+<td>Unique identifier of the experiment.</td>
+</tr>
+<tr class="even">
+<td>trapID</td>
+<td>Unique identifier of the trap used.</td>
+</tr>
+<tr class="odd">
+<td>lineageID</td>
+<td>Unique integer of the stem cell and its ancestry.</td>
+</tr>
+<tr class="even">
+<td>cellID</td>
+<td>Unique identification number for each cell existing since the
+beginning of the experiment or generated later.</td>
+</tr>
+<tr class="odd">
+<td>motherID</td>
+<td>Represents the identification number of the stem cell that gave
+rise to the progeny.</td>
+</tr>
+<tr class="even">
+<td>trackID</td>
+<td>Indicates the x-y coordinates where the cell being tracked
+starts.</td>
+</tr>
+<tr class="odd">
+<td>roiID</td>
+<td>Indicates the x-y position in which the cell is located,
+followed after each photograph.</td>
+</tr>
+<tr class="even">
+<td>frame</td>
+<td>Number of the photograph in the sequence of photographs taken,
+indicating the elapsed time (10 minutes per frame).</td>
+</tr>
+<tr class="odd">
+<td>length</td>
+<td>Cell length.</td>
+</tr>
+<tr class="even">
+<td>division</td>
+<td>Indicates cell division events, represented by the value 1 when
+they occur and 0 otherwise.</td>
+</tr>
+<tr class="odd">
+<td>GFP</td>
+<td>Represents the relative fluorescence intensity in each cell by
+green fluorescent protein (<em>i.e.</em>, GFP).</td>
+</tr>
+<tr class="even">
+<td>DsRed</td>
+<td>Represents the relative fluorescence intensity for cells
+generated by rhodamine’s internalization (<em>i.e.</em>, DsRed); an
+indicator of cell death events.</td>
+</tr>
+<tr class="odd">
+<td>tracking_score</td>
+<td>Determine how good or bad the tracking of a cell was.</td>
+</tr>
+<tr class="even">
+<td>state</td>
+<td>Indicates the state of the cell determined from its length and
+fluorescence thresholds. -1 for death, 0 for normal, and 1 for
+filamentation (see Section
+<a href="experiment-analysis.html#experiment-general-preprocessing">2.2</a> for detailed
+information).</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="introduction.html">Introduction</a></div>
+<div class="next"><a href="experiment-analysis.html"><span class="header-section-number">2</span> Experiment analysis</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#image-processing"><span class="header-section-number">1</span> Image processing</a></li>
+<li><a class="nav-link" href="#introduction-1"><span class="header-section-number">1.1</span> Introduction</a></li>
+<li><a class="nav-link" href="#preprocessing"><span class="header-section-number">1.2</span> Preprocessing</a></li>
+<li><a class="nav-link" href="#segmentation"><span class="header-section-number">1.3</span> Segmentation</a></li>
+<li><a class="nav-link" href="#tracking"><span class="header-section-number">1.4</span> Tracking</a></li>
+<li><a class="nav-link" href="#manual-corrections"><span class="header-section-number">1.5</span> Manual corrections</a></li>
+<li><a class="nav-link" href="#data-extraction"><span class="header-section-number">1.6</span> Data extraction</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/jvelezmagic/undergraduate_research_project/blob/main/01-image-processing.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/jvelezmagic/undergraduate_research_project/edit/main/01-image-processing.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Bacterial filamentation: a bet for survival in stressful environments</strong>" was written by Vélez Santiago Jesús. It was last built on 2021-12-04.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

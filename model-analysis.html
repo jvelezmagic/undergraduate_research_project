@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 3 Models to the rescue; filamentation abstraction | Bacterial filamentation: a bet for survival in stressful environments</title>
+<meta name="author" content="Vélez Santiago Jesús">
+<meta name="description" content="3.1 Introduction By integrating information from the environment, cells can alter their cell cycle. For instance, some cells arrest the cell division in the presence of toxic agents but continue...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 3 Models to the rescue; filamentation abstraction | Bacterial filamentation: a bet for survival in stressful environments">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://jvelezmagic.github.io/undergraduate_research_project/index.html/model-analysis.html">
+<meta property="og:description" content="3.1 Introduction By integrating information from the environment, cells can alter their cell cycle. For instance, some cells arrest the cell division in the presence of toxic agents but continue...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 3 Models to the rescue; filamentation abstraction | Bacterial filamentation: a bet for survival in stressful environments">
+<meta name="twitter:description" content="3.1 Introduction By integrating information from the environment, cells can alter their cell cycle. For instance, some cells arrest the cell division in the presence of toxic agents but continue...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="css/style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Bacterial filamentation: a bet for survival in stressful environments</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="introduction.html">Introduction</a></li>
+<li><a class="" href="image-processing.html"><span class="header-section-number">1</span> Image processing</a></li>
+<li><a class="" href="experiment-analysis.html"><span class="header-section-number">2</span> Experiment analysis</a></li>
+<li><a class="active" href="model-analysis.html"><span class="header-section-number">3</span> Models to the rescue; filamentation abstraction</a></li>
+<li><a class="" href="general-discussion.html"><span class="header-section-number">4</span> Discussion</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="code-availability.html"><span class="header-section-number">A</span> Code availability</a></li>
+<li><a class="" href="software-tools.html"><span class="header-section-number">B</span> Software tools</a></li>
+<li><a class="" href="software-usage.html"><span class="header-section-number">C</span> Software usage</a></li>
+<li><a class="" href="colophon.html"><span class="header-section-number">D</span> Colophon</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/jvelezmagic/undergraduate_research_project">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="model-analysis" class="section level1">
+<h1>
+<span class="header-section-number">3</span> Models to the rescue; filamentation abstraction<a class="anchor" aria-label="anchor" href="#model-analysis"><i class="fas fa-link"></i></a>
+</h1>
+<div id="introduction-3" class="section level2">
+<h2>
+<span class="header-section-number">3.1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction-3"><i class="fas fa-link"></i></a>
+</h2>
+<p>By integrating information from the environment, cells can alter their
+cell cycle. For instance, some cells arrest the cell division in the
+presence of toxic agents but continue to grow. Previous studies have
+shown that this filamentation phenomenon provides a mechanism that
+enables cells to cope with stress, which leads to an increase in the
+probability of survival.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Justice et al., “Morphological Plasticity as a Bacterial Survival Strategy.”&lt;/p&gt;"><sup>27</sup></a></span>
+For example, filamentation can be a process capable of subverting innate
+defenses during urinary tract infection, facilitating the transition of
+additional rounds of intracellular bacterial community formation.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Justice et al., “Filamentation by Escherichia Coli Subverts Innate Defenses During Urinary Tract Infection.”&lt;/p&gt;"><sup>28</sup></a></span></p>
+<p>Although filament growth can help mitigate environmental stress (e.g.,
+by activating the SOS response system<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Justice et al., “Morphological Plasticity as a Bacterial Survival Strategy.”&lt;/p&gt;"><sup>29</sup></a></span>), the evolutionary
+benefits of producing elongated cells that do not divide are unclear.
+Here, we proposed a mathematical model based on ordinary differential
+equations that explicitly considers the concentration of intracellular
+toxin as a function of the cell’s length (see Equation
+<a href="model-analysis.html#eq:model-equation">(3.1)</a>). The model is built based on the growth ratio
+of measurements of the surface area (<span class="math inline">\(SA\)</span>) and the cell volume (<span class="math inline">\(V\)</span>),
+whereby the uptake rate of the toxin depends on the <span class="math inline">\(SA\)</span>. However, <span class="math inline">\(V's\)</span>
+rate of change for <span class="math inline">\(SA\)</span> is higher than <span class="math inline">\(SA\)</span> for <span class="math inline">\(V\)</span>, which results in a
+transient reduction in the intracellular toxin concentration (see Figure
+<a href="model-analysis.html#fig:model-01-cell-dimensions-relationship">3.1</a>). Therefore, we
+hypothesized that this geometric interpretation of filamentation
+represents a biophysical defense line to increase the probability of a
+bacterial population’s survival in response to stressful environments.</p>
+<p>(ref:model-01-cell-dimensions-relationship-scap) Cell dimensions
+relationship.</p>
+<p>(ref:model-01-cell-dimensions-relationship-cap) <strong>Cell dimensions
+relationship.</strong> We evaluated the resulting geometric properties on a
+grid of side lengths and radii with a pill-shaped cell. We can see that
+by maintaining a constant radius (typical case in bacteria such as <em>E.
+coli</em>) and increasing the side length, the surface area / volume
+relationship (<span class="math inline">\(SA/V\)</span>) tends to decline since the <span class="math inline">\(V\)</span> will grow at a
+higher rate than the <span class="math inline">\(SA\)</span>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:model-01-cell-dimensions-relationship"></span>
+<img src="https://raw.githubusercontent.com/jvelezmagic/CellFilamentation/main/plots/cell_dimensions_relationship.svg" alt="(ref:model-01-cell-dimensions-relationship-cap)" width="100%"><p class="caption">
+Figure 3.1: (ref:model-01-cell-dimensions-relationship-cap)
+</p>
+</div>
+</div>
+<div id="filamentation-model" class="section level2">
+<h2>
+<span class="header-section-number">3.2</span> Filamentation model<a class="anchor" aria-label="anchor" href="#filamentation-model"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let us assume the shape of cells is a cylinder with hemispherical ends.
+Based on this geometric structure, a nonlinear system of differential
+equations governing filamentation can be written as follows:</p>
+<span class="math display" id="eq:model-equation">\[\begin{equation}
+\begin{split}
+\frac{dT_{int}}{dt} &amp;= T_{sa} \cdot (T_{ext}(t) - T_{vol}) - \alpha \cdot T_{ant} \cdot T_{int} \\
+\frac{dL}{dt} &amp;= 
+  \begin{cases} 
+    \beta \cdot L,&amp; \text{if } T_{int} \geq T_{sos},  t \geq \tau_{sos} + \tau_{delay} \text{ and } L &lt; L_{max}  \\
+    0,            &amp; \text{otherwise}
+  \end{cases}
+\end{split}
+\tag{3.1}
+\end{equation}\]</span>
+<p>It considers the internal toxin (<span class="math inline">\(T_{int}\)</span>) and the cell length (<span class="math inline">\(L\)</span>) as
+variables. <span class="math inline">\(T_{sa}\)</span> and <span class="math inline">\(T_{vol}\)</span> represent the surface area and volume
+of the toxin in the cell, respectively. <span class="math inline">\(T_{ext}(t)\)</span> is a function that
+returns the amount of toxin in the cell medium. <span class="math inline">\(T_{anti}\)</span> and <span class="math inline">\(\alpha\)</span>
+symbolize the amount of antitoxin and its efficiency rate, respectively.
+<span class="math inline">\(\beta\)</span> as the rate of filamentation. <span class="math inline">\(L_{max}\)</span> is the maximum size that
+the cell can reach when filamentation is on. <span class="math inline">\(T_{sos}\)</span> and <span class="math inline">\(T_{kill}\)</span>
+are thresholds for filamentation and death, respectively. Finally,
+<span class="math inline">\(\tau_{delay}\)</span> is the amount of time required to activate filamentation
+after reaching the <span class="math inline">\(T_{sos}\)</span> threshold.</p>
+</div>
+<div id="numerical-results" class="section level2">
+<h2>
+<span class="header-section-number">3.3</span> Numerical results<a class="anchor" aria-label="anchor" href="#numerical-results"><i class="fas fa-link"></i></a>
+</h2>
+<div id="filamentation-provides-transient-resistance-to-stressful-conditions" class="section level3">
+<h3>
+<span class="header-section-number">3.3.1</span> Filamentation provides transient resistance to stressful conditions<a class="anchor" aria-label="anchor" href="#filamentation-provides-transient-resistance-to-stressful-conditions"><i class="fas fa-link"></i></a>
+</h3>
+<p>When growing rod-shaped bacterial cells under constant conditions, the
+distribution of lengths and radii is narrow.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;M. Schaechter et al., “Growth, Cell and Nuclear Divisions in Some Bacteria,” &lt;em&gt;Journal of General Microbiology&lt;/em&gt; 29, no. 3 (November 1962): 421–34, &lt;a href="https://doi.org/10.1099/00221287-29-3-421" role="doc-biblioref"&gt;https://doi.org/10.1099/00221287-29-3-421&lt;/a&gt;.&lt;/p&gt;'><sup>30</sup></a></span> However, when growing under stress
+conditions, some cells produce filaments.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;M. Schaechter, O. MaalOe, and N. O. Kjeldgaard, “Dependency on Medium and Temperature of Cell Size and Chemical Composition During Balanced Growth of Salmonella Typhimurium,” &lt;em&gt;Journal of General Microbiology&lt;/em&gt; 19, no. 3 (December 1958): 592–606, &lt;a href="https://doi.org/10.1099/00221287-19-3-592" role="doc-biblioref"&gt;https://doi.org/10.1099/00221287-19-3-592&lt;/a&gt;.&lt;/p&gt;'><sup>31</sup></a></span> This phenomenon may depend
+on the SOS response system,<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Julia Bos et al., “Emergence of Antibiotic Resistance from Multinucleated Bacterial Filaments,” &lt;em&gt;Proceedings of the National Academy of Sciences&lt;/em&gt; 112, no. 1 (January 2015): 178–83, &lt;a href="https://doi.org/10.1073/pnas.1420702111" role="doc-biblioref"&gt;https://doi.org/10.1073/pnas.1420702111&lt;/a&gt;.&lt;/p&gt;'><sup>32</sup></a></span>
+which can repair DNA damage, giving the cell greater chances of
+recovering and surviving under stress conditions. Besides, the SOS
+response has been reported to have precise temporal coordination in
+individual bacteria.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Nir Friedman et al., “Precise Temporal Modulation in the Response of the SOS DNA Repair Network in Individual Bacteria,” ed. B’en’edicte Michel, &lt;em&gt;PLoS Biology&lt;/em&gt; 3, no. 7 (June 2005): e238, &lt;a href="https://doi.org/10.1371/journal.pbio.0030238" role="doc-biblioref"&gt;https://doi.org/10.1371/journal.pbio.0030238&lt;/a&gt;.&lt;/p&gt;'><sup>33</sup></a></span> Among the
+stress conditions that can trigger the SOS response is exposure to
+beta-lactam antibiotics.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;C. Miller, “SOS Response Induction by -Lactams and Bacterial Defense Against Antibiotic Lethality,” &lt;em&gt;Science&lt;/em&gt; 305, no. 5690 (September 2004): 1629–31, &lt;a href="https://doi.org/10.1126/science.1101630" role="doc-biblioref"&gt;https://doi.org/10.1126/science.1101630&lt;/a&gt;.&lt;/p&gt;'><sup>34</sup></a></span></p>
+<p>In general, filamentation has been studied as an unavoidable consequence
+of stress. However, we considered filamentation an active process that
+produces the first line of defense against toxic agents. Therefore, a
+differential equation model was proposed that assesses the change in the
+amount of internal toxin as a function of cell length. At the core of
+this model, we include the intrinsic relationship between the surface
+area and the capsule volume since it is vital in determining cell size.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Leigh K. Harris and Julie A. Theriot, “Relative Rates of Surface and Volume Synthesis Set Bacterial Cell Size,” &lt;em&gt;Cell&lt;/em&gt; 165, no. 6 (June 2016): 1479–92, &lt;a href="https://doi.org/10.1016/j.cell.2016.05.045" role="doc-biblioref"&gt;https://doi.org/10.1016/j.cell.2016.05.045&lt;/a&gt;.&lt;/p&gt;'><sup>35</sup></a></span></p>
+<p>In figure <a href="model-analysis.html#fig:model-01-filamentation-model-ramp-signal">3.2</a>, cells
+grow in a ramp-shaped external toxin signal without considering a
+toxin-antitoxin system.As time progresses, the toxin in the external
+environment increases, so the cell raises its internal toxin levels. At
+approximately time <span class="math inline">\(22\)</span>, any cell reaches <span class="math inline">\(T_{sos}\)</span>. The control cell
+(unable to filament) and the average cell (capable of filamenting) reach
+the death threshold, <span class="math inline">\(T_{kill}\)</span>, at times <span class="math inline">\(31\)</span> and <span class="math inline">\(93\)</span> (hatched and
+solid black lines), respectively. Therefore, under this example, the
+cell has increased its life span three times more than in control by
+growing as a filament (green shaded area versus orange shaded area). In
+turn, figure <a href="model-analysis.html#fig:model-01-filamentation-model-ramp-signal">3.2</a> also
+shows stochastic simulations of the system in the intake of internal
+toxins. Considering that cell growth and death processes are inherently
+stochastic, stochastic simulations would be a better approximation.
+However, from now on, we will continue with the study of the
+deterministic model.</p>
+<p>(ref:model-01-filamentation-model-ramp-signal-scap) Effect of
+filamentation on intracellular toxin concentration.</p>
+<p>(ref:model-01-filamentation-model-ramp-signal-cap) <strong>Effect of
+filamentation on intracellular toxin concentration.</strong> In the presence of
+an extracellular toxic agent, the intracellular concentration of the
+toxin (<span class="math inline">\(T_{int}\)</span>) increases until reaching a damage threshold that
+triggers filamentation (<span class="math inline">\(T_{sos}\)</span>, blue point), increasing cell length
+(<span class="math inline">\(L\)</span>). When filamentation is on, the cell decreases <span class="math inline">\(T_{int}\)</span> due to the
+intrinsic relationship between surface area and cell volume. When the
+cell reaches its maximum length, it eventually dies if the stressful
+stimulus is not removed (<span class="math inline">\(T_{kill}\)</span>, red dot). The hatched line
+represents a cell that can not grow as filament. The orange shaded area
+is the time between stress and the non-filament cell’s death, while the
+green shaded area represents the temporal gain for doing so. The blue
+background lines represent stochastic simulations of the same system.</p>
+<div class="figure">
+<span style="display:block;" id="fig:model-01-filamentation-model-ramp-signal"></span>
+<img src="https://raw.githubusercontent.com/jvelezmagic/CellFilamentation/main/plots/filamentation_model_ramp_signal.svg" alt="(ref:model-01-filamentation-model-ramp-signal-cap)" width="100%"><p class="caption">
+Figure 3.2: (ref:model-01-filamentation-model-ramp-signal-cap)
+</p>
+</div>
+</div>
+<div id="filamentation-increases-the-minimum-inhibitory-concentration" class="section level3">
+<h3>
+<span class="header-section-number">3.3.2</span> Filamentation increases the minimum inhibitory concentration<a class="anchor" aria-label="anchor" href="#filamentation-increases-the-minimum-inhibitory-concentration"><i class="fas fa-link"></i></a>
+</h3>
+<p>In other to characterize the degree of resistance, dose-response
+experiments determine the Minimum Inhibitory Concentration (MIC).<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Jennifer M. Andrews, “Determination of Minimum Inhibitory Concentrations,” &lt;em&gt;Journal of Antimicrobial Chemotherapy&lt;/em&gt; 48, no. suppl_1 (July 1, 2001): 5–16, &lt;a href="https://doi.org/10.1093/jac/48.suppl_1.5" role="doc-biblioref"&gt;https://doi.org/10.1093/jac/48.suppl_1.5&lt;/a&gt;; J. M. Andrews, “Determination of Minimum Inhibitory Concentrations,” &lt;em&gt;Journal of Antimicrobial Chemotherapy&lt;/em&gt; 49, no. 6 (June 2002): 1049–9, &lt;a href="https://doi.org/10.1093/jac/dkf083" role="doc-biblioref"&gt;https://doi.org/10.1093/jac/dkf083&lt;/a&gt;.&lt;/p&gt;'><sup>36</sup></a></span> Bacteria are
+capable of modifying their MIC through various mechanisms, for example,
+mutations,<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;P Lambert, “Bacterial Resistance to Antibiotics: Modified Target Sites,” &lt;em&gt;Advanced Drug Delivery Reviews&lt;/em&gt; 57, no. 10 (July 2005): 1471–85, &lt;a href="https://doi.org/10.1016/j.addr.2005.04.003" role="doc-biblioref"&gt;https://doi.org/10.1016/j.addr.2005.04.003&lt;/a&gt;.&lt;/p&gt;'><sup>37</sup></a></span> impaired
+membrane permeability,<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Kazuhito Sato and Taiji Nakae, “Outer Membrane Permeability of &lt;em&gt;Acinetobacter&lt;/em&gt; &lt;em&gt;Calcoaceticus&lt;/em&gt; and Its Implication in Antibiotic Resistance,” &lt;em&gt;Journal of Antimicrobial Chemotherapy&lt;/em&gt; 28, no. 1 (1991): 35–45, &lt;a href="https://doi.org/10.1093/jac/28.1.35" role="doc-biblioref"&gt;https://doi.org/10.1093/jac/28.1.35&lt;/a&gt;.&lt;/p&gt;'><sup>38</sup></a></span> flux pumps,<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;M. A. Webber, “The Importance of Efflux Pumps in Bacterial Antibiotic Resistance,” &lt;em&gt;Journal of Antimicrobial Chemotherapy&lt;/em&gt; 51, no. 1 (January 2003): 9–11, &lt;a href="https://doi.org/10.1093/jac/dkg050" role="doc-biblioref"&gt;https://doi.org/10.1093/jac/dkg050&lt;/a&gt;.&lt;/p&gt;'><sup>39</sup></a></span> toxin-inactivating enzymes,<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;G Wright, “Bacterial Resistance to Antibiotics: Enzymatic Degradation and Modification,” &lt;em&gt;Advanced Drug Delivery Reviews&lt;/em&gt; 57, no. 10 (July 2005): 1451–70, &lt;a href="https://doi.org/10.1016/j.addr.2005.04.002" role="doc-biblioref"&gt;https://doi.org/10.1016/j.addr.2005.04.002&lt;/a&gt;.&lt;/p&gt;'><sup>40</sup></a></span> and plasticity phenotypic.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Justice et al., “Morphological Plasticity as a Bacterial Survival Strategy.”&lt;/p&gt;"><sup>41</sup></a></span> The latter is our
+phenomenon of interest because it considers the change in shape and
+size, allowing us to study it as a strategy to promote bacterial
+survival.</p>
+<p>We decided to analyze the MIC change caused by filamentation through
+stable exposure experiments of different toxin amounts at other exposure
+times. Computational simulations show that when comparing cells unable
+to filament with those that can, there is an increase in the capacity to
+tolerate more generous amounts of toxin, increasing their MIC (see
+Figure <a href="model-analysis.html#fig:model-02-toxin-exposure-experiment">3.3</a>). Therefore, it
+confers a gradual increase in resistance beyond filamentation’s role in
+improving the cell’s life span as the exposure time is longer.</p>
+<p>(ref:model-02-toxin-exposure-experiment-scap) Effect of filamentation on
+minimum inhibitory concentration (MIC).</p>
+<p>(ref:model-02-toxin-exposure-experiment-cap) <strong>Effect of filamentation
+on minimum inhibitory concentration (MIC).</strong> By exposing a cell to
+different toxin concentrations with stable signals, the cell achieves a
+set MIC for conditions without or with filamentation (separation between
+stressed and dead state) for each exposure time, without representing a
+change for the normal state cells’ points (blue zone). Thus, the green
+line represents a gradual MIC increase when comparing each MIC between
+conditions for each exposure time.</p>
+<div class="figure">
+<span style="display:block;" id="fig:model-02-toxin-exposure-experiment"></span>
+<img src="03-model-analysis_files/figure-html/model-02-toxin-exposure-experiment-1.svg" alt="(ref:model-02-toxin-exposure-experiment-cap)" width="100%"><p class="caption">
+Figure 3.3: (ref:model-02-toxin-exposure-experiment-cap)
+</p>
+</div>
+</div>
+<div id="heterogeneity-in-the-toxin-antitoxin-system-represents-a-double-edged-sword-in-survival-probability" class="section level3">
+<h3>
+<span class="header-section-number">3.3.3</span> Heterogeneity in the toxin-antitoxin system represents a double-edged sword in survival probability<a class="anchor" aria-label="anchor" href="#heterogeneity-in-the-toxin-antitoxin-system-represents-a-double-edged-sword-in-survival-probability"><i class="fas fa-link"></i></a>
+</h3>
+<p>One of the SOS response system properties is that it presents
+synchronous activation times within homogeneous populations.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Friedman et al., “Precise Temporal Modulation in the Response of the SOS DNA Repair Network in Individual Bacteria.”&lt;/p&gt;"><sup>42</sup></a></span> It has constant gene
+expression rates that help it cope with stress; however, it is possible
+to introduce variability by considering having multicopy resistance
+plasmids.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Samuel Million-Weaver and Manel Camps, “Mechanisms of Plasmid Segregation: Have Multicopy Plasmids Been Overlooked?” &lt;em&gt;Plasmid&lt;/em&gt; 75 (September 2014): 27–36, &lt;a href="https://doi.org/10.1016/j.plasmid.2014.07.002" role="doc-biblioref"&gt;https://doi.org/10.1016/j.plasmid.2014.07.002&lt;/a&gt;.&lt;/p&gt;'><sup>43</sup></a></span> Therefore,
+the response times would have an asynchronous behavior at the global
+level but synchronous at the local level.</p>
+<p>To include this observation into the model, we include a negative term
+to the internal toxin representing a toxin-antitoxin system. Therefore,
+the model now has an efficiency rate of the antitoxin and a stable
+amount per cell. We simulate the effect of the toxin-antitoxin system
+variation within a <span class="math inline">\(1000\)</span>-cell population; we initialize each one with
+similar initial conditions, except for the amount of internal antitoxin,
+defined as <span class="math inline">\(T_{anti} \sim N(\mu, \sigma)\)</span>. Considering that <span class="math inline">\(T_{anti}\)</span>
+values <span class="math inline">\(&lt; 0\)</span> are equal to <span class="math inline">\(0\)</span>. For each experiment, <span class="math inline">\(\mu = 25\)</span>, while it
+was evaluated in the range <span class="math inline">\([0-20]\)</span>. For the generation of pseudo-random
+numbers and to ensure the results’ reproducibility, the number <span class="math inline">\(42\)</span> was
+considered seed.</p>
+<p>As shown in Figure <a href="model-analysis.html#fig:model-02-antitoxin-experiment">3.4</a>, when we
+compare heterogeneous populations in their toxin-antitoxin system, we
+can achieve different population dynamics, that is, changes in the final
+proportions of cell states; normal, stressed, and dead. This difference
+is because the cell sometimes has more or less antitoxin to handle the
+incoming stress situation.</p>
+<p>(ref:model-02-antitoxin-experiment-scap) Variability in the
+toxin-antitoxin system produces different proportions of cell states.</p>
+<p>(ref:model-02-antitoxin-experiment-cap) <strong>Variability in the
+toxin-antitoxin system produces different proportions of cell states.</strong>
+Histograms represent the distribution of antitoxin quantity, while the
+curves represent the population’s fraction over time. The cell will
+start to filament after reaching a certain internal toxin threshold,
+<span class="math inline">\(T_{sos}\)</span>. Therefore, the expected global effect on the population’s
+response times based on the amount of antitoxin is asynchronous, while
+at the local level, it is synchronous. Consequently, different
+proportions are presented in the cellular states since some cells will
+activate the filamentation system before and others later.</p>
+<div class="figure">
+<span style="display:block;" id="fig:model-02-antitoxin-experiment"></span>
+<img src="03-model-analysis_files/figure-html/model-02-antitoxin-experiment-1.svg" alt="(ref:model-02-antitoxin-experiment-cap)" width="100%"><p class="caption">
+Figure 3.4: (ref:model-02-antitoxin-experiment-cap)
+</p>
+</div>
+<p>Considering that the toxin-antitoxin system’s variability can modify the
+proportions of final cell states, a question arose about heterogeneity
+levels’ global behavior. To answer this question, we evaluate the
+probability of survival for each population, defined by its distribution
+of antitoxin levels. In this way, we characterized the population
+survival probability function into three essential points according to
+its effect: negative, invariant, and positive (see Figure
+<a href="model-analysis.html#fig:model-02-survival-probability">3.5</a>). Furthermore, these points are
+relative to the homogeneous population’s death time in question
+(<span class="math inline">\(\tau_{kill}\)</span>): when <span class="math inline">\(t &lt; \tau_{kill}\)</span> will represent a detrimental
+effect on survival, <span class="math inline">\(t = \tau_{kill}\)</span> will be independent of
+variability, and <span class="math inline">\(t &gt; \tau_{kill}\)</span> will be a beneficial point for
+survival. Therefore, we concluded that the effect of heterogeneity in a
+toxin-antitoxin system represents a double-edged sword.</p>
+<p>(ref:model-02-survival-probability-scap) Effect of variability on the
+toxin-antitoxin system.</p>
+<p>(ref:model-02-survival-probability-cap) <strong>Effect of variability on the
+toxin-antitoxin system.</strong> The color of the heatmap is representative of
+the fraction of living cells at exposure time. The white vertical line
+represents the death time of the homogeneous population (<span class="math inline">\(\tau_{kill}\)</span>).
+At <span class="math inline">\(t &lt; \tau_{kill}\)</span>, it is shown that the fraction of survivors
+decreases as the variability in the population increases. When
+<span class="math inline">\(t = \tau_{kill}\)</span>, the variability does not affect the fraction of
+survivors, but it represents a percentage improvement for the
+homogeneous population. Finally, when <span class="math inline">\(t &gt; \tau_{kill}\)</span>, the
+heterogeneity of the population favors survival.</p>
+<div class="figure">
+<span style="display:block;" id="fig:model-02-survival-probability"></span>
+<img src="03-model-analysis_files/figure-html/model-02-survival-probability-1.svg" alt="(ref:model-02-survival-probability-cap)" width="100%"><p class="caption">
+Figure 3.5: (ref:model-02-survival-probability-cap)
+</p>
+</div>
+</div>
+</div>
+<div id="benefits-and-limitations-of-the-model" class="section level2">
+<h2>
+<span class="header-section-number">3.4</span> Benefits and limitations of the model<a class="anchor" aria-label="anchor" href="#benefits-and-limitations-of-the-model"><i class="fas fa-link"></i></a>
+</h2>
+<p>Today, there have been advancements in the number of techniques that
+have allowed it to extend quantitative analyses to individual cells’
+dynamic observations.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Manuel Campos et al., “A Constant Size Extension Drives Bacterial Cell Size Homeostasis,” &lt;em&gt;Cell&lt;/em&gt; 159, no. 6 (December 2014): 1433–46, &lt;a href="https://doi.org/10.1016/j.cell.2014.11.022" role="doc-biblioref"&gt;https://doi.org/10.1016/j.cell.2014.11.022&lt;/a&gt;; Deirdre Meldrum, “Faculty Opinions Recommendation of Bacterial Persistence as a Phenotypic Switch.” January 2005, &lt;a href="https://doi.org/10.3410/f.1021664.264823" role="doc-biblioref"&gt;https://doi.org/10.3410/f.1021664.264823&lt;/a&gt;; Oleksii Sliusarenko et al., “High-Throughput, Subpixel Precision Analysis of Bacterial Morphogenesis and Intracellular Spatio-Temporal Dynamics: Quantitative Analysis of Spatio-Temporal Dynamics,” &lt;em&gt;Molecular Microbiology&lt;/em&gt; 80, no. 3 (May 2011): 612–27, &lt;a href="https://doi.org/10.1111/j.1365-2958.2011.07579.x" role="doc-biblioref"&gt;https://doi.org/10.1111/j.1365-2958.2011.07579.x&lt;/a&gt;; Sattar Taheri-Araghi et al., “Cell-Size Control and Homeostasis in Bacteria,” &lt;em&gt;Current Biology&lt;/em&gt; 27, no. 9 (May 2017): 1392, &lt;a href="https://doi.org/10.1016/j.cub.2017.04.028" role="doc-biblioref"&gt;https://doi.org/10.1016/j.cub.2017.04.028&lt;/a&gt;; Tristan Ursell et al., “Rapid, Precise Quantification of Bacterial Cellular Dimensions Across a Genomic-Scale Knockout Library,” &lt;em&gt;BMC Biology&lt;/em&gt; 15, no. 1 (December 2017): 17, &lt;a href="https://doi.org/10.1186/s12915-017-0348-8" role="doc-biblioref"&gt;https://doi.org/10.1186/s12915-017-0348-8&lt;/a&gt;.&lt;/p&gt;'><sup>44</sup></a></span> Therefore, studying their
+cellular behavior every day from medium to medium can be somewhat
+reproducible, facilitating the association of complex biological
+functions in simple mathematical equations.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Frederick C. Neidhardt, “Bacterial Growth: Constant Obsession with &lt;em&gt;dN&lt;/em&gt;&lt;em&gt;/Dt&lt;/em&gt;,” &lt;em&gt;Journal of Bacteriology&lt;/em&gt; 181, no. 24 (December 1999): 7405–8, &lt;a href="https://doi.org/10.1128/JB.181.24.7405-7408.1999" role="doc-biblioref"&gt;https://doi.org/10.1128/JB.181.24.7405-7408.1999&lt;/a&gt;.&lt;/p&gt;'><sup>45</sup></a></span></p>
+<p>Here, we proposed a mathematical model showing that filamentation could
+serve as a population’s resilience mechanism to stress conditions.
+Finding that filamentation’s net effect generates an additional window
+of time for the cell to survive, decreasing the toxin’s intracellular
+concentration. However, we also found that a side effect of
+filamentation is to increase the cell’s minimum inhibitory
+concentration. On the other hand, when we introduce variability in the
+amount of antitoxin in a cell population, we found that heterogeneity
+can be a double-edged sword, sometimes detrimental and sometimes
+beneficial, depending on the time of exposure to the toxic agent.</p>
+<p>Due to the above, despite being simple, the model could have the ability
+to recapitulate the behavior seen in nature from variables that we can
+calculate easily with single-cell measurements. However, in other
+situations, it could be helpful to consider the addition of variables
+such as cell wall production and peptidoglycans’ accumulation, among
+others. Notwithstanding the lack of parameters that are a little closer
+to reality, confirming that the model can work under experimental
+conditions would represent an achievement due to its explanatory
+simplicity, starting, in this way, the path of the study of
+filamentation oriented to the ecology of stress.</p>
+
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="experiment-analysis.html"><span class="header-section-number">2</span> Experiment analysis</a></div>
+<div class="next"><a href="general-discussion.html"><span class="header-section-number">4</span> Discussion</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#model-analysis"><span class="header-section-number">3</span> Models to the rescue; filamentation abstraction</a></li>
+<li><a class="nav-link" href="#introduction-3"><span class="header-section-number">3.1</span> Introduction</a></li>
+<li><a class="nav-link" href="#filamentation-model"><span class="header-section-number">3.2</span> Filamentation model</a></li>
+<li>
+<a class="nav-link" href="#numerical-results"><span class="header-section-number">3.3</span> Numerical results</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#filamentation-provides-transient-resistance-to-stressful-conditions"><span class="header-section-number">3.3.1</span> Filamentation provides transient resistance to stressful conditions</a></li>
+<li><a class="nav-link" href="#filamentation-increases-the-minimum-inhibitory-concentration"><span class="header-section-number">3.3.2</span> Filamentation increases the minimum inhibitory concentration</a></li>
+<li><a class="nav-link" href="#heterogeneity-in-the-toxin-antitoxin-system-represents-a-double-edged-sword-in-survival-probability"><span class="header-section-number">3.3.3</span> Heterogeneity in the toxin-antitoxin system represents a double-edged sword in survival probability</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#benefits-and-limitations-of-the-model"><span class="header-section-number">3.4</span> Benefits and limitations of the model</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/jvelezmagic/undergraduate_research_project/blob/main/03-model-analysis.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/jvelezmagic/undergraduate_research_project/edit/main/03-model-analysis.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Bacterial filamentation: a bet for survival in stressful environments</strong>" was written by Vélez Santiago Jesús. It was last built on 2021-12-04.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
