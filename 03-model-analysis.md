@@ -199,7 +199,7 @@ line represents a gradual MIC increase when comparing each MIC between
 conditions for each exposure time.
 
 <div class="figure">
-<img src="03-model-analysis_files/figure-html/model-02-toxin-exposure-experiment-1.svg" alt="(ref:model-02-toxin-exposure-experiment-cap)" width="100%" />
+<img src="03-model-analysis_files/figure-epub3/model-02-toxin-exposure-experiment-1.svg" alt="(ref:model-02-toxin-exposure-experiment-cap)" width="100%" />
 <p class="caption">(\#fig:model-02-toxin-exposure-experiment)(ref:model-02-toxin-exposure-experiment-cap)</p>
 </div>
 
@@ -248,7 +248,7 @@ proportions are presented in the cellular states since some cells will
 activate the filamentation system before and others later.
 
 <div class="figure">
-<img src="03-model-analysis_files/figure-html/model-02-antitoxin-experiment-1.svg" alt="(ref:model-02-antitoxin-experiment-cap)" width="100%" />
+<img src="03-model-analysis_files/figure-epub3/model-02-antitoxin-experiment-1.svg" alt="(ref:model-02-antitoxin-experiment-cap)" width="100%" />
 <p class="caption">(\#fig:model-02-antitoxin-experiment)(ref:model-02-antitoxin-experiment-cap)</p>
 </div>
 
@@ -282,7 +282,7 @@ homogeneous population. Finally, when $t > \tau_{kill}$, the
 heterogeneity of the population favors survival.
 
 <div class="figure">
-<img src="03-model-analysis_files/figure-html/model-02-survival-probability-1.svg" alt="(ref:model-02-survival-probability-cap)" width="100%" />
+<img src="03-model-analysis_files/figure-epub3/model-02-survival-probability-1.svg" alt="(ref:model-02-survival-probability-cap)" width="100%" />
 <p class="caption">(\#fig:model-02-survival-probability)(ref:model-02-survival-probability-cap)</p>
 </div>
 
