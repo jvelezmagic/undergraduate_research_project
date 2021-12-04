@@ -51,16 +51,9 @@ hypothesized that this geometric interpretation of filamentation
 represents a biophysical defense line to increase the probability of a
 bacterial population's survival in response to stressful environments.
 
-(ref:model-01-cell-dimensions-relationship-scap) Cell dimensions
-relationship.
+(ref:model-01-cell-dimensions-relationship-scap) Cell dimensions relationship.
 
-(ref:model-01-cell-dimensions-relationship-cap) **Cell dimensions
-relationship.** We evaluated the resulting geometric properties on a
-grid of side lengths and radii with a pill-shaped cell. We can see that
-by maintaining a constant radius (typical case in bacteria such as *E.
-coli*) and increasing the side length, the surface area / volume
-relationship ($SA/V$) tends to decline since the $V$ will grow at a
-higher rate than the $SA$.
+(ref:model-01-cell-dimensions-relationship-cap) **Cell dimensions relationship.** We evaluated the resulting geometric properties on a grid of side lengths and radii with a pill-shaped cell. We can see that by maintaining a constant radius (typical case in bacteria such as *E. coli*) and increasing the side length, the surface area / volume relationship ($SA/V$) tends to decline since the $V$ will grow at a higher rate than the $SA$.
 
 <div class="figure">
 <img src="https://raw.githubusercontent.com/jvelezmagic/CellFilamentation/main/plots/cell_dimensions_relationship.svg" alt="(ref:model-01-cell-dimensions-relationship-cap)" width="100%" />
@@ -140,22 +133,9 @@ stochastic, stochastic simulations would be a better approximation.
 However, from now on, we will continue with the study of the
 deterministic model.
 
-(ref:model-01-filamentation-model-ramp-signal-scap) Effect of
-filamentation on intracellular toxin concentration.
+(ref:model-01-filamentation-model-ramp-signal-scap) Effect of filamentation on intracellular toxin concentration.
 
-(ref:model-01-filamentation-model-ramp-signal-cap) **Effect of
-filamentation on intracellular toxin concentration.** In the presence of
-an extracellular toxic agent, the intracellular concentration of the
-toxin ($T_{int}$) increases until reaching a damage threshold that
-triggers filamentation ($T_{sos}$, blue point), increasing cell length
-($L$). When filamentation is on, the cell decreases $T_{int}$ due to the
-intrinsic relationship between surface area and cell volume. When the
-cell reaches its maximum length, it eventually dies if the stressful
-stimulus is not removed ($T_{kill}$, red dot). The hatched line
-represents a cell that can not grow as filament. The orange shaded area
-is the time between stress and the non-filament cell's death, while the
-green shaded area represents the temporal gain for doing so. The blue
-background lines represent stochastic simulations of the same system.
+(ref:model-01-filamentation-model-ramp-signal-cap) **Effect of filamentation on intracellular toxin concentration.** In the presence of an extracellular toxic agent, the intracellular concentration of the toxin ($T_{int}$) increases until reaching a damage threshold that triggers filamentation ($T_{sos}$, blue point), increasing cell length ($L$). When filamentation is on, the cell decreases $T_{int}$ due to the intrinsic relationship between surface area and cell volume. When the cell reaches its maximum length, it eventually dies if the stressful stimulus is not removed ($T_{kill}$, red dot). The hatched line represents a cell that can not grow as filament. The orange shaded area is the time between stress and the non-filament cell's death, while the green shaded area represents the temporal gain for doing so. The blue background lines represent stochastic simulations of the same system.
 
 <div class="figure">
 <img src="https://raw.githubusercontent.com/jvelezmagic/CellFilamentation/main/plots/filamentation_model_ramp_signal.svg" alt="(ref:model-01-filamentation-model-ramp-signal-cap)" width="100%" />
@@ -186,17 +166,9 @@ Figure \@ref(fig:model-02-toxin-exposure-experiment)). Therefore, it
 confers a gradual increase in resistance beyond filamentation's role in
 improving the cell's life span as the exposure time is longer.
 
-(ref:model-02-toxin-exposure-experiment-scap) Effect of filamentation on
-minimum inhibitory concentration (MIC).
+(ref:model-02-toxin-exposure-experiment-scap) Effect of filamentation on minimum inhibitory concentration (MIC).
 
-(ref:model-02-toxin-exposure-experiment-cap) **Effect of filamentation
-on minimum inhibitory concentration (MIC).** By exposing a cell to
-different toxin concentrations with stable signals, the cell achieves a
-set MIC for conditions without or with filamentation (separation between
-stressed and dead state) for each exposure time, without representing a
-change for the normal state cells' points (blue zone). Thus, the green
-line represents a gradual MIC increase when comparing each MIC between
-conditions for each exposure time.
+(ref:model-02-toxin-exposure-experiment-cap) **Effect of filamentation on minimum inhibitory concentration (MIC).** By exposing a cell to different toxin concentrations with stable signals, the cell achieves a set MIC for conditions without or with filamentation (separation between stressed and dead state) for each exposure time, without representing a change for the normal state cells' points (blue zone). Thus, the green line represents a gradual MIC increase when comparing each MIC between conditions for each exposure time.
 
 <div class="figure">
 <img src="03-model-analysis_files/figure-epub3/model-02-toxin-exposure-experiment-1.svg" alt="(ref:model-02-toxin-exposure-experiment-cap)" width="100%" />
@@ -233,19 +205,9 @@ proportions of cell states; normal, stressed, and dead. This difference
 is because the cell sometimes has more or less antitoxin to handle the
 incoming stress situation.
 
-(ref:model-02-antitoxin-experiment-scap) Variability in the
-toxin-antitoxin system produces different proportions of cell states.
+(ref:model-02-antitoxin-experiment-scap) Variability in the toxin-antitoxin system produces different proportions of cell states.
 
-(ref:model-02-antitoxin-experiment-cap) **Variability in the
-toxin-antitoxin system produces different proportions of cell states.**
-Histograms represent the distribution of antitoxin quantity, while the
-curves represent the population's fraction over time. The cell will
-start to filament after reaching a certain internal toxin threshold,
-$T_{sos}$. Therefore, the expected global effect on the population's
-response times based on the amount of antitoxin is asynchronous, while
-at the local level, it is synchronous. Consequently, different
-proportions are presented in the cellular states since some cells will
-activate the filamentation system before and others later.
+(ref:model-02-antitoxin-experiment-cap) **Variability in the toxin-antitoxin system produces different proportions of cell states.** Histograms represent the distribution of antitoxin quantity, while the curves represent the population's fraction over time. The cell will start to filament after reaching a certain internal toxin threshold, $T_{sos}$. Therefore, the expected global effect on the population's response times based on the amount of antitoxin is asynchronous, while at the local level, it is synchronous. Consequently, different proportions are presented in the cellular states since some cells will activate the filamentation system before and others later.
 
 <div class="figure">
 <img src="03-model-analysis_files/figure-epub3/model-02-antitoxin-experiment-1.svg" alt="(ref:model-02-antitoxin-experiment-cap)" width="100%" />
@@ -267,19 +229,9 @@ variability, and $t > \tau_{kill}$ will be a beneficial point for
 survival. Therefore, we concluded that the effect of heterogeneity in a
 toxin-antitoxin system represents a double-edged sword.
 
-(ref:model-02-survival-probability-scap) Effect of variability on the
-toxin-antitoxin system.
+(ref:model-02-survival-probability-scap) Effect of variability on the toxin-antitoxin system.
 
-(ref:model-02-survival-probability-cap) **Effect of variability on the
-toxin-antitoxin system.** The color of the heatmap is representative of
-the fraction of living cells at exposure time. The white vertical line
-represents the death time of the homogeneous population ($\tau_{kill}$).
-At $t < \tau_{kill}$, it is shown that the fraction of survivors
-decreases as the variability in the population increases. When
-$t = \tau_{kill}$, the variability does not affect the fraction of
-survivors, but it represents a percentage improvement for the
-homogeneous population. Finally, when $t > \tau_{kill}$, the
-heterogeneity of the population favors survival.
+(ref:model-02-survival-probability-cap) **Effect of variability on the toxin-antitoxin system.** The color of the heatmap is representative of the fraction of living cells at exposure time. The white vertical line represents the death time of the homogeneous population ($\tau_{kill}$). At $t < \tau_{kill}$, it is shown that the fraction of survivors decreases as the variability in the population increases. When $t = \tau_{kill}$, the variability does not affect the fraction of survivors, but it represents a percentage improvement for the homogeneous population. Finally, when $t > \tau_{kill}$, the heterogeneity of the population favors survival.
 
 <div class="figure">
 <img src="03-model-analysis_files/figure-epub3/model-02-survival-probability-1.svg" alt="(ref:model-02-survival-probability-cap)" width="100%" />
