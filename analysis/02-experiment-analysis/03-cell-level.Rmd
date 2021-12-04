@@ -614,7 +614,7 @@ c_umap_prep
 
 ```{r experiment-03-chromosome-umap-new-coordinates}
 p_c_umap <- juice(c_umap_prep) %>% 
-  ggplot(aes(umap_1, umap_2, labe )) +
+  ggplot(aes(UMAP1, UMAP2)) +
   geom_point(aes(color = cell_status), alpha = 0.7, size = 2) +
   guides(
     color = guide_legend(ncol = 2, override.aes = list(alpha = 1, size = 1)),
@@ -642,7 +642,7 @@ p_umap_prep
 
 ```{r experiment-03-plasmid-umap-new-coordinates}
 p_p_umap <- juice(p_umap_prep) %>%
-  ggplot(aes(umap_1, umap_2, label)) +
+  ggplot(aes(UMAP1, UMAP2)) +
   geom_point(aes(color = cell_status), alpha = 1/3, size = 1) +
   labs(
     x = "UMAP 1",
