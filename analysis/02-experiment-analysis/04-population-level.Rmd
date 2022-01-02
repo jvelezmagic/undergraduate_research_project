@@ -540,5 +540,11 @@ lineages_processed_1_df |>
   filter(time <= antibiotic_start_time) |>
   ggplot(aes(x = factor(time), y = dt_length, fill = cell_status)) +
   geom_boxplot(outlier.shape = NA) +
-  facet_grid(~experiment_id)
+  facet_grid(~experiment_id) +
+  coord_cartesian(ylim = c(0, 90)) +
+  labs(
+    x = "Time",
+    y = "Lenght dt",
+    fill = "Cell status"
+  )
 ```
