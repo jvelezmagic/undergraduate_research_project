@@ -1,7 +1,7 @@
 ---
 title: "Bacterial filamentation: a bet for survival in stressful environments"
 author: "Vélez Santiago Jesús"
-date: "2021-12-04"
+date: "2022-01-02"
 site: bookdown::bookdown_site
 documentclass: krantz
 bibliography: [
