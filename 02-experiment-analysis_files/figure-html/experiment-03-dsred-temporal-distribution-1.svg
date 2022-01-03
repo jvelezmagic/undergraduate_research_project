@@ -10326,7 +10326,7 @@
 <polyline points='33.23,308.96 35.97,308.96 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='33.23,273.85 35.97,273.85 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='33.23,238.73 35.97,238.73 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<text transform='translate(13.37,215.47) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: Arial;' textLength='66.64px' lengthAdjust='spacingAndGlyphs'>Ds-Red value</text>
+<text transform='translate(13.37,215.47) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: Arial;' textLength='62.98px' lengthAdjust='spacingAndGlyphs'>DsRed value</text>
 <rect x='87.66' y='5.48' width='341.96' height='45.52' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <text x='93.14' y='32.18' style='font-size: 11.00px; font-family: Arial;' textLength='51.34px' lengthAdjust='spacingAndGlyphs'>Cell status</text>
 <rect x='149.97' y='10.96' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />

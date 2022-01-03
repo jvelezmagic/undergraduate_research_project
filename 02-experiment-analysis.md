@@ -178,10 +178,10 @@ observing properties at the population level. We did this because it
 would allow us to understand what factors are affecting filamentation
 and why.
 
-We normalized the fluorescence values of Ds-Red and GFP for both
+We normalized the fluorescence values of DsRed and GFP for both
 experiments based on the values observed before exposure to antibiotics.
 It allowed us to have a basis to work with and compare expressions
-between cells. In the case of Ds-Red environment drug concentration, we
+between cells. In the case of DsRed environment drug concentration, we
 also applied a logarithmic transformation to observe subtle changes in
 fluorescence intensity that would allow us to detect cell dead.
 
@@ -199,7 +199,7 @@ from an increase in cell membrane permeability and the introduction of
 fluorescent dye into the cell) or because it left the field of
 observation. Therefore, a *surviving cell* is defined as a cell observed
 before and after exposure to the antibiotic and does not surpass the
-Ds-Red threshold.
+DsRed threshold.
 
 (ref:experiment-03-cell-distribution-across-experiments-scap) Cell classification and its distribution across experiments.
 
@@ -214,7 +214,7 @@ Ds-Red threshold.
 
 ### Cell length and the amount of GFP are crucial in determining cell survival {#length-gfp-crucial}
 
-We evaluated the Ds-Red, GFP, and length values for each cell at
+We evaluated the DsRed, GFP, and length values for each cell at
 different time points: initial, filamentation, and end. This
 preprocessing allowed us to observe and quantify each cell at critical
 times in the experiment and eliminate noise or signals outside the scope
@@ -229,17 +229,17 @@ the cell. We decided to bound the end time for surviving cells to one
 frame (10 min) after the end of antibiotic exposure so that the observed
 signal would reflect the final stress responses.
 
-When we compared the distributions of Ds-Red, GFP, and length for both
+When we compared the distributions of DsRed, GFP, and length for both
 experiments, we observed its changes in its role for cell survival. In
 Figure \@ref(fig:experiment-03-dsred-temporal-distribution), we show
 that indistinctly and, as expected, surviving cells managed to eliminate
 the antibiotic by the end time. In contrast, dead cells presented higher
-levels of antibiotics (measured by proxy through the mean Ds-Red
+levels of antibiotics (measured by proxy through the mean DsRed
 intensity of the cell).
 
-(ref:experiment-03-dsred-temporal-distribution-scap) Ds-Red temporal distribution.
+(ref:experiment-03-dsred-temporal-distribution-scap) DsRed temporal distribution.
 
-(ref:experiment-03-dsred-temporal-distribution-cap) **Ds-Red temporal distribution.** To evaluate the incident effect of the antibiotic marked by Ds-Red on cells by class, we show its values at three key moments: start, filamentation (SOS), and end. The upper asterisks represent the significance value when comparing a group X to the filamented and surviving cell reference. Asterisks in a line indicate whether or not there is a significant difference in the survival of non-filamented cells. The black dots represent the mean of each group, and the lines that join them are a comparative guide. The extent of the black bars represents the distribution of the data. Although, at the initial time, we observe multiple significant differences, this is likely due to the intrinsic noise of the system since, as expected, the values are close to zero. We observed a difference between the surviving and non-filamented cells for the chromosomal strain for the SOS time, but the same did not occur for the plasmid strain. The final amount of Ds-Red makes a clear difference between survival and death.
+(ref:experiment-03-dsred-temporal-distribution-cap) **DsRed temporal distribution.** To evaluate the incident effect of the antibiotic marked by DsRed on cells by class, we show its values at three key moments: start, filamentation (SOS), and end. The upper asterisks represent the significance value when comparing a group X to the filamented and surviving cell reference. Asterisks in a line indicate whether or not there is a significant difference in the survival of non-filamented cells. The black dots represent the mean of each group, and the lines that join them are a comparative guide. The extent of the black bars represents the distribution of the data. Although, at the initial time, we observe multiple significant differences, this is likely due to the intrinsic noise of the system since, as expected, the values are close to zero. We observed a difference between the surviving and non-filamented cells for the chromosomal strain for the SOS time, but the same did not occur for the plasmid strain. The final amount of DsRed makes a clear difference between survival and death.
 
 <div class="figure">
 <img src="02-experiment-analysis_files/figure-epub3/experiment-03-dsred-temporal-distribution-1.svg" alt="(ref:experiment-03-dsred-temporal-distribution-cap)" width="100%" />
@@ -389,7 +389,7 @@ contribution of division to cell survival (see Figure
 In Figures \@ref(fig:experiment-03-dsred-temporal-distribution),
 \@ref(fig:experiment-03-gfp-temporal-distribution), and
 \@ref(fig:experiment-03-length-temporal-distribution), we showed how, at
-the time of filamentation, Ds-Red and GFP levels appeared indifferent to
+the time of filamentation, DsRed and GFP levels appeared indifferent to
 the cells. Therefore, we hypothesized that a possible variable that
 could determine cell survival could be its time to activate its
 anti-stress response system that causes filamentation. Furthermore, we
@@ -495,7 +495,7 @@ filament cells from the dead ones.
 
 (ref:experiment-03-chromosome-pca-new-coordinates-scap) Principal Component Analysis of chromosomal strain.
 
-(ref:experiment-03-chromosome-pca-new-coordinates-cap) **Principal Component Analysis of chromosomal strain.** When integrating the information of different variables in a dimensionality reduction analysis, we observed a clear separation between the surviving cells and those that did not. The contributions that determined this phenomenon come mainly from the last amount of Ds-Red, GFP, and cell length (see Figure \@ref(fig:experiment-03-chromosome-pca-variable-contribution)). Although it seems obvious, it effectively confirms that the temporal classification that we carry out makes sense. Longer length represents a greater uptake of antibiotics but in a much larger volume, so the net effect is an internal reduction of antibiotics (see Figure \@ref(fig:model-01-cell-dimensions-relationship)).
+(ref:experiment-03-chromosome-pca-new-coordinates-cap) **Principal Component Analysis of chromosomal strain.** When integrating the information of different variables in a dimensionality reduction analysis, we observed a clear separation between the surviving cells and those that did not. The contributions that determined this phenomenon come mainly from the last amount of DsRed, GFP, and cell length (see Figure \@ref(fig:experiment-03-chromosome-pca-variable-contribution)). Although it seems obvious, it effectively confirms that the temporal classification that we carry out makes sense. Longer length represents a greater uptake of antibiotics but in a much larger volume, so the net effect is an internal reduction of antibiotics (see Figure \@ref(fig:model-01-cell-dimensions-relationship)).
 
 <div class="figure">
 <img src="02-experiment-analysis_files/figure-epub3/experiment-03-chromosome-pca-new-coordinates-1.svg" alt="(ref:experiment-03-chromosome-pca-new-coordinates-cap)" width="100%" />
@@ -517,14 +517,14 @@ For their part, in Figures
 total contribution of each variable per PC for the chromosomal and
 plasmid strain, respectively. Finding that, indeed, filamentation plays
 a crucial role in determining cell survival. For example, for PC2, we
-appreciated how the variable end Ds-Red directed the dots to the
+appreciated how the variable end DsRed directed the dots to the
 positive side, while the variable end and start length directed the dots
 to the opposing side. Therefore, we can support that filamentation has a
-role in moving cells away from having higher amounts of Ds-Red.
+role in moving cells away from having higher amounts of DsRed.
 
 (ref:experiment-03-chromosome-pca-variable-contribution-scap) Variables contribution of Principal Component Analysis of chromosomal strain.
 
-(ref:experiment-03-chromosome-pca-variable-contribution-cap) **Variables contribution of Principal Component Analysis of chromosomal strain.** In the figure \@ref(fig:experiment-03-chromosome-pca-new-coordinates), we see that the classes we created manually reflected what we observed when performing a reduction of dimensions analysis. Here we show the individual contribution of each variable for the first two components. The variables that most affected components 1 and 2 (X-axis and Y-axis, respectively) are the final measurements of Ds-Red, GFP, length, and the initial amount of GFP. Given that they are chromosomal strains, we should note that this variability could be produced by intrinsic experimental noise that we could not remove. With that in mind, having the Ds-Red and the final length highlights the inherent role of cells by having increased its size.
+(ref:experiment-03-chromosome-pca-variable-contribution-cap) **Variables contribution of Principal Component Analysis of chromosomal strain.** In the figure \@ref(fig:experiment-03-chromosome-pca-new-coordinates), we see that the classes we created manually reflected what we observed when performing a reduction of dimensions analysis. Here we show the individual contribution of each variable for the first two components. The variables that most affected components 1 and 2 (X-axis and Y-axis, respectively) are the final measurements of DsRed, GFP, length, and the initial amount of GFP. Given that they are chromosomal strains, we should note that this variability could be produced by intrinsic experimental noise that we could not remove. With that in mind, having the DsRed and the final length highlights the inherent role of cells by having increased its size.
 
 <div class="figure">
 <img src="02-experiment-analysis_files/figure-epub3/experiment-03-chromosome-pca-variable-contribution-1.svg" alt="(ref:experiment-03-chromosome-pca-variable-contribution-cap)" width="100%" />
@@ -533,7 +533,7 @@ role in moving cells away from having higher amounts of Ds-Red.
 
 (ref:experiment-03-plasmid-pca-variable-contribution-scap) Variables contribution of Principal Component Analysis of plasmid strain.
 
-(ref:experiment-03-plasmid-pca-variable-contribution-cap) **Variables contribution of Principal Component Analysis of plasmid strain.** In Figure \@ref(fig:experiment-03-plasmid-pca-new-coordinates), we saw that we could separate the filamented cells from the non-filamented ones. The reduction analysis also shows a slight difference between surviving and dead cells within the small group of filamented cells. Here we offer the individual contribution of each variable for the first two components. For the first component (x-axis in Figure \@ref(fig:experiment-03-chromosome-pca-new-coordinates)), the initial and final GFP measurements received mainly the variability. We expected this component's importance since, being a chromosomal strain, we hope that its inherent variation will be inherited into the system. On the other hand, the second component (Y-axis in Figure \@ref(fig:experiment-03-chromosome-pca-new-coordinates)) was determined by the length of the cell. Factors that, in the chromosomal strain (see Figure \@ref(fig:experiment-03-chromosome-pca-variable-contribution)), determined with the help of Ds-Red the separation between surviving and dead cells.
+(ref:experiment-03-plasmid-pca-variable-contribution-cap) **Variables contribution of Principal Component Analysis of plasmid strain.** In Figure \@ref(fig:experiment-03-plasmid-pca-new-coordinates), we saw that we could separate the filamented cells from the non-filamented ones. The reduction analysis also shows a slight difference between surviving and dead cells within the small group of filamented cells. Here we offer the individual contribution of each variable for the first two components. For the first component (x-axis in Figure \@ref(fig:experiment-03-chromosome-pca-new-coordinates)), the initial and final GFP measurements received mainly the variability. We expected this component's importance since, being a chromosomal strain, we hope that its inherent variation will be inherited into the system. On the other hand, the second component (Y-axis in Figure \@ref(fig:experiment-03-chromosome-pca-new-coordinates)) was determined by the length of the cell. Factors that, in the chromosomal strain (see Figure \@ref(fig:experiment-03-chromosome-pca-variable-contribution)), determined with the help of DsRed the separation between surviving and dead cells.
 
 <div class="figure">
 <img src="02-experiment-analysis_files/figure-epub3/experiment-03-plasmid-pca-variable-contribution-1.svg" alt="(ref:experiment-03-plasmid-pca-variable-contribution-cap)" width="100%" />
@@ -618,9 +618,9 @@ number of filament cells expected was much lower.
 
 In Figure \@ref(fig:experiment-04-metrics-over-time), we showed how once
 antibiotics exposure began, those cells that died had a much faster
-increase in Ds-Red than those that did manage to live, regardless of
+increase in DsRed than those that did manage to live, regardless of
 whether they filamented or not. On the other hand, surviving cells
-managed to maintain their Ds-Red levels relatively stable. We noted that
+managed to maintain their DsRed levels relatively stable. We noted that
 length was critical for the surviving cells for the chromosomal strain
 by turning to the GFP and length variables for a temporal explanation.
 Even cells categorized as non-filamented reached the filamentation
@@ -635,7 +635,7 @@ survival.
 
 (ref:experiment-04-metrics-over-time-scap) Population measurements over time.
 
-(ref:experiment-04-metrics-over-time-cap) **Population measurements over time.** The colored lines symbolize the average value of each metric at each instant of time, while its surrounded gray shaded area represents the 95% confidence interval. The vertical lines represent the start and end of antibiotic exposure. The horizontal line in the length metric symbolizes the threshold to consider a cell filament. We observed a faster increase of Ds-Red for the non-surviving populations in both experiments. Regarding the GFP metric, the behavior is relatively stable for the chromosomal strain. In contrast, for the plasmid strain, a decline in GFP is observed for the population that did not survive. For the length metric, it is interesting to note how the chromosome cells that did not filament continued to grow past the filamentation threshold once the exposure to the antibiotic in the chromosomal strain had ended. On the other hand, the filamented and dead cells seem to have a greater length from the beginning for the plasmid strain.
+(ref:experiment-04-metrics-over-time-cap) **Population measurements over time.** The colored lines symbolize the average value of each metric at each instant of time, while its surrounded gray shaded area represents the 95% confidence interval. The vertical lines represent the start and end of antibiotic exposure. The horizontal line in the length metric symbolizes the threshold to consider a cell filament. We observed a faster increase of DsRed for the non-surviving populations in both experiments. Regarding the GFP metric, the behavior is relatively stable for the chromosomal strain. In contrast, for the plasmid strain, a decline in GFP is observed for the population that did not survive. For the length metric, it is interesting to note how the chromosome cells that did not filament continued to grow past the filamentation threshold once the exposure to the antibiotic in the chromosomal strain had ended. On the other hand, the filamented and dead cells seem to have a greater length from the beginning for the plasmid strain.
 
 <div class="figure">
 <img src="02-experiment-analysis_files/figure-epub3/experiment-04-metrics-over-time-1.svg" alt="(ref:experiment-04-metrics-over-time-cap)" width="100%" />
@@ -739,7 +739,7 @@ cellular youth at a higher level of complexity in future studies to
 understand its contribution to cell survival.
 
 Interestingly, when we used temporal measurements of cell length, GFP,
-Ds-Red, and if a cell divided, we could recapitulate, for the most part,
+DsRed, and if a cell divided, we could recapitulate, for the most part,
 the fates of cellular states (see Sections \@ref(length-gfp-crucial) and
 \@ref(increasing-the-complexity-of-the-system-and-analyzing-it-in-an-unsupervised-way-allows-a-correct-classification-of-cell-states)).
 Thus, increasing the system's complexity led to better clustering cell
