@@ -190,7 +190,7 @@ based on whether the cell filamented and survived (see Figure
 \@ref(fig:experiment-03-cell-distribution-across-experiments)). We
 define a *filamented cell* as a cell with more than two standard
 deviations from the mean concerning the lengths observed before
-introducing antibiotics into the system []. On the other hand, although
+introducing antibiotics into the system. On the other hand, although
 there are multiple ways to define death from single-cell observations
 [@trevors2012; @kroemer2008], we considered a *cell dead or missing*
 when we stopped having information about it, either because of
