@@ -147,7 +147,7 @@ The [website](https://jvelezmagic.github.io/undergraduate_research_project/) is
 hosted via Github Pages, and the complete source is
 available via Github.
 
-This version of the project was built with R version 4.1.2 (2021-11-01) and the
+This version of the project was built with R version 4.2.0 (2022-04-22) and the
 following packages:
 
 
@@ -155,21 +155,21 @@ Table: (\#tab:colophon)Packages used to built the project documents.
 
 |Package     |Version |Source         |
 |:-----------|:-------|:--------------|
-|bookdown    |0.24    |CRAN (R 4.1.0) |
-|embed       |0.1.5   |CRAN (R 4.1.0) |
-|fs          |1.5.1   |CRAN (R 4.1.0) |
-|GGally      |2.1.2   |CRAN (R 4.1.0) |
-|ggdist      |3.0.1   |CRAN (R 4.1.0) |
-|ggpubr      |0.4.0   |CRAN (R 4.1.0) |
-|here        |1.0.1   |CRAN (R 4.1.0) |
-|janitor     |2.1.0   |CRAN (R 4.1.0) |
-|knitr       |1.36    |CRAN (R 4.1.0) |
-|patchwork   |1.1.1   |CRAN (R 4.1.0) |
-|plotly      |4.10.0  |CRAN (R 4.1.0) |
-|renv        |0.14.0  |CRAN (R 4.1.0) |
-|rmarkdown   |2.11    |CRAN (R 4.1.0) |
-|sessioninfo |1.2.1   |CRAN (R 4.1.0) |
-|stringr     |1.4.0   |CRAN (R 4.1.0) |
-|tidymodels  |0.1.4   |CRAN (R 4.1.0) |
-|tidytext    |0.3.2   |CRAN (R 4.1.0) |
-|tidyverse   |1.3.1   |CRAN (R 4.1.0) |
+|bookdown    |0.24    |CRAN (R 4.2.0) |
+|embed       |0.1.5   |CRAN (R 4.2.0) |
+|fs          |1.5.1   |CRAN (R 4.2.0) |
+|GGally      |2.1.2   |CRAN (R 4.2.0) |
+|ggdist      |3.0.1   |CRAN (R 4.2.0) |
+|ggpubr      |0.4.0   |CRAN (R 4.2.0) |
+|here        |1.0.1   |CRAN (R 4.2.0) |
+|janitor     |2.1.0   |CRAN (R 4.2.0) |
+|knitr       |1.36    |CRAN (R 4.2.0) |
+|patchwork   |1.1.1   |CRAN (R 4.2.0) |
+|plotly      |4.10.0  |CRAN (R 4.2.0) |
+|renv        |0.14.0  |CRAN (R 4.2.0) |
+|rmarkdown   |2.11    |CRAN (R 4.2.0) |
+|sessioninfo |1.2.1   |CRAN (R 4.2.0) |
+|stringr     |1.4.0   |CRAN (R 4.2.0) |
+|tidymodels  |0.1.4   |CRAN (R 4.2.0) |
+|tidytext    |0.3.2   |CRAN (R 4.2.0) |
+|tidyverse   |1.3.1   |CRAN (R 4.2.0) |
