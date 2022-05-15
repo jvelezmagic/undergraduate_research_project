@@ -76,7 +76,6 @@ parse_metrics_column <- function(.data, metric_column) {
 }
 ```
 
-
 ```{r experiment-03-cell-distribution-across-experiments}
 p_cells_distribution <- cells_df %>% 
   count(experiment_id, cell_status) %>%
@@ -438,6 +437,52 @@ p_number_divisions <-cells_df %>%
 p_number_divisions
 ```
 
+```{r}
+cells_df %>% 
+  group_by(
+    experiment_id,
+    survived
+  ) %>% 
+  summarize(
+    what = 'Number divisions', 
+    min = min(n_divisions),
+    median = median(n_divisions),
+    mean = mean(n_divisions),
+    max = max(n_divisions),
+    std = sd(n_divisions)
+  )
+```
+
+```{r experiment-03-number-divisions-withouth-filamentations}
+p_number_divisions <- cells_df %>% 
+  ggplot(aes(x = survived, y = n_divisions, fill = survived)) +
+  stat_eye(position = "dodge") +
+  stat_compare_means(
+    label = "p.format",
+    method = "t.test",
+    #ref.group = "Survived",
+    label.y.npc = 0.75,
+    hide.ns = TRUE
+  ) +
+  facet_grid(. ~ experiment_id) +
+  coord_cartesian(ylim = c(0, 10)) +
+  guides(
+    fill = guide_legend(ncol = 2)
+  ) +
+  theme(
+    panel.grid.major = element_blank(),
+    legend.position = "none"
+  ) +
+  labs(
+    x = "Cell status",
+    y = "Number of divisions",
+    fill = "Cell status"
+  ) +
+  NULL
+
+p_number_divisions
+```
+
 ```{r experiment-03-time-since-last-division}
 p_time_since_last_division <- cells_df %>% 
   filter(!is.na(time_since_last_division_to_experiment_start)) %>% 
@@ -656,4 +701,8 @@ p_p_umap <- juice(p_umap_prep) %>%
   NULL
 
 p_p_umap
+```
+
+```{r}
+
 ```
